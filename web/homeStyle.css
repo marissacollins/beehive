@@ -48,15 +48,14 @@ li a:hover {
 	margin-top:-850px;
 	margin-right:10px;
 	
-	background-image: url("http://i.stack.imgur.com/8zEoh.png");
-	background-size: 605px 800px;
-	background-repeat: no-repeat;
-	
-	color:white;
+	color:black;
 	font-family:Tahoma;
-	font-size:60px;
-	text-shadow:-3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+	font-size:20px;
 }
 #notes p{
 	margin-top: -50px;
+}
+
+#inputTextToSave{
+	margin-left:1.5%;
 }
