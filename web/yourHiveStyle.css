@@ -1,0 +1,132 @@
+#status{
+	font-family:Arial black;
+	float:right;
+}
+h1{
+	position:absolute;
+	margin-top:-100px;
+	margin-left:10px;
+	color:white;
+	font-family:Tahoma;
+	font-size:60px;
+	text-shadow:-3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+}
+div img{
+	position:relative;
+	width:100%;
+}
+
+/*Navigation Bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+li {
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+/*Background*/
+#image{
+	position:absolute;
+	width:99%;	
+}
+#grad{
+	position:absolute;
+	width:50%;
+	height:800px;
+	border:2px solid black;
+	margin-top:-1050px;
+	margin-left:25%;
+	background-color:rgba(0,0,0,.3);
+}
+h2 a{
+	text-decoration:none;
+	color:white;
+	font-family:Tahoma;
+	font-size:40px;
+	text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+	
+	position:absolute;
+	margin-top:-1000px;
+	margin-left:27%;
+}
+#outside{
+	margin-top:-10px;
+}
+
+#inside{
+	margin-top:100px;
+}
+#humidity{
+	margin-top:200px;
+}
+#weight{
+	margin-top:300px;
+}
+#light{
+	margin-top:400px;
+}
+#population{
+	margin-top:500px;
+}
+#frequencies{
+	margin-top:600px;
+}
+
+.outVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1610px;
+	margin-left:60%;
+}
+.inVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1510px;
+	margin-left:60%;
+}
+.humidVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1410px;
+	margin-left:60%;
+}
+.weightVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1310px;
+	margin-left:60%;
+}
+.lightVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1210px;
+	margin-left:60%;
+}
+.popVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1110px;
+	margin-left:60%;
+}
+.freqVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-1010px;
+	margin-left:60%;
+}
+
