@@ -61,72 +61,75 @@ h2 a{
 	text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 	
 	position:absolute;
-	margin-top:-1000px;
-	margin-left:27%;
-}
-#outside{
-	margin-top:-10px;
+	margin-left:5%;
 }
 
+#table{
+	margin-top:10px;
+	margin-left:10px;
+	width:80%;
+	height:730px;
+}
+
+table tr td{
+	/*border:1px solid black;*/
+}
+
+#outside{
+}
 #inside{
-	margin-top:100px;
 }
 #humidity{
-	margin-top:200px;
 }
 #weight{
-	margin-top:300px;
 }
 #light{
-	margin-top:400px;
 }
 #population{
-	margin-top:500px;
 }
 #frequencies{
-	margin-top:600px;
 }
 
 .outVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1610px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .inVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1510px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .humidVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1410px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .weightVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1310px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .lightVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1210px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .popVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1110px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 .freqVar h2 a{
 	border: 8px solid green;
 	padding: 5px;
-	margin-top:-1010px;
-	margin-left:60%;
+	margin-top:-15px;
+	margin-left:20%;
 }
 
