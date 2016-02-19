@@ -38,20 +38,11 @@ li a {
 li a:hover {
     background-color: #111;
 }
-
-/*Table*/
 #table{
-	width:33%;
+	width:75%;
 	height:600px;
-	border: 2px solid black;
-	margin-top:5px;
+	margin-left:12.5%;
 }
-
-/*Graph*/
-#graph{
-	float:right;
-	margin-top:-604px;
-	width:66%;
-	height:600px;
-	border: 2px solid black;
+table tr td{
+	border:1px solid black;
 }

@@ -39,15 +39,12 @@ li a:hover {
     background-color: #111;
 }
 
+table tr td{
+	/*border:1px solid black;*/
+}
 /*Notes*/
 #notes{
 	border:2px solid black;
-	width:32%;
-	height:800px;
-	float:right;
-	margin-top:-850px;
-	margin-right:10px;
-	
 	color:black;
 	font-family:Tahoma;
 	font-size:20px;
@@ -55,7 +52,11 @@ li a:hover {
 #notes p{
 	margin-top: -50px;
 }
-
 #inputTextToSave{
 	margin-left:1.5%;
+}
+
+#table{
+	width:90%;
+	margin-left:5%;
 }

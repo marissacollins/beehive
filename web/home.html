@@ -57,38 +57,43 @@
 
 		</SCRIPT>
 
-		<!-- The Image and Form Codes are Below --> 
-		<IMG SRC="http://nationswell.com/wp-content/uploads/2014/06/school-behive.jpg" NAME="mypic" BORDER=0 WIDTH="66%">
-		
-
-		<FORM NAME="beehive">
-		<INPUT TYPE="text" WIDTH="100" NAME="burns" VALUE="Text For Picture One">
-		</FORM>
-
-		<A HREF="JavaScript:slideshowBack()"> Back</A>
-		<A HREF="JavaScript:slideshowUp()"> Next</A>
-
-		<!--Notes-->
-		<div id="notes">	
-			<table>
-				<tr><td>General Note to Save:</td></tr>
-				<tr>
-					<td colspan="3">
-						<textarea id="inputTextToSave" style="width:96%;height:500px"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>Filename to Save As:</td>
-					<td><input id="inputFileNameToSaveAs"></input></td>
-					<td><button onclick="saveTextAsFile()">Save Note to File</button></td>
-				</tr>
-				<tr>
-					<td>Select a File to Load:</td>
-					<td><input type="file" id="fileToLoad"></td>
-					<td><button onclick="loadFileAsText()">Load Selected File</button><td>
-				</tr>
-			</table>
-		</div>
+		<table id = "table">
+			<tr>
+				<td width=65%>
+					<!-- The Image and Form Codes are Below --> 
+					<IMG SRC="http://nationswell.com/wp-content/uploads/2014/06/school-behive.jpg" NAME="mypic" BORDER=0 WIDTH="100%">
+					<FORM NAME="beehive">
+						<INPUT TYPE="text" WIDTH="100" NAME="burns" VALUE="Text For Picture One">
+					</FORM>
+					<A HREF="JavaScript:slideshowBack()"> Back</A>
+					<A HREF="JavaScript:slideshowUp()">   Next</A>
+				</td>
+				
+				<td>
+					<!--Notes-->
+					<div id="notes">	
+					<table>
+						<tr><td>General Note to Save:</td></tr>
+						<tr>
+							<td colspan="3">
+								<textarea id="inputTextToSave" style="width:96%;height:550px"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>Filename to Save As:</td>
+							<td><input id="inputFileNameToSaveAs"></input></td>
+							<td><button onclick="saveTextAsFile()">Save Note to File</button></td>
+						</tr>
+						<tr>
+							<td>Select a File to Load:</td>
+							<td><input type="file" id="fileToLoad"></td>
+							<td><button onclick="loadFileAsText()">Load Selected File</button><td>
+						</tr>
+					</table>
+					</div>
+				</td>
+			</tr>
+		</table>
 		
 		<script type='text/javascript'>
 
