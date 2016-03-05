@@ -41,6 +41,352 @@ $app->get('/bees',   function() use($app) {
     }
 });
 
+//Calls Population function from DBBee.php to get data from database
+$app->get('/populations',   function() use($app) {
+	
+
+
+ $allGetVars = $app->request->get();
+    error_log( print_R("populations entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("populations params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getPopulation($thelimit);
+
+    $response["error"] = false;
+    $response["PopulationList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["count"] = (empty($slist["count"]) ? "NULL" : $slist["count"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["PopulationList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Outside Temp function from DBBee.php to get data from database
+$app->get('/outsidetemp',   function() use($app) {
+	
+
+ $allGetVars = $app->request->get();
+    error_log( print_R("outsidetemp entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("outsidetemp params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getOutsideTemp($thelimit);
+
+    $response["error"] = false;
+    $response["OutsideTempList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["temp"] = (empty($slist["temp"]) ? "NULL" : $slist["temp"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["OutsideTempList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Hive temp function from DBBee.php to get data from database
+$app->get('/hivetemp',   function() use($app) {
+	
+	
+ $allGetVars = $app->request->get();
+    error_log( print_R("hivetemp entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("hivetemp params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getHiveTemp($thelimit);
+
+    $response["error"] = false;
+    $response["HiveTempList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["temp"] = (empty($slist["temp"]) ? "NULL" : $slist["temp"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["HiveTempList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Hive Humidity function from DBBee.php to get data from database
+$app->get('/hivehumidity',   function() use($app) {
+	
+	
+ $allGetVars = $app->request->get();
+    error_log( print_R("hivehumidity entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("hivehumidity params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getHiveHumidity($thelimit);
+
+    $response["error"] = false;
+    $response["HiveHumidityList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["humidity"] = (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["HiveHumidityListList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Hive weight function from DBBee.php to get data from database
+$app->get('/HiveWeightStatus',   function() use($app) {
+	
+	
+ $allGetVars = $app->request->get();
+    error_log( print_R("HiveWeightStatus entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("HiveWeightStatus params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getHiveWeightStatus($thelimit);
+
+    $response["error"] = false;
+    $response["HiveWeightStatusList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["weight"] = (empty($slist["weight"]) ? "NULL" : $slist["weight"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["HiveWeightStatusList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Hive Light function from DBBee.php to get data from database
+$app->get('/light',   function() use($app) {
+	
+	
+ $allGetVars = $app->request->get();
+    error_log( print_R("light entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("light params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getLight($thelimit);
+
+    $response["error"] = false;
+    $response["LightList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["lux"] = (empty($slist["lux"]) ? "NULL" : $slist["lux"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["LightList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+//Calls Bee Frequency function from DBBee.pho to get data from database
+$app->get('/beeFreqStatus',   function() use($app) {
+	
+	
+ $allGetVars = $app->request->get();
+    error_log( print_R("beeFreqStatus entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("beeFreqStatus params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getBeeFrequencyStatus($thelimit);
+
+    $response["error"] = false;
+    $response["BeeFreqStatusList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["frequencyStatus"] = (empty($slist["frequencyStatus"]) ? "NULL" : $slist["frequencyStatus"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+			$tmp["hiveID"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["BeeFreqStatusList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
+
 /*
 $app->get('/eventnames',   function() use ($app) {
 

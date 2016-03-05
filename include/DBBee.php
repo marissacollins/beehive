@@ -18,10 +18,153 @@ class BeeDbHandler {
         $this->conn = $db->connect();
     }
 
+	/* DATABASE QUERIES - Use each function to pull the different 
+	characteristics off of the database, use the 
+	limit to set how many you want to go back*/
+	
+	//gets all data from database
+	 /* public function getAllBeehives() {
+        $stmt = $this->conn->prepare("SELECT * FROM hive");
+        $stmt->execute();
+        $beehives = $stmt->get_result();
+        $stmt->close();
+	 return $beehives;}*/
+	
+	//Gets population from database 
+	public function getPopulation($thelimit = NULL) {
+			error_log( print_R("getPopulation entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM population order by datetime desc ";
 
-    /**
-     * Fetching lookup lists for students
-     */
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $populations = $stmt->get_result();
+        $stmt->close();
+        return $populations;
+    }
+	
+	//Gets Outside temperatures from database
+	public function getOutsideTemp($thelimit = NULL) {
+			error_log( print_R("getOutsideTemp entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM outsidetemp order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $outsidetemp = $stmt->get_result();
+        $stmt->close();
+        return $outsidetemp;
+    }
+	
+	//Get hive temp from database
+	public function getHiveTemp($thelimit = NULL) {
+			error_log( print_R("getHiveTemp entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM hive order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $hivetemp = $stmt->get_result();
+        $stmt->close();
+        return $hivetemp;
+    }
+	
+	//Get Hive Humidity
+	public function getHiveHumidity($thelimit = NULL) {
+			error_log( print_R("getHiveHumidity entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM hive order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $hivehumidity = $stmt->get_result();
+        $stmt->close();
+        return $hivehumidity;
+    }
+	
+	//Get Hive Weight from database
+	public function getHiveWeightStatus($thelimit = NULL) {
+			error_log( print_R("getHiveWeightStatus entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM hive order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $HiveWeightStatus = $stmt->get_result();
+        $stmt->close();
+        return $HiveWeightStatus;
+    }
+	
+	//Get Hive Light from database
+	public function getLight($thelimit = NULL) {
+			error_log( print_R("getLight entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM lighthistory order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $light = $stmt->get_result();
+        $stmt->close();
+        return $light;
+    }
+	
+	//Get Bee Frequency from database
+	public function getBeeFrequencyStatus($thelimit = NULL) {
+			error_log( print_R("getBeeFrequencyStatus entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM audio order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $beeFreqStatus = $stmt->get_result();
+        $stmt->close();
+        return $beeFreqStatus;
+    }
+	
+	
+	/*
     public function getStudentLists() {
         $stmt = $this->conn->prepare("SELECT t.* FROM studentlist t order by t.listtype, t.listorder");
         $stmt->execute();
@@ -30,9 +173,6 @@ class BeeDbHandler {
         return $slists;
     }
 
-    /**
-     * Fetching all students
-     */
     public function getAllStudents() {
         $stmt = $this->conn->prepare("SELECT t.* FROM ncontacts t LIMIT 10");
         $stmt->execute();
@@ -41,19 +181,8 @@ class BeeDbHandler {
         return $students;
     }
 
-        public function getAllBeehives() {
-        $stmt = $this->conn->prepare("SELECT * FROM hive");
-        $stmt->execute();
-        $beehives = $stmt->get_result();
-        $stmt->close();
-        return $beehives;
-    }
 
 
-    /**
-     * Fetching single student
-     * @param String $student_id id of the student
-     */
     public function getStudent($student_id) {
         $stmt = $this->conn->prepare("SELECT
                    t.ID,
@@ -197,10 +326,6 @@ class BeeDbHandler {
         }
     }
 
-    /**
-     * Updating student
-
-     */
     public function updateStudent($student_id,
                                   $LastName,
                                   $FirstName,
@@ -355,6 +480,7 @@ class BeeDbHandler {
         //       }
         return $num_affected_rows > 0;
     }
+*/
 
 }
 ?>
