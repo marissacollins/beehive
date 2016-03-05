@@ -1,0 +1,135 @@
+#status{
+	font-family:Arial black;
+	float:right;
+}
+h1{
+	position:absolute;
+	margin-top:-100px;
+	margin-left:10px;
+	color:white;
+	font-family:Tahoma;
+	font-size:60px;
+	text-shadow:-3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
+}
+div img{
+	position:relative;
+	width:100%;
+}
+
+/*Navigation Bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+li {
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+/*Background*/
+#image{
+	position:absolute;
+	width:99%;	
+}
+#grad{
+	position:absolute;
+	width:50%;
+	height:800px;
+	border:2px solid black;
+	margin-top:-1050px;
+	margin-left:25%;
+	background-color:rgba(0,0,0,.3);
+}
+h2 a{
+	text-decoration:none;
+	color:white;
+	font-family:Tahoma;
+	font-size:40px;
+	text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+	
+	position:absolute;
+	margin-left:5%;
+}
+
+#table{
+	margin-top:10px;
+	margin-left:10px;
+	width:80%;
+	height:730px;
+}
+
+table tr td{
+	/*border:1px solid black;*/
+}
+
+#outside{
+}
+#inside{
+}
+#humidity{
+}
+#weight{
+}
+#light{
+}
+#population{
+}
+#frequencies{
+}
+
+.outVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.inVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.humidVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.weightVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.lightVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.popVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+.freqVar h2 a{
+	border: 8px solid green;
+	padding: 5px;
+	margin-top:-15px;
+	margin-left:20%;
+}
+

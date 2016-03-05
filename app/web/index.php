@@ -56,7 +56,7 @@ Feb 9, 2016me
 <html>
 	<head>
 		<title>Beehive Monitoring System</title>
-		<link type="text/css" rel="stylesheet" href="homeStyle.css"/>
+		<link type="text/css" rel="stylesheet" href="/beehive/web/homeStyle.css"/>
 	</head>
 	<body>
 		<div id="status">
@@ -69,8 +69,8 @@ Feb 9, 2016me
 		
 		<!--Navigation bar-->
 		<ul>
-			<li><a href="">Home</a></li>
-			<li><a href="">Your Hive</a></li>
+			<li><a href="/beehive/web/home.html">Home</a></li>
+			<li><a href="/beehive/web/youHive.html">Your Hive</a></li>
 		</ul>
 
 		<!--Slide Show-->

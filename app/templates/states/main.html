@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+		<!--Slide Show-->
+		<SCRIPT LANGUAGE="JavaScript">
+		var num=1
+		img1 = new Image ()
+		img1.src = "http://nationswell.com/wp-content/uploads/2014/06/school-behive.jpg"
+		img2 = new Image ()
+		img2.src = "https://upload.wikimedia.org/wikipedia/commons/9/92/Natural_Beehive_and_Honeycombs.jpg"
+		img3 = new Image()
+		img3.src = "http://4.bp.blogspot.com/-yYpc-bB1INw/U07cujbNEUI/AAAAAAAAAJY/8u-uFxm3IFs/s1600/_MG_1923.jpg"
+		img4 = new Image()
+		img4.src = "https://nineappletrees.files.wordpress.com/2014/07/beehive-entrance.gif"
+
+		text1 = "Text for Picture One"
+		text2 = "Text for Picture Two"
+		text3 = "Text for Picture Three"
+		text4 = "Text for Picture Four"		
+
+		function slideshowUp()
+		{
+			num=num+1
+			if (num==5)
+				{num=1}
+			document.mypic.src=eval("img"+num+".src")
+			document.joe.burns.value=eval("text"+num)
+		}
+
+		function slideshowBack()
+		{
+			num=num-1
+			if (num==0)
+				{num=4}
+			document.mypic.src=eval("img"+num+".src")
+			document.joe.burns.value=eval("text"+num)
+		}
+
+		</SCRIPT>
+
+		<table id = "table">
+			<tr>
+				<td width=65%>
+					<!-- The Image and Form Codes are Below --> 
+					<IMG SRC="http://nationswell.com/wp-content/uploads/2014/06/school-behive.jpg" NAME="mypic" BORDER=0 WIDTH="100%">
+					<FORM NAME="beehive">
+						<INPUT TYPE="text" WIDTH="100" NAME="burns" VALUE="Text For Picture One">
+					</FORM>
+					<A HREF="JavaScript:slideshowBack()"> Back</A>
+					<A HREF="JavaScript:slideshowUp()">   Next</A>
+				</td>
+				
+				<td>
+					<!--Notes-->
+					<div id="notes">	
+					<table>
+						<tr><td>General Note to Save:</td></tr>
+						<tr>
+							<td colspan="3">
+								<textarea id="inputTextToSave" style="width:96%;height:550px"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>Filename to Save As:</td>
+							<td><input id="inputFileNameToSaveAs"></input></td>
+							<td><button onclick="saveTextAsFile()">Save Note to File</button></td>
+						</tr>
+						<tr>
+							<td>Select a File to Load:</td>
+							<td><input type="file" id="fileToLoad"></td>
+							<td><button onclick="loadFileAsText()">Load Selected File</button><td>
+						</tr>
+					</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+		<script type='text/javascript'>
+
+function saveTextAsFile()
+{
+	var textToWrite = document.getElementById("inputTextToSave").value;
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
+}
+
+function loadFileAsText()
+{
+	var fileToLoad = document.getElementById("fileToLoad").files[0];
+
+	var fileReader = new FileReader();
+	fileReader.onload = function(fileLoadedEvent) 
+	{
+		var textFromFileLoaded = fileLoadedEvent.target.result;
+		document.getElementById("inputTextToSave").value = textFromFileLoaded;
+	};
+	fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+</script>
+
