@@ -11,7 +11,13 @@
         
         var service = {
             getAllBeehives: getAllBeehives,
-            getOutsideTemp: getOutsideTemp
+            getOutsideTemp: getOutsideTemp,
+			getHiveTemp: getHiveTemp,
+			getHiveHumidity: getHiveHumidity,
+			getHiveWeight: getHiveWeight,
+			getLight: getLight,
+			getPopulation: getPopulation,
+			getBeeFrequency: getBeeFrequency
 /*            getAllZips: getAllZips,
             getStudentLists: getStudentLists,
             getRankList: getRankList,
@@ -41,7 +47,60 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-        
+          function getHiveTemp(path) {
+            $log.debug('getHiveTemp service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		  function getHiveHumidity(path) {
+            $log.debug('getHiveHumidity service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		  function getHiveWeight(path) {
+            $log.debug('getHiveWeight service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		  function getLight(path) {
+            $log.debug('getLight service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		  function getPopulation(path) {
+            $log.debug('getPopulation service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		  function getBeeFrequency(path) {
+            $log.debug('getBeeFrequency service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
         
  /*
      function refreshStudents(input) {

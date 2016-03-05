@@ -1,11 +1,13 @@
+//Keep things modular so if you have the same variable names from different places it doesnt cause problems
 (function () {
-    'use strict';
+    'use strict'; //checking for syntax issues
 
     angular
-        .module('ng-admin')
+        .module('ng-admin') //Binds all of the angular modules into one
 
-    .controller('BeeController', BeeController);
-    BeeController.$inject = ['BeeServices',
+    .controller('BeeController', BeeController); //definition of controller
+    //injecting external functions into the controller
+	BeeController.$inject = ['BeeServices',
     '$scope',
     '$rootScope',
     '$routeParams',
@@ -13,14 +15,35 @@
     '$location',
     '$q'
     ];
-
+	
+	//Controllers connect the html and the webapp 
+	//Bee Controller pulls the latest values from the database, for "Your Hive" page
     function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q) {
         /* jshint validthis: true */
         var vmbee = this;
         vmbee.getBeeHives = getBeeHives;
-        vmbee.getOutsideTemp = getOutsideTemp;
+		//Latest outside temperature
+        vmbee.getLatestOutsideTemp = getLatestOutsideTemp;
         vmbee.outsidetemp = [];
-
+		//Latest Hive Temperature
+		 vmbee.getLatestHiveTemp = getLatestHiveTemp;
+        vmbee.hivetemp = [];
+		//Latest hive humidity
+		 vmbee.getLatestHiveHumidity = getLatestHiveHumidity;
+        vmbee.hivehumidity = [];
+		//Latest hive weight
+		 vmbee.getLatestHiveWeight = getLatestHiveWeight;
+        vmbee.HiveWeightStatus = [];
+		//Latest light value
+		vmbee.getLatestLight = getLatestLight;
+        vmbee.light = [];
+		//Latest bee population count
+		 vmbee.getLatestBeePopulation = getLatestBeePopulation;
+        vmbee.populations = [];
+		//Latest frequency status
+		 vmbee.getLatestBeeFreq = getLatestBeeFreq;
+        vmbee.beeFreqStatus = [];
+		
         vmbee.setGridHiveOptions = setGridHiveOptions;
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
@@ -76,6 +99,7 @@
         */
         activate();
 
+	//Functions to actually retrieve the latest values
 /*        function idpresent() {
             return vmbee.id > 0;
         }
@@ -95,20 +119,69 @@
                     }, function(error) {
                              return ($q.reject(error));
                     }),
-                    getOutsideTemp().then(function () {
-                        $log.debug('got outsidetemp');
+					
+                    getLatestOutsideTemp().then(function () {
+                        $log.debug('got latestoutsidetemp');
 
                     }, function(error) {
                         vmbee.outsidetemp=[];
                              return ($q.reject(error));
+                    }),
+					
+					 getLatestHiveTemp().then(function () {
+                        $log.debug('got latesthivetemp');
+
+                    }, function(error) {
+                        vmbee.hivetemp=[];
+                             return ($q.reject(error));
+                    }),
+					
+					 getLatestHiveHumidity().then(function () {
+                        $log.debug('got latesthivehumidity');
+
+                    }, function(error) {
+                        vmbee.hivehumidity=[];
+                             return ($q.reject(error));
+                    }),
+					
+					 getLatestHiveWeight().then(function () {
+                        $log.debug('got latesthiveweight');
+
+                    }, function(error) {
+                        vmbee.HiveWeightStatus=[];
+                             return ($q.reject(error));
+                    }),
+					
+					 getLatestLight().then(function () {
+                        $log.debug('got latestlight');
+
+                    }, function(error) {
+                        vmbee.light=[];
+                             return ($q.reject(error));
+                    }),
+					
+					 getLatestBeePopulation().then(function () {
+                        $log.debug('got latestbeepopulation');
+
+                    }, function(error) {
+                        vmbee.populations=[];
+                             return ($q.reject(error));
+                    }),
+					
+					 getLatestBeeFreq().then(function () {
+                        $log.debug('got latestbeefrequency');
+
+                    }, function(error) {
+                        vmbee.beeFreqStatus=[];
+                             return ($q.reject(error));
                     })
+					
                 ])
                 .then(function() {
                          $log.debug('all data returned');
                      });
             
         }
-
         function getBeeHives() {
             var thepath = '../v1/bees';
             return BeeServices.getAllBeehives(thepath).then(function (data) {
@@ -119,21 +192,84 @@
                     return vmbee.gridHiveOptions.data;
             });
         }
-
-        function getOutsideTemp() {
+        function getLatestOutsideTemp() {
             var thepath = '../v1/outsidetemp';
             var thepath = encodeURI('../v1/outsidetemp?thelimit=1' );
                 
             return BeeServices.getOutsideTemp(thepath).then(function (data) {
-                $log.debug('getOutsideTemp returned data');
+                $log.debug('getLatestOutsideTemp returned data');
                 $log.debug(data);
                     vmbee.outsidetemp = data.OutsideTempList;
+                    return;
+            });
+        }
+		function getLatestHiveTemp() {
+            var thepath = '../v1/hivetemp';
+            var thepath = encodeURI('../v1/hivetemp?thelimit=1' );
+                
+            return BeeServices.getHiveTemp(thepath).then(function (data) {
+                $log.debug('getLatestHiveTemp returned data');
+                $log.debug(data);
+                    vmbee.hivetemp = data.HiveTempList;
 
                     return;
             });
         }
-        
-
+		function getLatestHiveHumidity() {
+            var thepath = '../v1/hivehumidity';
+            var thepath = encodeURI('../v1/hivehumidity?thelimit=1' );
+                
+            return BeeServices.getHiveHumidity(thepath).then(function (data) {
+                $log.debug('getLatestHiveHumidity returned data');
+                $log.debug(data);
+                    vmbee.hivehumidity = data.HiveHumidityList;
+                    return;
+            });
+        }
+		function getLatestHiveWeight() {
+            var thepath = '../v1/HiveWeightStatus';
+            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=1' );
+                
+            return BeeServices.getHiveWeight(thepath).then(function (data) {
+                $log.debug('getLatestHiveWeightStatus returned data');
+                $log.debug(data);
+                    vmbee.HiveWeightStatus = data.HiveWeightStatusList;
+                    return;
+            });
+        }		
+		function getLatestLight() {
+            var thepath = '../v1/light';
+            var thepath = encodeURI('../v1/light?thelimit=1' );
+                
+            return BeeServices.getLight(thepath).then(function (data) {
+                $log.debug('getLatestLight returned data');
+                $log.debug(data);
+                    vmbee.light = data.LightList;
+                    return;
+            });
+        }
+		function getLatestBeePopulation() {
+            var thepath = '../v1/populations';
+            var thepath = encodeURI('../v1/populations?thelimit=1' );
+                
+            return BeeServices.getPopulation(thepath).then(function (data) {
+                $log.debug('getLatestPopulation returned data');
+                $log.debug(data);
+                    vmbee.populations = data.PopulationList;
+                    return;
+            });
+        }
+		function getLatestBeeFreq() {
+            var thepath = '../v1/beeFreqStatus';
+            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=1' );
+                
+            return BeeServices.getBeeFrequency(thepath).then(function (data) {
+                $log.debug('getLatestBeeFreq returned data');
+                $log.debug(data);
+                    vmbee.beeFreqStatus = data.BeeFreqStatusList;
+                    return;
+            });
+        }
         function highlightFilteredHeader(row, rowRenderIndex, col, colRenderIndex) {
             if (col.filters[0].term) {
                 return 'header-filtered';
@@ -141,7 +277,6 @@
                 return '';
             }
         }
-
         function setGridHiveOptions() {
 
             vmbee.gridHiveOptions = {
@@ -309,7 +444,6 @@
 
   */
 	}
-	
     setTimeout(function(){
         var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
 

@@ -7,10 +7,10 @@
  * @author Ravi Tamada
  * @link URL Tutorial link
  */
+ 
+ //Handles the database interactions
 class BeeDbHandler {
-
     private $conn;
-
     function __construct() {
         require_once dirname(__FILE__) . '/DbConnect.php';
         // opening db connection
@@ -30,7 +30,6 @@ class BeeDbHandler {
         $stmt->close();
 	 return $beehives;
      }
-	
 	//Gets population from database 
 	public function getPopulation($thelimit = NULL) {
 			error_log( print_R("getPopulation entered\n", TRUE), 3, LOG);
@@ -49,7 +48,6 @@ class BeeDbHandler {
         $stmt->close();
         return $populations;
     }
-	
 	//Gets Outside temperatures from database
 	public function getOutsideTemp($thelimit = NULL) {
 			error_log( print_R("getOutsideTemp entered\n", TRUE), 3, LOG);
@@ -68,7 +66,6 @@ class BeeDbHandler {
         $stmt->close();
         return $outsidetemp;
     }
-	
 	//Get hive temp from database
 	public function getHiveTemp($thelimit = NULL) {
 			error_log( print_R("getHiveTemp entered\n", TRUE), 3, LOG);
@@ -87,7 +84,6 @@ class BeeDbHandler {
         $stmt->close();
         return $hivetemp;
     }
-	
 	//Get Hive Humidity
 	public function getHiveHumidity($thelimit = NULL) {
 			error_log( print_R("getHiveHumidity entered\n", TRUE), 3, LOG);
@@ -106,7 +102,6 @@ class BeeDbHandler {
         $stmt->close();
         return $hivehumidity;
     }
-	
 	//Get Hive Weight from database
 	public function getHiveWeightStatus($thelimit = NULL) {
 			error_log( print_R("getHiveWeightStatus entered\n", TRUE), 3, LOG);
@@ -125,7 +120,6 @@ class BeeDbHandler {
         $stmt->close();
         return $HiveWeightStatus;
     }
-	
 	//Get Hive Light from database
 	public function getLight($thelimit = NULL) {
 			error_log( print_R("getLight entered\n", TRUE), 3, LOG);
@@ -144,7 +138,6 @@ class BeeDbHandler {
         $stmt->close();
         return $light;
     }
-	
 	//Get Bee Frequency from database
 	public function getBeeFrequencyStatus($thelimit = NULL) {
 			error_log( print_R("getBeeFrequencyStatus entered\n", TRUE), 3, LOG);
@@ -163,7 +156,6 @@ class BeeDbHandler {
         $stmt->close();
         return $beeFreqStatus;
     }
-	
 	
 	/*
     public function getStudentLists() {

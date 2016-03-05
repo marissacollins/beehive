@@ -223,7 +223,7 @@ $app->get('/hivehumidity',   function() use($app) {
             $tmp["id"] = "NULL";
 
 }
-        array_push($response["HiveHumidityListList"], $tmp);
+        array_push($response["HiveHumidityList"], $tmp);
     }
     
     $row_cnt = $result->num_rows;
