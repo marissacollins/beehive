@@ -1,4 +1,5 @@
 <?php
+define("LOG", "c:/beehive/beephp.log", true);
 
 require_once '../include/DBUtilQueries.php';
 require_once '../include/DBBee.php';

@@ -10,13 +10,17 @@
     '$rootScope',
     '$routeParams',
     '$log',
-    '$location'
+    '$location',
+    '$q'
     ];
 
-    function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location) {
+    function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q) {
         /* jshint validthis: true */
         var vmbee = this;
         vmbee.getBeeHives = getBeeHives;
+        vmbee.getOutsideTemp = getOutsideTemp;
+        vmbee.outsidetemp = [];
+
         vmbee.setGridHiveOptions = setGridHiveOptions;
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
@@ -83,11 +87,26 @@
         function activate() {
             $log.debug('about activate bee ');
             setGridHiveOptions();
-            
-            return getBeeHives().then(function () {
-                $log.debug('activated Beehive view');
 
-            });
+           $q.all([
+                    getBeeHives().then(function () {
+                        $log.debug('activated Beehive view');
+
+                    }, function(error) {
+                             return ($q.reject(error));
+                    }),
+                    getOutsideTemp().then(function () {
+                        $log.debug('got outsidetemp');
+
+                    }, function(error) {
+                        vmbee.outsidetemp=[];
+                             return ($q.reject(error));
+                    })
+                ])
+                .then(function() {
+                         $log.debug('all data returned');
+                     });
+            
         }
 
         function getBeeHives() {
@@ -98,6 +117,19 @@
                     vmbee.gridHiveOptions.data = data.HivesList;
 
                     return vmbee.gridHiveOptions.data;
+            });
+        }
+
+        function getOutsideTemp() {
+            var thepath = '../v1/outsidetemp';
+            var thepath = encodeURI('../v1/outsidetemp?thelimit=1' );
+                
+            return BeeServices.getOutsideTemp(thepath).then(function (data) {
+                $log.debug('getOutsideTemp returned data');
+                $log.debug(data);
+                    vmbee.outsidetemp = data.OutsideTempList;
+
+                    return;
             });
         }
         

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+    <div ng-controller="BeeController as vm">
 		<div id="status">
 			<p>Hive Status: <span style="color:green">Good</span></p>
 		</div>
@@ -7,7 +7,7 @@
 				<table id="table">
 				<tr>
 					<td><h2 id="outside"><a href="/beehive/web/outsideTemp.html">Outside Temperature:</a></h2></td>
-					<td><div class="outVar"><h2><a href="/beehive/web/outsideTemp.html">45&#8457;</a></h2></div></td>
+					<td><div class=""><h2><a href="/beehive/web/outsideTemp.html">{{vm.outsidetemp[0].temp}} as of: {{vm.outsidetemp[0].datetime}}</a></h2></div></td>
 				</tr>	
 				<tr>
 					<td><h2 id="inside"><a href="/beehive/web/hiveTemp.html">Hive Temperature:</a></h2></td>
@@ -35,3 +35,4 @@
 				</tr>
 				</table>
 			</div>
+    </div>

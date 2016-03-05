@@ -10,7 +10,8 @@
     function BeeServices( $http, $q, $log ) {
         
         var service = {
-            getAllBeehives: getAllBeehives
+            getAllBeehives: getAllBeehives,
+            getOutsideTemp: getOutsideTemp
 /*            getAllZips: getAllZips,
             getStudentLists: getStudentLists,
             getRankList: getRankList,
@@ -24,6 +25,15 @@
 
         function getAllBeehives(path) {
             $log.debug('getAllBeehives service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+        function getOutsideTemp(path) {
+            $log.debug('getOutsideTemp service entered');
                     var request = $http({
                         method: "GET",
                         url: path

@@ -23,12 +23,13 @@ class BeeDbHandler {
 	limit to set how many you want to go back*/
 	
 	//gets all data from database
-	 /* public function getAllBeehives() {
+	  public function getAllBeehives() {
         $stmt = $this->conn->prepare("SELECT * FROM hive");
         $stmt->execute();
         $beehives = $stmt->get_result();
         $stmt->close();
-	 return $beehives;}*/
+	 return $beehives;
+     }
 	
 	//Gets population from database 
 	public function getPopulation($thelimit = NULL) {
