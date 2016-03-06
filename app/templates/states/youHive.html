@@ -3,37 +3,173 @@
 		<div id="status">
 			<p>Hive Status: <span style="color:green">Good</span></p>
 		</div>
-		<! Shows all latest values and what date and time the latest value was from >
-			<div id="grad">
-				<table id="table">
-				<!Outide Temp><tr>
-					<td><h2 id="outside"><a href="/beehive/web/outsideTemp.html">Outside Temperature:</a></h2></td>
-					<td><div class=""><h2><a href="/beehive/web/outsideTemp.html">{{vm.outsidetemp[0].temp}} as of: {{vm.outsidetemp[0].datetime}}</a></h2></div></td>
-				</tr>	
-				<!Hive Temp><tr>
-					<td><h2 id="inside"><a href="/beehive/web/hiveTemp.html">Hive Temperature:</a></h2></td>
-					<td><div class="inVar"><h2><a href="/beehive/web/hiveTemp.html">{{vm.hivetemp[0].temp}} as of: {{vm.hivetemp[0].datetime}}</a></h2></div></td>
-				</tr>
-				<!Hive Humidity><tr>
-					<td><h2 id="humidity"><a href="/beehive/web/humidity.html">Hive Humidity:</a></h2></td>
-					<td><div class="humidVar"><h2><a href="/beehive/web/humidity.html">{{vm.hivehumidity[0].humidity}} as of: {{vm.hivehumidity[0].datetime}}</a></h2></div></td>
-				</tr>
-				<!Weight Status><tr>
-					<td><h2 id="weight"><a href="/beehive/web/weight.html">Hive Weight:</a></h2></td>
-					<td><div class="weightVar"><h2><a href="/beehive/web/weight.html">{{vm.HiveWeightStatus[0].weight}} as of: {{vm.HiveWeightStatus[0].datetime}}</a></h2></div></td>
-				</tr>
-				<!Light><tr>
-					<td><h2 id="light"><a href="/beehive/web/light.html">Hive Light:</a></h2></td>
-					<td><div class="lightVar"><h2><a href="/beehive/web/light.html">{{vm.light[0].lux}} as of: {{vm.light[0].datetime}}</a></h2></div></td>
-				</tr>
-				<!Population Count><tr>
-					<td><h2 id="population"><a href="/beehive/web/population.html">Bee Population:</a></h2></td>
-					<td><div class="popVar"><h2><a href="/beehive/web/population.html">{{vm.populations[0].count}} as of: {{vm.populations[0].datetime}}</a></h2></div></td>
-				</tr>
-				<!Frequency Status><tr>
-					<td><h2 id="frequencies"><a href="/beehive/web/frequency.html">Bee Frequencies:</a></h2></td>
-					<td><div class="freqVar"><h2><a href="/beehive/web/frequency.html">{{vm.beeFreqStatus[0].frequencyStatus}} as of: {{vm.beeFreqStatus[0].datetime}}</a></h2></div></td>
-				</tr>
-				</table>
+
+		<div ng-controller="ModalController as vmmodal">
+
+			<script id="modal.html" type="text/ng-template">
+				<div class="modal-header">
+				  <h3 class="modal-title"> {{vminst.graphlabel}}</h3>
+				  </div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-offset-1 col-md-10 col-md-offset-1">		
+							<!Outside Temp graph>
+							 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend</h4>
+								  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="OutsideTempLegend"></div>
+							   </div>
+							  </div>
+							  
+							  <!Hive Temp Graph>
+							  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Hive Temperature Trend</h4>
+								  <div class="col-md-9" id="HiveTempSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="HiveTempLegend"></div>
+							   </div>
+							  </div>
+							  
+							  <!Humidity Graph>
+							  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Humidity Trend</h4>
+								  <div class="col-md-9" id="HumiditySpline" style="height:200px"></div>
+								  <div class="col-md-3" id="HumidityLegend"></div>
+							   </div>
+							  </div>
+							  
+							  <!Light Graph>
+							  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Light Trend</h4>
+								  <div class="col-md-9" id="LightSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="LightLegend"></div>
+							   </div>
+							  </div>
+							  
+							  <!Population Graph>
+							  <div ng-show="vminst.graphid == 'PopulationSpline'" ng-hide="vminst.graphid != 'PopulationSpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Population Trend</h4>
+								  <div class="col-md-9" id="PopulationSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="PopulationLegend"></div>
+							   </div>
+							  </div>
+						  </div>
+						</div>
+					</div>					
+				<div class="modal-footer">
+				<button class="btn btn-warning" type="button" ng-click="vminst.close()">Close</button>
+				</div>		
+			</script>
+
+		<!-- Shows all latest values and what date and time the latest value was from -->
+            <div class="panel panel-blue col-md-12">
+				<div class="col-md-offset-1 col-md-3 col-md-offset-2">
+					<h2>
+					<label for="hiveselect" class="control-label">Hive Name</label>
+					</h2>
+				</div>
+				<div class="col-md-6 ">
+					<h2>
+					<select  
+						id="hiveselect"
+						type="text" 
+						ng-model="vm.selectedHiveId" 
+						ng-change="vm.doHiveSelect()" 
+						>
+						  <option value="" disabled selected>Select Hive</option>
+							<option 
+								ng-repeat="h in vm.HiveIdList" 
+								ng-selected="{{h.hiveid == vm.HiveIdList.hiveid}}" 
+								value="{{h.hiveid}}">{{h.name}}
+							</option>
+					</select>
+					</h2>
+				</div>
+			<div class="panel-body pan">
+				<div class="yourhive" id="yourtable">
+				<!--Outide Temp-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="outside">Outside Temperature:</h2></div>
+					<div class="col-md-6"><div class="outVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('outsidetemp')">
+								{{vm.outsidetemp[0].temp}}   </a>
+								</br>
+								<div class="dta">  as of: {{vm.outsidetemp[0].datetime}} 
+								</div></h2></div></div>
+				</div>	
+				<!--Hive Temp-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="inside">Hive Temperature:</h2></div>
+					<div class="col-md-6"><div class="inVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('hivetemp')">
+								{{vm.hivetemp[0].temp}} </a>
+								</br>
+								<div class="dta"> as of: {{vm.hivetemp[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				<!--Hive Humidity-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="humidity">Hive Humidity:</h2></div>
+					<div class="col-md-6"><div class="humidVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('hivehumidity')">
+								{{vm.hivehumidity[0].humidity}} </a>
+								</br>
+								<div class="dta">as of: {{vm.hivehumidity[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				<!--Weight Status-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="weight">Hive Weight:</h2></div>
+					<div class="col-md-6"><div class="weightVar">
+						<h2>
+							<a href="/beehive/web/weight.html">
+								{{vm.HiveWeightStatus[0].weight}} </a>
+								</br>
+								<div class="dta">as of: {{vm.HiveWeightStatus[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				<!--Light-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="light">Hive Light:</h2></div>
+					<div class="col-md-6"><div class="lightVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('light')">
+								{{vm.light[0].lux}}</a>
+								</br>
+								<div class="dta">as of: {{vm.light[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				<!--Population Count-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="population">Bee Population:</h2></div>
+					<div class="col-md-6"><div class="popVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('population')">
+								{{vm.populations[0].count}} </a>
+								</br>
+								<div class="dta">as of: {{vm.populations[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				<!--Frequency Status-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="frequencies">Bee Frequencies:</h2></div>
+					<div class="col-md-6"><div class="freqVar">
+						<h2>
+							<a href="/beehive/web/frequency.html">
+								{{vm.beeFreqStatus[0].frequencyStatus}}</a>
+								</br>
+								<div class="dta">as of: {{vm.beeFreqStatus[0].datetime}}
+								</div></h2></div></div>
+				</div>
+				</div>
 			</div>
+			</div>
+		</div>                    
     </div>

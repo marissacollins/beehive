@@ -44,7 +44,7 @@ div img{
 	height:600px;
 	margin-left:12.5%;
 }
-table tr td{
+#table tr td{
 	border:1px solid black;
 	padding:15px;
 }

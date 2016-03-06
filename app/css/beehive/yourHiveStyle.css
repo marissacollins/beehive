@@ -3,7 +3,7 @@
 	float:right;
 }
 h1{
-	position:absolute;
+/*	position:absolute;*/
 	margin-top:-100px;
 	margin-left:10px;
 	color:white;
@@ -45,9 +45,8 @@ li a:hover {
 	width:99%;	
 }
 #grad{
-	position:absolute;
 	width:50%;
-	height:800px;
+/*	height:800px;*/
 	border:2px solid black;
 	margin-left:25%;
 	background-color:rgba(0,0,0,.3);
@@ -59,19 +58,26 @@ h2 a{
 	font-size:40px;
 	text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 	
-	position:absolute;
 	margin-left:5%;
 }
 
-#table{
+#yourtable{
 	margin-top:10px;
 	margin-left:10px;
 	width:80%;
-	height:730px;
+	border:1px solid black;
+/*	height:730px;*/
 }
 
-table tr td{
-	/*border:1px solid black;*/
+.yourhive table tr td{
+	border:1px solid black;
+}
+
+.dta{
+	text-decoration:none;
+	font-family:Tahoma;
+	font-size:15px;	
+	padding:5px;
 }
 
 #outside{
@@ -90,45 +96,38 @@ table tr td{
 }
 
 .outVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .inVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .humidVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .weightVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .lightVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .popVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 .freqVar h2 a{
-	border: 8px solid green;
-	padding: 5px;
+	border: 4px solid green;
 	margin-top:-15px;
-	margin-left:20%;
+	margin-left:10%;
 }
 

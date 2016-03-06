@@ -1043,7 +1043,7 @@ hr {
 /******* Page Content ********/
 .page-content {
   padding: 20px;
-  min-height: 1200px;
+  min-height: 2000px;
 }
 .page-content #tab-general {
   display: block;
