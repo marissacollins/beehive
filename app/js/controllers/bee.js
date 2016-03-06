@@ -650,7 +650,7 @@
 						//var d2_2 = [["Jan", 165],["Feb", 172],["Mar", 175],["Apr", 176],["May", 164],["Jun", 171],["Jul", 175],["Aug", 180],["Sep", 181]];
 						//var d2_3 = [["Jan", 128],["Feb", 131],["Mar", 140],["Apr", 150],["May", 140],["Jun", 144],["Jul", 146],["Aug", 155],["Sep", 158]];
 					*/
-				$.plot('#' + graphid, [{
+				var plot = $.plot('#' + graphid, [{
 					data: grapharray,
 					label: graphlabel,
 					color: "#2ecc71"
@@ -686,11 +686,11 @@
 						margin: 10,
 						minBorderMargin: 10
 					},
-					tooltip: !0,
-					tooltipOpts: {
-						content: "%x : %y",
-						defaultTheme: false
-					},
+//					tooltip: !0,
+//					tooltipOpts: {
+//						content: "%x : %y",
+//						defaultTheme: false
+//					},
 //					xaxis: {
 //						tickColor: "#fafafa",
 //						mode: "categories"
@@ -714,6 +714,30 @@
 					}
 
 				});
+			/*	$("<div id='tooltip'></div>").css({
+						position: "absolute",
+						display: "none",
+						border: "1px solid #fdd",
+						padding: "2px",
+						"background-color": "#fee",
+						opacity: 0.80
+					}).appendTo("div");
+			manually placed this in html */
+					$('#' + graphid).bind("plothover", function (event, pos, item) {
+
+
+							if (item) {
+								var x = item.datapoint[0].toFixed(2),
+									y = item.datapoint[1].toFixed(2);
+
+								$("#tooltip").html(item.series.label + " = " + y)
+									.css({top: item.pageY+5, left: item.pageX+5})
+									.fadeIn(200);
+							} else {
+								$("#tooltip").hide();
+							}
+					});				
+				
 			 } catch(e) {
 			console.log(e.message, "from", e.stack);
 			// You can send data to your server
