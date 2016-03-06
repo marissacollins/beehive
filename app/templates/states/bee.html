@@ -18,18 +18,17 @@
             </div>
         </div>
 		
-	<select  
-		type="text" 
-		ng-model="vm.selectedHiveId" 
-		ng-change="vm.doHiveSelect()" 
-		>
+		<select  
+			type="text" 
+			ng-model="vm.selectedHiveId" 
+			ng-change="vm.doHiveSelect()" >
 			<option 
 				ng-repeat="h in vm.HiveIdList" 
 				ng-selected="{{h.hiveid == vm.HiveIdList.hiveid}}" 
 				placeholder="Select Hive" 
 				value="{{h.hiveid}}">{{h.name}}
 			</option>
-	</select>
+		</select>
 		
 		<div ng-controller="ModalController as vmmodal">
 			<a id="templink" href="" ng-click="vmmodal.openmodal('outsidetemp')">Some temp value here</a>
@@ -45,51 +44,51 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-md-offset-1 col-md-10 col-md-offset-1">		
-			<!Outside Temp graph>
-			 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
-				<div class="panel-body">
-				  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend</h4>
-				  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
-				  <div class="col-md-3" id="OutsideTempLegend"></div>
-			   </div>
-			  </div>
-			  
-			  <!Hive Temp Graph>
-			  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
-				<div class="panel-body">
-				  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Hive Temperature Trend</h4>
-				  <div class="col-md-9" id="HiveTempSpline" style="height:200px"></div>
-				  <div class="col-md-3" id="HiveTempLegend"></div>
-			   </div>
-			  </div>
-			  
-			  <!Humidity Graph>
-			  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
-				<div class="panel-body">
-				  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Humidity Trend</h4>
-				  <div class="col-md-9" id="HumiditySpline" style="height:200px"></div>
-				  <div class="col-md-3" id="HumidityLegend"></div>
-			   </div>
-			  </div>
-			  
-			  <!Light Graph>
-			  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
-				<div class="panel-body">
-				  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Light Trend</h4>
-				  <div class="col-md-9" id="LightSpline" style="height:200px"></div>
-				  <div class="col-md-3" id="LightLegend"></div>
-			   </div>
-			  </div>
-			  
-			  <!Population Graph>
-			  <div ng-show="vminst.graphid == 'PopulationSpline'" ng-hide="vminst.graphid != 'PopulationSpline'"  class="panel">
+					<!--Outside Temp graph-->
+					 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
+						<div class="panel-body">
+						  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend</h4>
+						  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
+						  <div class="col-md-3" id="OutsideTempLegend"></div>
+					   </div>
+					  </div>
+					  
+					  <!--Hive Temp Graph-->
+					  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
+						<div class="panel-body">
+						  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Hive Temperature Trend</h4>
+						  <div class="col-md-9" id="HiveTempSpline" style="height:200px"></div>
+						  <div class="col-md-3" id="HiveTempLegend"></div>
+					   </div>
+					  </div>
+					  
+					  <!--Humidity Graph-->
+					  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
+						<div class="panel-body">
+						  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Humidity Trend</h4>
+						  <div class="col-md-9" id="HumiditySpline" style="height:200px"></div>
+						  <div class="col-md-3" id="HumidityLegend"></div>
+					   </div>
+					  </div>
+					  
+					  <!--Light Graph-->
+					  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
+						<div class="panel-body">
+						  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Light Trend</h4>
+						  <div class="col-md-9" id="LightSpline" style="height:200px"></div>
+						  <div class="col-md-3" id="LightLegend"></div>
+					   </div>
+					  </div>
+					  
+					  <!--Population Graph-->
+					  <div ng-show="vminst.graphid == 'PopulationSpline'" ng-hide="vminst.graphid != 'PopulationSpline'"  class="panel">
 				<div class="panel-body">
 				  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Population Trend</h4>
 				  <div class="col-md-9" id="PopulationSpline" style="height:200px"></div>
 				  <div class="col-md-3" id="PopulationLegend"></div>
 			   </div>
 			  </div>
-		  </div>
+			</div>
 		</div>
 						
 			<div class="modal-footer">
@@ -97,7 +96,5 @@
 			</div>
 	</div>		
 	</script>
-	</div>                    
-		
-	  
+	</div>                      
  </div>

@@ -13,10 +13,10 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-offset-1 col-md-10 col-md-offset-1">		
-							<!Outside Temp graph>
+							<!--Outside Temp graph-->
 							 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend for {{vm.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
 								  <div class="col-md-3" id="OutsideTempLegend"></div>
 							   </div>
@@ -80,7 +80,7 @@
 						ng-model="vm.selectedHiveId" 
 						ng-change="vm.doHiveSelect()" 
 						>
-						  <option value="" disabled selected>Select Hive</option>
+						  <option value="All" disabled selected>All</option>
 							<option 
 								ng-repeat="h in vm.HiveIdList" 
 								ng-selected="{{h.hiveid == vm.HiveIdList.hiveid}}" 

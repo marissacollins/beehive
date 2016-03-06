@@ -18,14 +18,13 @@
     '$q',
 	'Notification'
     ];
-
-  ModalController.$inject = [
+	ModalController.$inject = [
       '$log',
       '$uibModal',
 	  '$location',
 	  'BeeServices'
     ];
-  ModalInstController.$inject = [
+	ModalInstController.$inject = [
       '$log',
       '$uibModalInstance',
       '$window',
@@ -65,7 +64,8 @@
 			vmbee.getHiveList = getHiveList;
 			vmbee.hiveIdList =[];
 			//React to selecting hiveIdList
-			vmbee.selectedHiveId = '';
+			vmbee.selectedHiveId = 'All';
+			vmbee.selectedHiveName = 'All';
 			vmbee.doHiveSelect = doHiveSelect;
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
@@ -158,7 +158,15 @@
                      });
         }
 		function doHiveSelect() {
-			var themsg = "you selected: " + vmbee.selectedHiveId + ', now do something with it';
+			$log.debug('doHiveSelect',vmbee.HiveIdList, vmbee.selectedHiveId);
+			for(var i=0,len=vmbee.HiveIdList.length; i< len; i++) {
+				$log.debug('doHiveSelect loop',vmbee.HiveIdList[i], vmbee.selectedHiveId);				
+				if (vmbee.HiveIdList[i].hiveid == vmbee.selectedHiveId) {
+					$log.debug('found hivename',vmbee.HiveIdList[i].name);
+					vmbee.selectedHiveName = vmbee.HiveIdList[i].name;
+				}
+			}
+			var themsg = "you selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName + ', now do something with it';
 			Notification.info({message: themsg, delay: 5000});		
 		}
 		//Get Latest functions
@@ -200,7 +208,7 @@
         }
 		function getLatestHiveTemp() {
             var thepath = '../v1/hivetemp';
-            var thepath = encodeURI('../v1/hivetemp?thelimit=1' );
+            var thepath = encodeURI('../v1/hivetemp?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getHiveTemp(thepath).then(function (data) {
                 $log.debug('getLatestHiveTemp returned data');
@@ -357,7 +365,7 @@
  
  
 	}
-  function ModalController( $log, $uibModal, $location, BeeServices) {
+			function ModalController( $log, $uibModal, $location, BeeServices) {
     /* jshint validthis: true */
     var vmotemp = this;
     
@@ -392,9 +400,9 @@
     }
     
   }
-
-  function ModalInstController( $log, $uibModalInstance, $window, Notification, BeeServices) {
-    /* jshint validthis: true */
+			function ModalInstController( $log, $uibModalInstance, $window, Notification, BeeServices) {
+   
+   /* jshint validthis: true */
     var vminst = this;
     console.log('modal inst entered');
     console.log(vminst);

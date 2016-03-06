@@ -6,7 +6,8 @@ $app->get('/bees',   function() use($app) {
 	$result = $db->getAllBeehives();
 	$response["error"] = false;
 	$response["HivesList"] = array();
-// looping through result and preparing  arrays
+
+	// looping through result and preparing  arrays
 	while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
