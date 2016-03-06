@@ -460,7 +460,9 @@
 					var otemparray = [];
 					for (var i=0,len=vminst.otemprange.length; i<len; i++) {
 						var d2 = [];
-						d2[0] = vminst.otemprange[i].datetime;
+						var tt = mysqlGmtStrToJSLocal(vminst.otemprange[i].datetime);
+						$log.debug('date conversion',vminst.otemprange[i].datetime, tt);
+						d2[0] = tt;
 						d2[1] = vminst.otemprange[i].temp;
 						otemparray.push(d2);
 					}	
@@ -480,7 +482,9 @@
 						var htemparray = [];
 						for (var i=0,len=vminst.htemprange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.htemprange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.htemprange[i].datetime);
+							$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.htemprange[i].temp;
 							htemparray.push(d2);
 						}
@@ -501,7 +505,9 @@
 						var humidityarray = [];
 						for (var i=0, len=vminst.humidityrange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.humidityrange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.humidityrange[i].datetime);
+							$log.debug('date conversion',vminst.humidityrange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.humidityrange[i].humidity;
 							humidityarray.push(d2);
 						}
@@ -522,7 +528,9 @@
 						var weightarray = [];
 						for (var i=0, len=vminst.weightrange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.weightrange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.weightrange[i].datetime);
+							$log.debug('date conversion',vminst.weightrange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.weightrange[i].weight;
 							weightarray.push(d2);
 						}
@@ -543,7 +551,9 @@
 						var lightarray = [];
 						for (var i=0, len=vminst.luxrange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.luxrange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.luxrange[i].datetime);
+							$log.debug('date conversion',vminst.luxrange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.luxrange[i].lux;
 							lightarray.push(d2);
 						}
@@ -564,7 +574,9 @@
 						var populationarray = [];
 						for (var i=0, len=vminst.countrange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.countrange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.countrange[i].datetime);
+							$log.debug('date conversion',vminst.countrange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.countrange[i].count;
 							populationarray.push(d2);
 						}
@@ -585,7 +597,9 @@
 						var freqarray = [];
 						for (var i=0, len=vminst.frequencyrange.length; i<len; i++) {
 							var d2 = [];
-							d2[0] = vminst.frequencyrange[i].datetime;
+							var tt = mysqlGmtStrToJSLocal(vminst.frequencyrange[i].datetime);
+							$log.debug('date conversion',vminst.frequencyrange[i].datetime, tt);
+							d2[0] = tt;
 							d2[1] = vminst.frequencyrange[i].frequencyStatus;
 							freqarray.push(d2);
 						}
@@ -608,6 +622,21 @@
       $uibModalInstance.dismiss('cancel');
     }
 
+	function mysqlGmtStrToJSDate(str) {
+
+        var t = str.split(/[- :]/);
+
+        // Apply each element to the Date function
+        return new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+
+    }
+
+    function mysqlGmtStrToJSLocal(str) {
+        // first create str to Date object
+        var g = mysqlGmtStrToJSDate(str);
+        // 
+        return new Date(g.getTime() - ( g.getTimezoneOffset() * 60000 ));
+    }
 		
 	function getGraph(graphid, graphlabel, grapharray, legendcontainer) {
 
@@ -615,7 +644,6 @@
 
 		setTimeout(function(){
 			try {
-
 				//BEGIN LINE CHART SPLINE
 					/*How to put 3 lines on a graph
 						//var d2_1 = [["Jan", 181],["Feb", 184],["Mar", 189],["Apr", 180],["May", 190],["Jun", 183],["Jul", 185],["Aug", 188],["Sep", 202]];
@@ -647,28 +675,35 @@
 							fill: 0
 						},
 						points: {
-							show: !0,
+							show: true,
 							radius: 4
 						}
 					},
 					grid: {
-						borderColor: "#ffffff",
-						borderWidth: 1,
-						hoverable: !0
+						borderColor: "green",
+						borderWidth: 0,
+						hoverable: true,
+						margin: 10,
+						minBorderMargin: 10
 					},
 					tooltip: !0,
 					tooltipOpts: {
 						content: "%x : %y",
 						defaultTheme: false
 					},
+//					xaxis: {
+//						tickColor: "#fafafa",
+//						mode: "categories"
+//					},
 					xaxis: {
-						tickColor: "#fafafa",
-						mode: "categories"
+						mode: "time",
+						timeformat: "%m/%d %H:%M"
 					},
 					yaxis: {
 						tickColor: "#fafafa"
 					},
 					shadowSize: 0,
+					highlightColor: "green",
 					legend: {         
 						backgroundOpacity: 0.5,
 						noColumns: 1,
