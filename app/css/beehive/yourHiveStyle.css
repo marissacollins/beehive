@@ -95,7 +95,7 @@ h2 a{
 #frequencies{
 }
 
-/*Formats the values with the green boxes around them*>
+/*Formats the values with the green boxes around them*>*/
 .outVar h2 a{
 	border: 4px solid green;
 	margin-top:-15px;

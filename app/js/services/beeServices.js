@@ -6,9 +6,14 @@
     BeeServices.$inject = ['$http', '$q', '$log'];
     function BeeServices( $http, $q, $log ) {
 		var themodal = '';
+		var thehive = 'All';
+		var thename = 'All';
         var service = {
 			setmodal: setmodal,
 			getmodal: getmodal,
+			setHiveId: setHiveId,
+			getHiveId: getHiveId,
+			getHiveName: getHiveName,
 			getHiveList: getHiveList,
             getAllBeehives: getAllBeehives,
             getOutsideTemp: getOutsideTemp,
@@ -28,6 +33,22 @@
 		function getmodal() {
 			$log.debug('BeeServices getmodal entered', themodal);
 			return themodal;
+		}
+
+		function setHiveId(ahive, aname) {
+			$log.debug('BeeServices setHiveId entered', ahive);
+			thehive = ahive;
+			thename = aname;
+		}
+
+		function getHiveId() {
+			$log.debug('BeeServices getHiveId entered', thehive);
+			return thehive;
+		}
+		
+		function getHiveName() {
+			$log.debug('BeeServices getHiveName entered', thename);
+			return thename;
 		}
 		
 		//Service Functions

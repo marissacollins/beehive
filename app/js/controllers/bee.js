@@ -159,6 +159,9 @@
         }
 		function doHiveSelect() {
 			$log.debug('doHiveSelect',vmbee.HiveIdList, vmbee.selectedHiveId);
+			//set it in services so we can get it in another controller
+			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
+			
 			for(var i=0,len=vmbee.HiveIdList.length; i< len; i++) {
 				$log.debug('doHiveSelect loop',vmbee.HiveIdList[i], vmbee.selectedHiveId);				
 				if (vmbee.HiveIdList[i].hiveid == vmbee.selectedHiveId) {
@@ -166,8 +169,12 @@
 					vmbee.selectedHiveName = vmbee.HiveIdList[i].name;
 				}
 			}
+			//set it in services so we can get it in another controller
+			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
+			
 			var themsg = "you selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName + ', now do something with it';
-			Notification.info({message: themsg, delay: 5000});		
+			Notification.info({message: themsg, delay: 5000});
+			activate();
 		}
 		//Get Latest functions
         function getHiveList() {
@@ -220,7 +227,7 @@
         }
 		function getLatestHiveHumidity() {
             var thepath = '../v1/hivehumidity';
-            var thepath = encodeURI('../v1/hivehumidity?thelimit=1' );
+            var thepath = encodeURI('../v1/hivehumidity?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getHiveHumidity(thepath).then(function (data) {
                 $log.debug('getLatestHiveHumidity returned data');
@@ -231,7 +238,7 @@
         }
 		function getLatestHiveWeight() {
             var thepath = '../v1/HiveWeightStatus';
-            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=1' );
+            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getHiveWeight(thepath).then(function (data) {
                 $log.debug('getLatestHiveWeightStatus returned data');
@@ -242,7 +249,7 @@
         }		
 		function getLatestLight() {
             var thepath = '../v1/light';
-            var thepath = encodeURI('../v1/light?thelimit=1' );
+            var thepath = encodeURI('../v1/light?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getLight(thepath).then(function (data) {
                 $log.debug('getLatestLight returned data');
@@ -253,7 +260,7 @@
         }
 		function getLatestBeePopulation() {
             var thepath = '../v1/populations';
-            var thepath = encodeURI('../v1/populations?thelimit=1' );
+            var thepath = encodeURI('../v1/populations?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getPopulation(thepath).then(function (data) {
                 $log.debug('getLatestPopulation returned data');
@@ -264,7 +271,7 @@
         }
 		function getLatestBeeFreq() {
             var thepath = '../v1/beeFreqStatus';
-            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=1' );
+            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=1&thehive=' + vmbee.selectedHiveId );
                 
             return BeeServices.getBeeFrequency(thepath).then(function (data) {
                 $log.debug('getLatestBeeFreq returned data');
@@ -438,9 +445,11 @@
 			vminst.grapharray = 'z';
 			vminst.legendcontainer = 'xx';
 			
-			
+			//the service lets you communicate between different controllers
 			vminst.themodal = BeeServices.getmodal();
-				
+			vminst.selectedHiveId = BeeServices.getHiveId();
+			vminst.selectedHiveName = BeeServices.getHiveName();
+			
 		$log.debug('eval switch against:', vminst.themodal);
 		switch(vminst.themodal) {
 			case 'outsidetemp':
@@ -696,7 +705,7 @@
         }
 		function getHiveTempRange (){
             var thepath = '../v1/hivetemp';
-            var thepath = encodeURI('../v1/hivetemp?thelimit=10' );
+            var thepath = encodeURI('../v1/hivetemp?thelimit=10&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getHiveTemp(thepath).then(function (data) {
                 $log.debug('getHiveTempRange returned data');
@@ -708,7 +717,7 @@
         }
 		function getHiveHumidityRange (){
             var thepath = '../v1/hivehumidity';
-            var thepath = encodeURI('../v1/hivehumidity?thelimit=10' );
+            var thepath = encodeURI('../v1/hivehumidity?thelimit=10&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getHiveHumidity(thepath).then(function (data) {
                 $log.debug('getLatestHiveHumidity returned data');
@@ -719,8 +728,7 @@
         }
 		function getWeightStatusRange (){
             var thepath = '../v1/HiveWeightStatus';
-			var thehive = 'hive1';
-            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=10&thehive=' + thehive );
+            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=10&thehive=' + vminst.selectedHiveId );
                 
             return BeeServices.getHiveWeight(thepath).then(function (data) {
                 $log.debug('getHiveWeight returned data');
@@ -731,7 +739,7 @@
         }	
 		function getLightRange (){
             var thepath = '../v1/light';
-            var thepath = encodeURI('../v1/light?thelimit=10' );
+            var thepath = encodeURI('../v1/light?thelimit=10&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getLight(thepath).then(function (data) {
                 $log.debug('getLightRange returned data');
@@ -742,7 +750,7 @@
         }
 		function getPopCountRange (){
             var thepath = '../v1/populations';
-            var thepath = encodeURI('../v1/populations?thelimit=10' );
+            var thepath = encodeURI('../v1/populations?thelimit=10&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getPopulation(thepath).then(function (data) {
                 $log.debug('getPopCountRange returned data');
@@ -753,7 +761,7 @@
         }
 		function getFreqStatusRange (){
             var thepath = '../v1/beeFreqStatus';
-            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=10' );
+            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=10&thehive=' + vminst.selectedHiveId);
                 
             return BeeServices.getBeeFrequency(thepath).then(function (data) {
                 $log.debug('getFreqStatusRangereturned data');
