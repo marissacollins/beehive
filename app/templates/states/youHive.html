@@ -6,31 +6,31 @@
 		<! Shows all latest values and what date and time the latest value was from >
 			<div id="grad">
 				<table id="table">
-				<tr>
+				<!Outide Temp><tr>
 					<td><h2 id="outside"><a href="/beehive/web/outsideTemp.html">Outside Temperature:</a></h2></td>
 					<td><div class=""><h2><a href="/beehive/web/outsideTemp.html">{{vm.outsidetemp[0].temp}} as of: {{vm.outsidetemp[0].datetime}}</a></h2></div></td>
 				</tr>	
-				<tr>
+				<!Hive Temp><tr>
 					<td><h2 id="inside"><a href="/beehive/web/hiveTemp.html">Hive Temperature:</a></h2></td>
 					<td><div class="inVar"><h2><a href="/beehive/web/hiveTemp.html">{{vm.hivetemp[0].temp}} as of: {{vm.hivetemp[0].datetime}}</a></h2></div></td>
 				</tr>
-				<tr>
+				<!Hive Humidity><tr>
 					<td><h2 id="humidity"><a href="/beehive/web/humidity.html">Hive Humidity:</a></h2></td>
 					<td><div class="humidVar"><h2><a href="/beehive/web/humidity.html">{{vm.hivehumidity[0].humidity}} as of: {{vm.hivehumidity[0].datetime}}</a></h2></div></td>
 				</tr>
-				<tr>
+				<!Weight Status><tr>
 					<td><h2 id="weight"><a href="/beehive/web/weight.html">Hive Weight:</a></h2></td>
 					<td><div class="weightVar"><h2><a href="/beehive/web/weight.html">{{vm.HiveWeightStatus[0].weight}} as of: {{vm.HiveWeightStatus[0].datetime}}</a></h2></div></td>
 				</tr>
-				<tr>
+				<!Light><tr>
 					<td><h2 id="light"><a href="/beehive/web/light.html">Hive Light:</a></h2></td>
 					<td><div class="lightVar"><h2><a href="/beehive/web/light.html">{{vm.light[0].lux}} as of: {{vm.light[0].datetime}}</a></h2></div></td>
 				</tr>
-				<tr>
+				<!Population Count><tr>
 					<td><h2 id="population"><a href="/beehive/web/population.html">Bee Population:</a></h2></td>
 					<td><div class="popVar"><h2><a href="/beehive/web/population.html">{{vm.populations[0].count}} as of: {{vm.populations[0].datetime}}</a></h2></div></td>
 				</tr>
-				<tr>
+				<!Frequency Status><tr>
 					<td><h2 id="frequencies"><a href="/beehive/web/frequency.html">Bee Frequencies:</a></h2></td>
 					<td><div class="freqVar"><h2><a href="/beehive/web/frequency.html">{{vm.beeFreqStatus[0].frequencyStatus}} as of: {{vm.beeFreqStatus[0].datetime}}</a></h2></div></td>
 				</tr>

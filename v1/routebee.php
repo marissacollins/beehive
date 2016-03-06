@@ -1,18 +1,13 @@
 <?php
 
 $app->get('/bees',   function() use($app) {
-
-
-    $response = array();
-    $db = new BeeDbHandler();
-
-    $result = $db->getAllBeehives();
-
-    $response["error"] = false;
-    $response["HivesList"] = array();
-
-    // looping through result and preparing  arrays
-    while ($slist = $result->fetch_assoc()) {
+	$response = array();
+	$db = new BeeDbHandler();
+	$result = $db->getAllBeehives();
+	$response["error"] = false;
+	$response["HivesList"] = array();
+// looping through result and preparing  arrays
+	while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
             $tmp["name"] = (empty($slist["name"]) ? "NULL" : $slist["name"]);
@@ -21,45 +16,76 @@ $app->get('/bees',   function() use($app) {
             $tmp["humidity"] =  (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
-
-        } else {
+            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+        } 
+		else {
             $tmp["id"] = "NULL";
-
-}
-        array_push($response["HivesList"], $tmp);
+		}
+		array_push($response["HivesList"], $tmp);
     }
-    
-    $row_cnt = $result->num_rows;
-
-    if ($result != NULL) {
-        $response["error"] = false;
-        echoRespnse(200, $response);
-    } else {
-        $response["error"] = true;
-        $response["message"] = "The requested resource doesn't exists";
-        echoRespnse(404, $response);
-    }
+	$row_cnt = $result->num_rows;
+	if ($result != NULL) {
+		$response["error"] = false;
+		echoRespnse(200, $response);
+	}		
+	else {
+		$response["error"] = true;
+		$response["message"] = "The requested resource doesn't exists";
+		echoRespnse(404, $response);
+	}
 });
 
-//Calls Population function from DBBee.php to get data from database
+$app->get('/hivelist',   function() use($app) {
+	$response = array();
+	$db = new BeeDbHandler();
+	$result = $db->getHiveList();
+	$response["error"] = false;
+	$response["HiveIdList"] = array();
+// looping through result and preparing  arrays
+	while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+            $tmp["name"] = (empty($slist["name"]) ? "NULL" : $slist["name"]);
+        } 
+		else {
+            $tmp["hiveid"] = "NULL";
+		}
+		array_push($response["HiveIdList"], $tmp);
+    }
+	$row_cnt = $result->num_rows;
+	if ($result != NULL) {
+		$response["error"] = false;
+		echoRespnse(200, $response);
+	}		
+	else {
+		$response["error"] = true;
+		$response["message"] = "The requested resource doesn't exists";
+		echoRespnse(404, $response);
+	}
+});
+
 $app->get('/populations',   function() use($app) {
-	
-
-
  $allGetVars = $app->request->get();
     error_log( print_R("populations entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
+	$thehive = '';
     
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
     error_log( print_R("populations params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
 	
+	 if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("populations params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	
     $response = array();
     $db = new BeeDbHandler();
 
-    $result = $db->getPopulation($thelimit);
+    $result = $db->getPopulation($thelimit, $thehive);
 
     $response["error"] = false;
     $response["PopulationList"] = array();
@@ -91,7 +117,6 @@ $app->get('/populations',   function() use($app) {
     }
 });
 
-//Calls Outside Temp function from DBBee.php to get data from database
 $app->get('/outsidetemp',   function() use($app) {
 	
 
@@ -140,7 +165,6 @@ $app->get('/outsidetemp',   function() use($app) {
     }
 });
 
-//Calls Hive temp function from DBBee.php to get data from database
 $app->get('/hivetemp',   function() use($app) {
 	
 	
@@ -148,16 +172,22 @@ $app->get('/hivetemp',   function() use($app) {
     error_log( print_R("hivetemp entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
-    
+    $thehive = '';
+	
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
     error_log( print_R("hivetemp params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
 	
+	if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("hivetemp params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	
     $response = array();
     $db = new BeeDbHandler();
 
-    $result = $db->getHiveTemp($thelimit);
+    $result = $db->getHiveTemp($thelimit, $thehive);
 
     $response["error"] = false;
     $response["HiveTempList"] = array();
@@ -189,7 +219,6 @@ $app->get('/hivetemp',   function() use($app) {
     }
 });
 
-//Calls Hive Humidity function from DBBee.php to get data from database
 $app->get('/hivehumidity',   function() use($app) {
 	
 	
@@ -197,16 +226,22 @@ $app->get('/hivehumidity',   function() use($app) {
     error_log( print_R("hivehumidity entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
+	$thehive = '';
     
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
     error_log( print_R("hivehumidity params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
 	
+	if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("hivehumidity params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	
     $response = array();
     $db = new BeeDbHandler();
 
-    $result = $db->getHiveHumidity($thelimit);
+    $result = $db->getHiveHumidity($thelimit,$thehive);
 
     $response["error"] = false;
     $response["HiveHumidityList"] = array();
@@ -238,29 +273,26 @@ $app->get('/hivehumidity',   function() use($app) {
     }
 });
 
-//Calls Hive weight function from DBBee.php to get data from database
 $app->get('/HiveWeightStatus',   function() use($app) {
-	
-	
- $allGetVars = $app->request->get();
+	$allGetVars = $app->request->get();
     error_log( print_R("HiveWeightStatus entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
-    
+	$thehive = '';
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
+	if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
     error_log( print_R("HiveWeightStatus params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
-	
+	error_log( print_R("HiveWeightStatus params:  thehive: $thehive \n ", TRUE), 3, LOG);
     $response = array();
     $db = new BeeDbHandler();
-
-    $result = $db->getHiveWeightStatus($thelimit);
-
+    $result = $db->getHiveWeightStatus($thelimit,$thehive);
     $response["error"] = false;
     $response["HiveWeightStatusList"] = array();
-
-    // looping through result and preparing  arrays
+// looping through result and preparing  arrays
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
@@ -268,97 +300,89 @@ $app->get('/HiveWeightStatus',   function() use($app) {
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
 
-        } else {
+        } 
+		else {
             $tmp["id"] = "NULL";
-
-}
+		}
         array_push($response["HiveWeightStatusList"], $tmp);
     }
-    
     $row_cnt = $result->num_rows;
-
     if ($result != NULL) {
         $response["error"] = false;
         echoRespnse(200, $response);
-    } else {
+    } 
+	else {
         $response["error"] = true;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
 });
 
-//Calls Hive Light function from DBBee.php to get data from database
 $app->get('/light',   function() use($app) {
-	
-	
- $allGetVars = $app->request->get();
+	$allGetVars = $app->request->get();
     error_log( print_R("light entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
-    
+	$thehive = '';
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
-    error_log( print_R("light params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+    error_log( print_R("light params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("light params:  thehive: $thehive \n ", TRUE), 3, LOG);
 	
     $response = array();
     $db = new BeeDbHandler();
-
-    $result = $db->getLight($thelimit);
-
+    $result = $db->getLight($thelimit,$thehive);
     $response["error"] = false;
     $response["LightList"] = array();
-
-    // looping through result and preparing  arrays
+ // looping through result and preparing  arrays
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
             $tmp["lux"] = (empty($slist["lux"]) ? "NULL" : $slist["lux"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
-
-        } else {
+        }
+		else {
             $tmp["id"] = "NULL";
-
-}
+		}
         array_push($response["LightList"], $tmp);
     }
-    
     $row_cnt = $result->num_rows;
-
     if ($result != NULL) {
         $response["error"] = false;
         echoRespnse(200, $response);
-    } else {
+    } 
+	else{
         $response["error"] = true;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
 });
 
-//Calls Bee Frequency function from DBBee.pho to get data from database
 $app->get('/beeFreqStatus',   function() use($app) {
-	
-	
- $allGetVars = $app->request->get();
+	$allGetVars = $app->request->get();
     error_log( print_R("beeFreqStatus entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
     $thelimit = '';
-    
+	$thehive = '';
     if(array_key_exists('thelimit', $allGetVars)){
         $thelimit = $allGetVars['thelimit'];
     }
     error_log( print_R("beeFreqStatus params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
-	
+	if(array_key_exists('thehive', $allGetVars)){
+    $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("beeFreqStatus params:  thehive: $thehive \n ", TRUE), 3, LOG);
     $response = array();
     $db = new BeeDbHandler();
-
-    $result = $db->getBeeFrequencyStatus($thelimit);
-
+    $result = $db->getBeeFrequencyStatus($thelimit,$thehive);
     $response["error"] = false;
     $response["BeeFreqStatusList"] = array();
-
-    // looping through result and preparing  arrays
+// looping through result and preparing  arrays
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
@@ -366,26 +390,23 @@ $app->get('/beeFreqStatus',   function() use($app) {
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
 			$tmp["hiveID"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
-
-        } else {
-            $tmp["id"] = "NULL";
-
-}
+		}
+		else {
+			$tmp["id"] = "NULL";
+		}
         array_push($response["BeeFreqStatusList"], $tmp);
     }
-    
     $row_cnt = $result->num_rows;
-
     if ($result != NULL) {
         $response["error"] = false;
         echoRespnse(200, $response);
-    } else {
+    }
+	else {
         $response["error"] = true;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
     }
 });
-
 
 /*
 $app->get('/eventnames',   function() use ($app) {
@@ -1189,7 +1210,6 @@ $app->get('/eventsource',   function() use($app) {
     }
 });
 */
-
 /**
  * Validating email address
  */

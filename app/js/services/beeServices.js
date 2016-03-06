@@ -1,15 +1,15 @@
 (function () {
     'use strict';
-
     angular
-        .module('ng-admin')
+    .module('ng-admin')
     .factory('BeeServices', BeeServices);
-
     BeeServices.$inject = ['$http', '$q', '$log'];
-
     function BeeServices( $http, $q, $log ) {
-        
+		var themodal = '';
         var service = {
+			setmodal: setmodal,
+			getmodal: getmodal,
+			getHiveList: getHiveList,
             getAllBeehives: getAllBeehives,
             getOutsideTemp: getOutsideTemp,
 			getHiveTemp: getHiveTemp,
@@ -18,17 +18,28 @@
 			getLight: getLight,
 			getPopulation: getPopulation,
 			getBeeFrequency: getBeeFrequency
-/*            getAllZips: getAllZips,
-            getStudentLists: getStudentLists,
-            getRankList: getRankList,
-            updateStudent: updateStudent,
-            createStudent: createStudent,
-            getStudent: getStudent,
-             refreshStudents: refreshStudents
-*/
         };
         return service;
 
+		function setmodal(amodal) {
+			$log.debug('BeeServices setmodal entered', amodal);
+			themodal = amodal;
+		}
+		function getmodal() {
+			$log.debug('BeeServices getmodal entered', themodal);
+			return themodal;
+		}
+		
+		//Service Functions
+        function getHiveList(path) {
+            $log.debug('getHiveList service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
         function getAllBeehives(path) {
             $log.debug('getAllBeehives service entered');
                     var request = $http({
@@ -47,7 +58,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-          function getHiveTemp(path) {
+        function getHiveTemp(path) {
             $log.debug('getHiveTemp service entered');
                     var request = $http({
                         method: "GET",
@@ -56,7 +67,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		  function getHiveHumidity(path) {
+		function getHiveHumidity(path) {
             $log.debug('getHiveHumidity service entered');
                     var request = $http({
                         method: "GET",
@@ -65,7 +76,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		  function getHiveWeight(path) {
+		function getHiveWeight(path) {
             $log.debug('getHiveWeight service entered');
                     var request = $http({
                         method: "GET",
@@ -74,7 +85,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		  function getLight(path) {
+		function getLight(path) {
             $log.debug('getLight service entered');
                     var request = $http({
                         method: "GET",
@@ -83,7 +94,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		  function getPopulation(path) {
+		function getPopulation(path) {
             $log.debug('getPopulation service entered');
                     var request = $http({
                         method: "GET",
@@ -92,7 +103,7 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		  function getBeeFrequency(path) {
+		function getBeeFrequency(path) {
             $log.debug('getBeeFrequency service entered');
                     var request = $http({
                         method: "GET",
@@ -101,7 +112,6 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-        
  /*
      function refreshStudents(input) {
         var params = {input: input};
@@ -158,9 +168,6 @@
                     return( request.then( handleSuccess, handleError ) );
         }        
    */     
-
-        
-                
 /*
 
         function updateStudent(path, students) {
@@ -231,12 +238,9 @@
                 });
         }
 */
-                // ---
-                // PRIVATE METHODS.
-                // ---
-                // I transform the error response, unwrapping the application dta from
-                // the API response payload.
-                function handleError( response ) {
+// PRIVATE METHODS.
+// I transform the error response, unwrapping the application dta from the API response payload.
+        function handleError( response ) {
                     // The API response from the server should be returned in a
                     // nomralized format. However, if the request was not handled by the
                     // server (or what not handles properly - ex. server error), then we
@@ -258,9 +262,8 @@
                     // Otherwise, use expected error message.
                     return( $q.reject( err ) );
                 }
-                // I transform the successful response, unwrapping the application data
-                // from the API response payload.
-                function handleSuccess( response ) {
+// I transform the successful response, unwrapping the application data from the API response payload.
+        function handleSuccess( response ) {
                     $log.debug(' success:');
                     $log.debug(response.data);
                     return( response.data );

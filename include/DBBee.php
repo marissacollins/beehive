@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Class to handle all db operations
- * This class will have CRUD methods for database tables
- *
+ *Class to handle all db operations
+ *This class will have CRUD methods for database tables
  * @author Ravi Tamada
  * @link URL Tutorial link
  */
- 
+
  //Handles the database interactions
 class BeeDbHandler {
     private $conn;
@@ -21,16 +20,22 @@ class BeeDbHandler {
 	/* DATABASE QUERIES - Use each function to pull the different 
 	characteristics off of the database, use the 
 	limit to set how many you want to go back*/
+
+	public function getHiveList() {
+        $stmt = $this->conn->prepare("SELECT distinct hiveid, name FROM hive");
+        $stmt->execute();
+        $hiveIdList = $stmt->get_result();
+        $stmt->close();
+	 return $hiveIdList;
+     }
 	
-	//gets all data from database
-	  public function getAllBeehives() {
+	public function getAllBeehives() {
         $stmt = $this->conn->prepare("SELECT * FROM hive");
         $stmt->execute();
         $beehives = $stmt->get_result();
         $stmt->close();
 	 return $beehives;
      }
-	//Gets population from database 
 	public function getPopulation($thelimit = NULL) {
 			error_log( print_R("getPopulation entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -48,7 +53,6 @@ class BeeDbHandler {
         $stmt->close();
         return $populations;
     }
-	//Gets Outside temperatures from database
 	public function getOutsideTemp($thelimit = NULL) {
 			error_log( print_R("getOutsideTemp entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -66,7 +70,6 @@ class BeeDbHandler {
         $stmt->close();
         return $outsidetemp;
     }
-	//Get hive temp from database
 	public function getHiveTemp($thelimit = NULL) {
 			error_log( print_R("getHiveTemp entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -84,7 +87,6 @@ class BeeDbHandler {
         $stmt->close();
         return $hivetemp;
     }
-	//Get Hive Humidity
 	public function getHiveHumidity($thelimit = NULL) {
 			error_log( print_R("getHiveHumidity entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -102,13 +104,19 @@ class BeeDbHandler {
         $stmt->close();
         return $hivehumidity;
     }
-	//Get Hive Weight from database
-	public function getHiveWeightStatus($thelimit = NULL) {
+	public function getHiveWeightStatus($thelimit = NULL, $thehive=NULL) {
 			error_log( print_R("getHiveWeightStatus entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
 			
 			//get just one record - the most recent			
-			$sql = "SELECT * FROM hive order by datetime desc ";
+			$sql = "SELECT * FROM hive ";
+
+			if (strlen($thehive) > 0  && $thehive != 'NULL' && $thehive != 'All') {
+				$sql .= " where name =  '" . $thehive . "'" ;
+			} 
+
+			$sql .= "order by datetime desc ";
 
 			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
 				$sql .= " LIMIT " . $thelimit ;
@@ -120,7 +128,6 @@ class BeeDbHandler {
         $stmt->close();
         return $HiveWeightStatus;
     }
-	//Get Hive Light from database
 	public function getLight($thelimit = NULL) {
 			error_log( print_R("getLight entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -138,7 +145,6 @@ class BeeDbHandler {
         $stmt->close();
         return $light;
     }
-	//Get Bee Frequency from database
 	public function getBeeFrequencyStatus($thelimit = NULL) {
 			error_log( print_R("getBeeFrequencyStatus entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -156,7 +162,6 @@ class BeeDbHandler {
         $stmt->close();
         return $beeFreqStatus;
     }
-	
 	/*
     public function getStudentLists() {
         $stmt = $this->conn->prepare("SELECT t.* FROM studentlist t order by t.listtype, t.listorder");
