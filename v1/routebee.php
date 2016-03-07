@@ -98,6 +98,7 @@ $app->get('/populations',   function() use($app) {
             $tmp["count"] = (empty($slist["count"]) ? "NULL" : $slist["count"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+			   $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
 
         } else {
             $tmp["id"] = "NULL";
@@ -200,6 +201,7 @@ $app->get('/hivetemp',   function() use($app) {
             $tmp["temp"] = (empty($slist["temp"]) ? "NULL" : $slist["temp"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+            $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
 
         } else {
             $tmp["id"] = "NULL";
@@ -254,6 +256,7 @@ $app->get('/hivehumidity',   function() use($app) {
             $tmp["humidity"] = (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+            $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
 
         } else {
             $tmp["id"] = "NULL";
@@ -346,6 +349,7 @@ $app->get('/light',   function() use($app) {
             $tmp["lux"] = (empty($slist["lux"]) ? "NULL" : $slist["lux"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+            $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
         }
 		else {
             $tmp["id"] = "NULL";

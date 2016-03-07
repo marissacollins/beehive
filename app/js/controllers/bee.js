@@ -456,6 +456,9 @@
 					$log.debug('got OutsideTempRange');
 				  //Outside Temp Range
 					$log.debug('before graph',vminst.otemprange);
+						var dataarr = [];
+						vminst.graphid = 'OutsideTempSpline';
+						vminst.legendcontainer = 'OutsideTempLegend';
 					var otemparray = [];
 					for (var i=0,len=vminst.otemprange.length; i<len; i++) {
 						var d2 = [];
@@ -465,11 +468,16 @@
 						d2[1] = vminst.otemprange[i].temp;
 						otemparray.push(d2);
 					}	
-						$log.debug('outsidetemp array',otemparray);
-						vminst.graphid = 'OutsideTempSpline';
+
+					$log.debug('outsidetemp array',otemparray);
+					
+					
 						vminst.graphlabel = 'Outside Temperature';
 						vminst.grapharray = otemparray;
-						vminst.legendcontainer = 'OutsideTempLegend';
+
+						dataarr.push( { data: otemparray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+						vminst.grapharray = dataarr;
+						
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
 				});
 				break;
@@ -478,20 +486,39 @@
                         $log.debug('got HiveTempRange');
 						//Hive Temp Range
 						$log.debug('before graph',vminst.htemprange);
-						var htemparray = [];
-						for (var i=0,len=vminst.htemprange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.htemprange[i].datetime);
-							$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.htemprange[i].temp;
-							htemparray.push(d2);
-						}
-						$log.debug('hivetemp array',htemparray);
+						var dataarr = [];
 						vminst.graphid = 'HiveTempSpline';
-						vminst.graphlabel = 'Hive Temperature';
-						vminst.grapharray = htemparray;
 						vminst.legendcontainer = 'HiveTempLegend';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.htemprange, false, function(p){return p.hiveid});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveid;
+							var htemparray = [];
+							vminst.graphlabel = 'Hive Temperature for hive:' + uhiveid;
+
+							//$log.debug('hiv',hiveid);
+							//sort the data for the hives
+							for (var i=0,len=vminst.htemprange.length; i<len; i++) {
+								$//log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
+								if (vminst.htemprange[i].hiveid == uhiveid) {
+									var d2 = [];
+									var tt = mysqlGmtStrToJSLocal(vminst.htemprange[i].datetime);
+									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+									d2[0] = tt;
+									d2[1] = vminst.htemprange[i].temp;
+									htemparray.push(d2);
+									//$log.debug('htemp push',htemparray);
+								}
+							}
+							dataarr.push( { data: htemparray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+							//$log.debug('darr',dataarr);
+						}
+						$log.debug('hivetemp array',dataarr);
+						vminst.grapharray = dataarr;
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
 
                     });
@@ -501,20 +528,42 @@
                         $log.debug('got HiveHumidityRange');
 						//Hive Humidity Range
 						$log.debug('before graph', vminst.humidityrange)
-						var humidityarray = [];
-						for (var i=0, len=vminst.humidityrange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.humidityrange[i].datetime);
-							$log.debug('date conversion',vminst.humidityrange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.humidityrange[i].humidity;
-							humidityarray.push(d2);
-						}
-						$log.debug('humidity array' ,humidityarray);
+						var dataarr = [];
 						vminst.graphid = 'HumiditySpline';
-						vminst.graphlabel = 'Humidity';
-						vminst.grapharray = humidityarray;
 						vminst.legendcontainer = 'HumidityLegend';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.humidityrange, false, function(p){return p.hiveid});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveid;
+							var humidityarray = [];
+							vminst.graphlabel = 'Humidity range for hive:' + uhiveid;
+						
+						
+							//$log.debug('hiv',hiveid);
+							//sort the data for the hives
+							for (var i=0, len=vminst.humidityrange.length; i<len; i++) {
+								//$log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
+								if (vminst.humidityrange[i].hiveid == uhiveid) {
+									var d2 = [];
+									var tt = mysqlGmtStrToJSLocal(vminst.humidityrange[i].datetime);
+									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+									d2[0] = tt;
+									d2[1] = vminst.humidityrange[i].humidity;
+									humidityarray.push(d2);
+									//$log.debug('htemp push',htemparray);
+								}
+							}
+						
+							dataarr.push( { data: humidityarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+							//$log.debug('darr',dataarr);
+						
+						}
+						$log.debug('humidity array',dataarr);
+						vminst.grapharray = dataarr;
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
 
                     });
@@ -546,23 +595,42 @@
 					getLightRange().then(function () {
                         $log.debug('got lightrange');
 						//Light Range
-						$log.debug('before graph', vminst.luxrange)
-						var lightarray = [];
-						for (var i=0, len=vminst.luxrange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.luxrange[i].datetime);
-							$log.debug('date conversion',vminst.luxrange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.luxrange[i].lux;
-							lightarray.push(d2);
-						}
-						$log.debug('light array' ,lightarray);
+						$log.debug('before graph', vminst.luxrange);
+						var dataarr = [];
 						vminst.graphid = 'LightSpline';
-						vminst.graphlabel = 'Light';
-						vminst.grapharray = lightarray;
 						vminst.legendcontainer = 'LightLegend';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.luxrange, false, function(p){return p.hiveid});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveid;
+							var lightarray = [];
+							vminst.graphlabel = 'Light Range for hive:' + uhiveid;
+						
+						//$log.debug('hiv',hiveid);
+							//sort the data for the hives
+							for (var i=0, len=vminst.luxrange.length; i<len; i++) {
+								$//log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
+								if (vminst.luxrange[i].hiveid == uhiveid) {
+									var d2 = [];
+									var tt = mysqlGmtStrToJSLocal(vminst.luxrange[i].datetime);
+									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+									d2[0] = tt;
+									d2[1] = vminst.luxrange[i].lux;
+									lightarray.push(d2);
+									//$log.debug('htemp push',htemparray);
+								}	
+							}
+							dataarr.push( { data: lightarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+							//$log.debug('darr',dataarr);
+						}	
+						$log.debug('light array',dataarr);
+						vminst.grapharray = dataarr;
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
-
+							
                     });
 				break;
 			case 'population':
@@ -570,20 +638,40 @@
                         $log.debug('got popcountrange');
 						//Population Count Range
 						$log.debug('before graph', vminst.countrange)
-						var populationarray = [];
-						for (var i=0, len=vminst.countrange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.countrange[i].datetime);
-							$log.debug('date conversion',vminst.countrange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.countrange[i].count;
-							populationarray.push(d2);
-						}
-						$log.debug('population array' ,populationarray);
+						var dataarr = [];
 						vminst.graphid = 'PopulationSpline';
-						vminst.graphlabel = 'Population';
-						vminst.grapharray = populationarray;
 						vminst.legendcontainer = 'PopulationLegend';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.countrange, false, function(p){return p.hiveid});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveid;
+							var populationarray = [];
+							vminst.graphlabel = 'Hive Population for hive:' + uhiveid;
+						
+						//$log.debug('hiv',hiveid);
+							//sort the data for the hives
+							for (var i=0,len=vminst.countrange.length; i<len; i++) {
+								$//log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
+								if (vminst.countrange[i].hiveid == uhiveid) {
+									var d2 = [];
+									var tt = mysqlGmtStrToJSLocal(vminst.countrange[i].datetime);
+									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+									d2[0] = tt;
+									d2[1] = vminst.countrange[i].count;
+									populationarray.push(d2);
+									//$log.debug('htemp push',htemparray);
+						
+								}
+							}
+							dataarr.push( { data: populationarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+							//$log.debug('darr',dataarr);
+						}
+						$log.debug('population array',dataarr);
+						vminst.grapharray = dataarr;
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
 
                     });
@@ -649,20 +737,8 @@
 						//var d2_2 = [["Jan", 165],["Feb", 172],["Mar", 175],["Apr", 176],["May", 164],["Jun", 171],["Jul", 175],["Aug", 180],["Sep", 181]];
 						//var d2_3 = [["Jan", 128],["Feb", 131],["Mar", 140],["Apr", 150],["May", 140],["Jun", 144],["Jul", 146],["Aug", 155],["Sep", 158]];
 					*/
-				var plot = $.plot('#' + graphid, [{
-					data: grapharray,
-					label: graphlabel,
-					color: "#2ecc71"
-				//  },{
-			    //    data: grapharray2,
-			    //    label: graphlabel2,
-			    //    color: "#e74c3c"
-			  //  },{
-			  //      data: d2_3,
-			  //      label: "Blackbelts",
-			  //      color: "#2980b9" */
-				}], {   
-					series: {
+				var data = grapharray;	
+							/*		series: {
 						lines: {
 							show: !1
 						},
@@ -677,6 +753,8 @@
 							radius: 4
 						}
 					},
+			*/
+				var options = {   
 					grid: {
 						borderColor: "green",
 						borderWidth: 0,
@@ -700,8 +778,10 @@
 						labelBoxBorderColor: "white",
 						position: "ne"
 					}
+				};
 
-				});
+				var plot = $.plot('#' + graphid, data, options);
+				
 					$('#' + graphid).bind("plothover", function (event, pos, item) {
 
 
