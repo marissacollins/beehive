@@ -16,7 +16,8 @@
     '$log',
     '$location',
     '$q',
-	'Notification'
+	'Notification',
+	'uiGridConstants'
     ];
 	ModalController.$inject = [
       '$log',
@@ -35,7 +36,7 @@
 	
 	//Controllers connect the html and the webapp 
 		//Controller pulls the latest values from the database, for "Your Hive" page
-			function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q, Notification) {
+			function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q, Notification, uiGridConstants) {
 			/* jshint validthis: true */
 			var vmbee = this;
 			vmbee.getBeeHives = getBeeHives;
@@ -296,32 +297,59 @@
                 paginationPageSizes: vmbee.limits,
                 paginationPageSize: 10,
             columnDefs: [
-                // default
-//`id`, `name`, `datetime`, `temp`, `weight`, `humidity`
                 {
-                    field: 'id',
-                    enableCellEdit: true,
-                    enableFiltering: true
-                }, {
                     field: 'name',
                     enableCellEdit: false,
-                    enableFiltering: false
+                    enableFiltering: true
                 }, {
                     field: 'datetime',
                     enableCellEdit: false,
-                    enableFiltering: false
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
                 }, {
                     field: 'temp',
                     enableCellEdit: false,
-                    enableFiltering: false
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than'
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than'
+                            }
+                          ]
                 }, {
                     field: 'weight',
                     enableCellEdit: false,
-                    enableFiltering: false
-                }, {
-                    field: 'humidity`',
+                    enableFiltering: true
+				}, {
+                    field: 'humidity',
                     enableCellEdit: false,
-                    enableFiltering: false
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than'
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than'
+                            }
+                          ]
                 }
                 ],
 
@@ -333,35 +361,6 @@
                 onRegisterApi: function(gridApi) {
                     $log.debug('vm gridapi onRegisterApi');
                      vmbee.gridHiveApi = gridApi;
-
-     /*               gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                        var msg = 'grid row selected ' + row.entity;
-                        $log.debug(msg);
-
-                        var selectedStudentarr = vmbee.gridHiveApi.selection.getSelectedRows();
-                        $log.debug('selected', selectedStudentarr);
-                        setSelectedArray(selectedStudentarr);
-                        
-                    });
-     */
-    /*                    gridApi.selection.on.rowSelectionChangedBatch($scope, function(rows) {
-                            $log.debug("grid batch");  
-                            var selectedStudentarr = vmbee.gridHiveApi.selection.getSelectedRows();
-                            $log.debug('batch selected', selectedStudentarr);
-                            setSelectedArray(selectedStudentarr);
-
-                    });
-     */               gridApi.edit.on.afterCellEdit($scope, 
-                            function(rowEntity, colDef, newValue, oldValue) {
-                        $log.debug('rowEntity');
-                        $log.debug(rowEntity);
-                        //Alert to show what info about the edit is available
-                        $log.debug('Column: ' + colDef.name  + 
-                            ' newValue: ' + newValue + ' oldValue: ' + oldValue    );
-                        if (newValue != oldValue) {
-                            //updateEvent(colDef,newValue,rowEntity);       
-                        }
-                    });
 
                     }
             };
@@ -654,11 +653,10 @@
 					data: grapharray,
 					label: graphlabel,
 					color: "#2ecc71"
-			  /* Additional how to code 
-			  },{
-			  //      data: d2_2,
-			  //      label: "Adults",
-			  //      color: "#e74c3c"
+				//  },{
+			    //    data: grapharray2,
+			    //    label: graphlabel2,
+			    //    color: "#e74c3c"
 			  //  },{
 			  //      data: d2_3,
 			  //      label: "Blackbelts",
@@ -686,15 +684,6 @@
 						margin: 10,
 						minBorderMargin: 10
 					},
-//					tooltip: !0,
-//					tooltipOpts: {
-//						content: "%x : %y",
-//						defaultTheme: false
-//					},
-//					xaxis: {
-//						tickColor: "#fafafa",
-//						mode: "categories"
-//					},
 					xaxis: {
 						mode: "time",
 						timeformat: "%m/%d %H:%M"
@@ -709,20 +698,10 @@
 						noColumns: 1,
 						container: '#' + legendcontainer,
 						labelBoxBorderColor: "white",
-				 //       backgroundColor: "green",   
 						position: "ne"
 					}
 
 				});
-			/*	$("<div id='tooltip'></div>").css({
-						position: "absolute",
-						display: "none",
-						border: "1px solid #fdd",
-						padding: "2px",
-						"background-color": "#fee",
-						opacity: 0.80
-					}).appendTo("div");
-			manually placed this in html */
 					$('#' + graphid).bind("plothover", function (event, pos, item) {
 
 
