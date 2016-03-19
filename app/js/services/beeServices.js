@@ -4,6 +4,7 @@
     .module('ng-admin')
     .factory('BeeServices', BeeServices);
     BeeServices.$inject = ['$http', '$q', '$log'];
+	
     function BeeServices( $http, $q, $log ) {
 		var themodal = '';
 		var thehive = 'All';
@@ -22,7 +23,13 @@
 			getHiveWeight: getHiveWeight,
 			getLight: getLight,
 			getPopulation: getPopulation,
-			getBeeFrequency: getBeeFrequency
+			getBeeFrequency: getBeeFrequency,
+			updateAudio: updateAudio,
+			updateFrameWeight: updateFrameWeight,
+			updateHive: updateHive,
+			updateLightHistory: updateLightHistory,
+			updateOutsideTemp: updateOutsideTemp,
+			updatePopulation: updatePopulation
         };
         return service;
 
@@ -34,23 +41,19 @@
 			$log.debug('BeeServices getmodal entered', themodal);
 			return themodal;
 		}
-
 		function setHiveId(ahive, aname) {
 			$log.debug('BeeServices setHiveId entered', ahive);
 			thehive = ahive;
 			thename = aname;
 		}
-
 		function getHiveId() {
 			$log.debug('BeeServices getHiveId entered', thehive);
 			return thehive;
-		}
-		
+		}		
 		function getHiveName() {
 			$log.debug('BeeServices getHiveName entered', thename);
 			return thename;
-		}
-		
+		}	
 		//Service Functions
         function getHiveList(path) {
             $log.debug('getHiveList service entered');
@@ -133,6 +136,90 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
+		function updateAudio(path, audio){
+			$log.debug('updateAudio data before post :' , audio);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					audio: audio
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+ 		function updateFrameWeight(path, frame){
+			$log.debug('updateFrameWeight data before post :' , frame);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					frame: frame
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+ 		function updateHive(path, hive){
+			$log.debug('updateAudio data before post :' , hive);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					hive: hive
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+ 		function updateLightHistory(path, light){
+			$log.debug('updateLightHistory data before post :' , light);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					light: light
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+ 		function updateOutsideTemp(path, otemp){
+			$log.debug('updateOutsideTemp data before post :' , otemp);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					otemp: otemp
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+ 		function updatePopulation(path, population){
+			$log.debug('updatePopulation data before post :' , population);
+			var request = $http({
+				method: "POST",
+				url: path,
+			//    params: {
+			//        action: "add"
+			//    },
+				data: {
+					population: population
+				}
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
  /*
      function refreshStudents(input) {
         var params = {input: input};

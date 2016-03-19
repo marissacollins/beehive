@@ -57,6 +57,15 @@
 								  <div class="col-md-3" id="PopulationLegend"></div>
 							   </div>
 							  </div>
+							  
+							  <!--WeightSummary Graph-->
+							  <div ng-show="vminst.graphid == 'WeightSpline'" ng-hide="vminst.graphid != 'WeightSpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <div class="col-md-9" id="WeightSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="WeightLegend"></div>
+							   </div>
+							  </div>
 						  </div>
 						</div>
 					</div>					
@@ -130,11 +139,11 @@
 				</div>
 				<!--Weight Status-->
 				<div class="row">
-					<div class="col-md-offset-1 col-md-5"><h2 id="weight">Hive Weight:</h2></div>
+					<div class="col-md-offset-1 col-md-5"><h2 id="weight">Total Hive Weight:</h2></div>
 					<div class="col-md-6"><div class="weightVar">
 						<h2>
 							<a href="">
-								{{vm.HiveWeightStatus[0].weight}} </a>
+								{{vm.HiveWeightStatus[0].frameweightsum}} </a>
 								</br>
 								<div class="dta">as of: {{vm.HiveWeightStatus[0].datetime}}
 								</div></h2></div></div>

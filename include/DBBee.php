@@ -132,11 +132,17 @@ class BeeDbHandler {
 			error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
 			
 			//get just one record - the most recent			
-			$sql = "SELECT * FROM hive ";
-
+			//$sql = "SELECT * FROM frameweight ";
+			$sql = "select sum(`frameweight1` + `frameweight2`+ `frameweight3`+ ";
+			$sql .=  " `frameweight4` + `frameweight5` + `frameweight6` + ";
+			$sql .= " `frameweight7` + `frameweight8` ) as frameweightsum , hiveid, datetime ";
+			$sql .= " from frameweight "; 
+			
 			if (strlen($thehive) > 0  && $thehive != 'NULL' && $thehive != 'All') {
 				$sql .= " where hiveid =  " . $thehive ;
 			} 
+
+			$sql .= " group by hiveid, datetime " ;
 
 			$sql .= " order by datetime desc ";
 

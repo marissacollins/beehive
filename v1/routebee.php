@@ -1,7 +1,6 @@
 <?php
 
 //Gets are reading from the database
-
 $app->get('/bees',   function() use($app) {
 	$response = array();
 	$db = new BeeDbHandler();
@@ -37,7 +36,6 @@ $app->get('/bees',   function() use($app) {
 		echoRespnse(404, $response);
 	}
 });
-
 $app->get('/hivelist',   function() use($app) {
 	$response = array();
 	$db = new BeeDbHandler();
@@ -67,7 +65,6 @@ $app->get('/hivelist',   function() use($app) {
 		echoRespnse(404, $response);
 	}
 });
-
 $app->get('/populations',   function() use($app) {
  $allGetVars = $app->request->get();
     error_log( print_R("populations entered:\n ", TRUE), 3, LOG);
@@ -120,7 +117,6 @@ $app->get('/populations',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/outsidetemp',   function() use($app) {
 	
 
@@ -168,7 +164,6 @@ $app->get('/outsidetemp',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/hivetemp',   function() use($app) {
 	
 	
@@ -223,7 +218,6 @@ $app->get('/hivetemp',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/hivehumidity',   function() use($app) {
 	
 	
@@ -278,7 +272,6 @@ $app->get('/hivehumidity',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/HiveWeightStatus',   function() use($app) {
 	$allGetVars = $app->request->get();
     error_log( print_R("HiveWeightStatus entered:\n ", TRUE), 3, LOG);
@@ -302,13 +295,12 @@ $app->get('/HiveWeightStatus',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
-            $tmp["weight"] = (empty($slist["weight"]) ? "NULL" : $slist["weight"]);
+            $tmp["frameweightsum"] = (empty($slist["frameweightsum"]) ? "NULL" : $slist["frameweightsum"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
-            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
-
+            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
         } 
 		else {
-            $tmp["id"] = "NULL";
+            $tmp["hiveid"] = "NULL";
 		}
         array_push($response["HiveWeightStatusList"], $tmp);
     }
@@ -323,7 +315,6 @@ $app->get('/HiveWeightStatus',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/light',   function() use($app) {
 	$allGetVars = $app->request->get();
     error_log( print_R("light entered:\n ", TRUE), 3, LOG);
@@ -369,7 +360,6 @@ $app->get('/light',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
-
 $app->get('/beeFreqStatus',   function() use($app) {
 	$allGetVars = $app->request->get();
     error_log( print_R("beeFreqStatus entered:\n ", TRUE), 3, LOG);
