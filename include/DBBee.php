@@ -37,6 +37,8 @@ class BeeDbHandler {
      }
 	
 	
+	
+	
 	public function getPopulation($thelimit = NULL,$thehive = NULL) {
 			error_log( print_R("getPopulation entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
