@@ -198,6 +198,318 @@ class BeeDbHandler {
         return $beeFreqStatus;
     }
 
-
+	//Check for duplicate records in each table in the database
+	private function doesAudioIDExist($hiveID, $datetime){
+		
+		error_log( print_R("before doesAudioIDExist\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT hiveID from audio WHERE hiveID = ? and datetime = ?");
+        $stmt->bind_param("ss", $hiveID, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesFWIDExist($hiveID, $datetime){
+		
+		error_log( print_R("before doesFWIDExist\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT hiveID from frameweight WHERE hiveID = ? and datetime = ?");
+        $stmt->bind_param("ss", $hiveID, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesHiveIDExist($hiveID, $datetime){
+		
+		error_log( print_R("before doesHiveIDExist\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT hiveID from hive WHERE hiveID = ? and datetime = ?");
+        $stmt->bind_param("ss", $hiveID, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesHiveNameExist($name, $datetime){
+		
+		error_log( print_R("before doesHiveID2Exist\n", TRUE ), 3, LOG);
+		error_log( print_R("name: $name\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT name from hive WHERE name = ? and datetime = ?");
+        $stmt->bind_param("ss", $name, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesLightIDExist($hiveID, $datetime){
+		
+		error_log( print_R("before doesLightID1Exist\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT hiveID from lighthistory WHERE hiveID = ? and datetime = ?");
+        $stmt->bind_param("ss", $hiveID, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesLightLumenExist($lumen, $datetime){
+		
+		error_log( print_R("before doesLightID2Exist\n", TRUE ), 3, LOG);
+		error_log( print_R("lumen: $lumen\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT datetime from lighthistory WHERE datetime = ? and lumen = ?");
+        $stmt->bind_param("ss", $datetime, $lumen);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesOTempExist($datetime){
+		
+		error_log( print_R("before doesOTempExist\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT datetime from outsidetemp WHERE datetime = ?");
+        $stmt->bind_param("s", $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	private function doesPopIDExist($hiveID, $datetime){
+		
+		error_log( print_R("before doesPopIDExist\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+	
+	    $stmt = $this->conn->prepare("SELECT hiveID from population WHERE hiveID = ? and datetime = ?");
+        $stmt->bind_param("ss", $hiveID, $datetime);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
+	
+	}
+	
+	
+	//INSERT STATEMENT FUNCTIONS
+	public function createAudio($datetime, $hiveID, $frequencyStatus){
+		
+		error_log( print_R("createAudio entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO audio (datetime, hiveID, frequencyStatus)VALUES ";
+		$sql .= "(?,?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesAudioIDExist($hiveID, $datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("sss", $datetime, $hiveID, $frequencyStatus);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}
+	public function createFrameWeight($datetime, $hiveID, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8){
+		
+		error_log( print_R("createFrameWeight entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO frameweight ((datetime, hiveID, frameweight1, frameweight2, frameweight3, frameweight4, frameweight5, frameweight6, frameweight7, frameweight8)VALUES ";
+		$sql .= "(?,?, ";
+		$sql .= " ?,?,?,?, ";
+		$sql .= " ?,?,?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesFWIDExist($hiveID, $datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("ssssssssss", $datetime, $hiveID, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}
+	public function createHive($hiveID, $name, $datetime, $temp, $weight, $humidity){
+		
+		error_log( print_R("createHive entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO hive (hiveID, name, datetime, temp, weight, humidity)VALUES ";
+		$sql .= "(?,?,? ";
+		$sql .= " ?,?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesHiveIDExist($hiveID, $datetime) && !$this->doesHiveNameExist($name, $datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("ssssss", $hiveID, $name, $datetime, $temp, $weight, $humidity);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}
+	public function createLightHistory($hiveID, $datetime, $lumen){
+		
+		error_log( print_R("createLightHistory entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO lighthistory (hiveID, datetime, lumen)VALUES ";
+		$sql .= "(?,?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesLightIDExist($hiveID, $datetime) && !$this->doesLightLumenExist($lumen, $datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("sss", $hiveID, $datetime, $lumen);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}	
+	public function createOutsideTemp($datetime, $temp){
+		
+		error_log( print_R("createOutsideTemp entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO outsidetemp (datetime, temp)VALUES ";
+		$sql .= "(?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesOTempExist($datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("ss", $datetime, $temp);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}
+	public function createPopulation($hiveID, $datetime, $count){
+		
+		error_log( print_R("createPopulation entered\n", TRUE ),3, LOG);
+		
+		$response = array();
+		
+		$sql = "INSERT INTO population (hiveID, datetime, count)VALUES ";
+		$sql .= "(?,?,?)";
+		
+		//Check if hiveID already exists in database
+		if (!$this->doesPopIDExist($hiveID, $datetime)){
+			if ($stmt = $this->conn->prepare($sql)) {
+                $stmt->bind_param("sss", $hiveID, $datetime, $count);
+				//Check if it inserted correctly
+				$stmt->execute();
+                $num_affected_rows = $stmt->affected_rows;
+                $stmt->close();
+                return $num_affected_rows >= 0;
+			}
+			else{
+				printf("Errormessage: %s\n", $this->conn->error);
+                return NULL;
+			}
+		}
+		else{
+			// datetime with same hiveID existed
+            return RECORD_ALREADY_EXISTED;
+		}
+		
+		return $response;
+	}	
+	
 }
 ?>
