@@ -346,7 +346,7 @@ $app->get('/light',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
-            $tmp["lux"] = (empty($slist["lux"]) ? "NULL" : $slist["lux"]);
+            $tmp["lumen"] = (empty($slist["lumen"]) ? "NULL" : $slist["lumen"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
             $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);

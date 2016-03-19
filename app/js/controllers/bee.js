@@ -431,7 +431,7 @@
 			vminst.weightrange = [];
 			//Light range
 			vminst.getLightRange = getLightRange;
-			vminst.luxrange= [];
+			vminst.lumenrange= [];
 			//Population count range
 			vminst.getPopCountRange = getPopCountRange;
 			vminst.countrange = [];
@@ -595,13 +595,13 @@
 					getLightRange().then(function () {
                         $log.debug('got lightrange');
 						//Light Range
-						$log.debug('before graph', vminst.luxrange);
+						$log.debug('before graph', vminst.lumenrange);
 						var dataarr = [];
 						vminst.graphid = 'LightSpline';
 						vminst.legendcontainer = 'LightLegend';
 						
 						//get list of unique hives
-						var uniqhives = _.uniq(vminst.luxrange, false, function(p){return p.hiveid});
+						var uniqhives = _.uniq(vminst.lumenrange, false, function(p){return p.hiveid});
 						$log.debug('uniq hives',uniqhives);
 						
 						//loop through hives to match
@@ -612,14 +612,14 @@
 						
 						//$log.debug('hiv',hiveid);
 							//sort the data for the hives
-							for (var i=0, len=vminst.luxrange.length; i<len; i++) {
+							for (var i=0, len=vminst.lumenrange.length; i<len; i++) {
 								$//log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
-								if (vminst.luxrange[i].hiveid == uhiveid) {
+								if (vminst.lumenrange[i].hiveid == uhiveid) {
 									var d2 = [];
-									var tt = mysqlGmtStrToJSLocal(vminst.luxrange[i].datetime);
+									var tt = mysqlGmtStrToJSLocal(vminst.lumenrange[i].datetime);
 									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
 									d2[0] = tt;
-									d2[1] = vminst.luxrange[i].lux;
+									d2[1] = vminst.lumenrange[i].lumen;
 									lightarray.push(d2);
 									//$log.debug('htemp push',htemparray);
 								}	
@@ -862,7 +862,7 @@
             return BeeServices.getLight(thepath).then(function (data) {
                 $log.debug('getLightRange returned data');
                 $log.debug(data);
-                    vminst.luxrange = data.LightList;
+                    vminst.lumenrange = data.LightList;
                     return;
             });
         }

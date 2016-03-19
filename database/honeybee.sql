@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2016 at 11:36 PM
+-- Generation Time: Mar 19, 2016 at 03:13 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `audio`
 --
 
+DROP TABLE IF EXISTS `audio`;
 CREATE TABLE `audio` (
   `id` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -60,7 +61,36 @@ INSERT INTO `audio` (`id`, `datetime`, `hiveID`, `frequency`, `frequencyStatus`)
 (113, '2016-03-05 10:18:44', 1, NULL, 'good'),
 (114, '2016-03-05 10:18:44', 2, NULL, 'good'),
 (115, '2016-03-05 10:19:08', 1, NULL, 'good'),
-(116, '2016-03-05 10:19:08', 2, NULL, 'good');
+(116, '2016-03-05 10:19:08', 2, NULL, 'good'),
+(117, '2016-03-09 04:11:11', 1, NULL, 'good');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `frameweight`
+--
+
+DROP TABLE IF EXISTS `frameweight`;
+CREATE TABLE `frameweight` (
+  `id` int(11) NOT NULL,
+  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `hiveID` int(11) NOT NULL,
+  `frameweight1` decimal(5,2) NOT NULL,
+  `frameweight2` decimal(5,2) NOT NULL,
+  `frameweight3` decimal(5,2) NOT NULL,
+  `frameweight4` decimal(5,2) NOT NULL,
+  `frameweight5` decimal(5,2) NOT NULL,
+  `frameweight6` decimal(5,2) NOT NULL,
+  `frameweight7` decimal(5,2) NOT NULL,
+  `frameweight8` decimal(5,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `frameweight`
+--
+
+INSERT INTO `frameweight` (`id`, `datetime`, `hiveID`, `frameweight1`, `frameweight2`, `frameweight3`, `frameweight4`, `frameweight5`, `frameweight6`, `frameweight7`, `frameweight8`) VALUES
+(1, '2016-03-09 03:18:17', 1, '5.88', '7.50', '15.62', '25.80', '26.53', '14.55', '8.18', '4.86');
 
 -- --------------------------------------------------------
 
@@ -68,6 +98,7 @@ INSERT INTO `audio` (`id`, `datetime`, `hiveID`, `frequency`, `frequencyStatus`)
 -- Table structure for table `hive`
 --
 
+DROP TABLE IF EXISTS `hive`;
 CREATE TABLE `hive` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
@@ -98,7 +129,8 @@ INSERT INTO `hive` (`id`, `hiveID`, `name`, `datetime`, `temp`, `weight`, `humid
 (16, 1, 'hive1', '2016-02-16 10:23:31', '95.4', 'good', '67.50'),
 (17, 2, 'hive2', '2016-02-18 10:23:31', '93.5', 'good', '63.80'),
 (18, 1, 'hive1', '2016-02-25 10:25:03', '95.4', 'good', '69.40'),
-(19, 2, 'hive2', '2016-03-05 10:25:03', '93.5', 'good', '68.50');
+(19, 2, 'hive2', '2016-03-05 10:25:03', '93.5', 'good', '68.50'),
+(20, 1, 'hive1', '2016-03-09 09:14:15', '96.8', 'good', '66.10');
 
 -- --------------------------------------------------------
 
@@ -106,18 +138,19 @@ INSERT INTO `hive` (`id`, `hiveID`, `name`, `datetime`, `temp`, `weight`, `humid
 -- Table structure for table `lighthistory`
 --
 
+DROP TABLE IF EXISTS `lighthistory`;
 CREATE TABLE `lighthistory` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `lux` int(11) NOT NULL
+  `lumen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `lighthistory`
 --
 
-INSERT INTO `lighthistory` (`id`, `hiveID`, `datetime`, `lux`) VALUES
+INSERT INTO `lighthistory` (`id`, `hiveID`, `datetime`, `lumen`) VALUES
 (1, 1, '2016-03-04 22:56:35', 7687),
 (2, 2, '2016-03-03 08:16:00', 6667),
 (3, 1, '2016-03-05 10:26:56', 6845),
@@ -141,6 +174,7 @@ INSERT INTO `lighthistory` (`id`, `hiveID`, `datetime`, `lux`) VALUES
 -- Table structure for table `outsidetemp`
 --
 
+DROP TABLE IF EXISTS `outsidetemp`;
 CREATE TABLE `outsidetemp` (
   `id` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -168,6 +202,7 @@ INSERT INTO `outsidetemp` (`id`, `datetime`, `temp`) VALUES
 -- Table structure for table `population`
 --
 
+DROP TABLE IF EXISTS `population`;
 CREATE TABLE `population` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
@@ -199,6 +234,12 @@ ALTER TABLE `audio`
   ADD KEY `hive` (`hiveID`);
 
 --
+-- Indexes for table `frameweight`
+--
+ALTER TABLE `frameweight`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `hive`
 --
 ALTER TABLE `hive`
@@ -211,7 +252,7 @@ ALTER TABLE `hive`
 --
 ALTER TABLE `lighthistory`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `datetime` (`datetime`,`lux`),
+  ADD UNIQUE KEY `datetime` (`datetime`,`lumen`),
   ADD UNIQUE KEY `hiveID` (`hiveID`,`datetime`);
 
 --
@@ -237,12 +278,17 @@ ALTER TABLE `population`
 -- AUTO_INCREMENT for table `audio`
 --
 ALTER TABLE `audio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+--
+-- AUTO_INCREMENT for table `frameweight`
+--
+ALTER TABLE `frameweight`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `hive`
 --
 ALTER TABLE `hive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `lighthistory`
 --
