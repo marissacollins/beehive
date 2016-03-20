@@ -683,16 +683,7 @@
 							//$log.debug('darr',dataarr);
 						
 						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
 						}
 						$log.debug('weight array1',dataarr1);
 						$log.debug('weight arraysum',dataarrsum);

@@ -107,6 +107,9 @@
            .when('/help', {
                 templateUrl: 'templates/states/help.html'
             })
+			.when('/uploaddata', {
+                templateUrl: 'templates/states/uploaddata.html'
+            })
             .when('/bees/id/:id', {
                 templateUrl: 'templates/states/bee.html'
             })
