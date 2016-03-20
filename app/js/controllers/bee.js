@@ -571,23 +571,149 @@
 			case 'weightstatus':
 					getWeightStatusRange().then(function () {
                         $log.debug('got WeightStatusRange');
-						//Hive Weight Range
+						//Hive weight Range
 						$log.debug('before graph', vminst.weightrange)
-						var weightarray = [];
-						for (var i=0, len=vminst.weightrange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.weightrange[i].datetime);
-							$log.debug('date conversion',vminst.weightrange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.weightrange[i].weight;
-							weightarray.push(d2);
+						var dataarr1 = [];
+						var dataarr2 = [];
+						var dataarr3 = [];
+						var dataarr4 = [];
+						var dataarr5 = [];
+						var dataarr6 = [];
+						var dataarr7 = [];
+						var dataarr8 = [];
+						var dataarrsum = [];
+						vminst.graphid1 = 'weightSplineFrame1';
+						vminst.graphid2 = 'weightSplineFrame2';
+						vminst.graphid3 = 'weightSplineFrame3';
+						vminst.graphid4 = 'weightSplineFrame4';
+						vminst.graphid5 = 'weightSplineFrame5';
+						vminst.graphid6 = 'weightSplineFrame6';
+						vminst.graphid7 = 'weightSplineFrame7';
+						vminst.graphid8 = 'weightSplineFrame8';
+						vminst.graphidsum = 'weightSplineSum';
+						vminst.legendcontainer1 = 'weightLegend1';
+						vminst.legendcontainer2 = 'weightLegend2';
+						vminst.legendcontainer3 = 'weightLegend3';
+						vminst.legendcontainer4 = 'weightLegend4';
+						vminst.legendcontainer5 = 'weightLegend5';
+						vminst.legendcontainer6 = 'weightLegend6';
+						vminst.legendcontainer7 = 'weightLegend7';
+						vminst.legendcontainer8 = 'weightLegend8';
+						vminst.legendcontainersum = 'weightLegendsum';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.weightrange, false, function(p){return p.hiveid});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveid;
+							var weightarray1 = [];
+							var weightarray2 = [];
+							var weightarray3 = [];
+							var weightarray4 = [];
+							var weightarray5 = [];
+							var weightarray6 = [];
+							var weightarray7 = [];
+							var weightarray8 = [];
+							var weightarraysum = [];
+							vminst.graphlabel1 = 'frameweight1 range for hive:' + uhiveid;
+							vminst.graphlabel2 = 'frameweight2 range for hive:' + uhiveid;
+							vminst.graphlabel3 = 'frameweight3 range for hive:' + uhiveid;
+							vminst.graphlabel4 = 'frameweight4 range for hive:' + uhiveid;
+							vminst.graphlabel5 = 'frameweight5 range for hive:' + uhiveid;
+							vminst.graphlabel6 = 'frameweight6 range for hive:' + uhiveid;
+							vminst.graphlabel7 = 'frameweight7 range for hive:' + uhiveid;
+							vminst.graphlabel8 = 'frameweight8 range for hive:' + uhiveid;
+							vminst.graphlabelsum = 'frameweight sum range for hive:' + uhiveid;
+						
+						
+							//$log.debug('hiv',hiveid);
+							//sort the data for the hives
+							for (var i=0, len=vminst.weightrange.length; i<len; i++) {
+								//$log.debug('loop',vminst.htemprange[i].hiveid, hiveid);
+								if (vminst.weightrange[i].hiveid == uhiveid) {
+									var d21 = [];
+									var d22 = [];
+									var d23 = [];
+									var d24 = [];
+									var d25 = [];
+									var d26 = [];
+									var d27 = [];
+									var d28 = [];
+									var d2sum = [];
+									var tt = mysqlGmtStrToJSLocal(vminst.weightrange[i].datetime);
+									//$log.debug('date conversion',vminst.htemprange[i].datetime, tt);
+									d21[0] = tt;
+									d21[1] = vminst.weightrange[i].frameweight1;
+									d22[0] = tt;
+									d22[1] = vminst.weightrange[i].frameweight2;
+									d23[0] = tt;
+									d23[1] = vminst.weightrange[i].frameweight3;
+									d24[0] = tt;
+									d24[1] = vminst.weightrange[i].frameweight4;
+									d25[0] = tt;
+									d25[1] = vminst.weightrange[i].frameweight5;
+									d26[0] = tt;
+									d26[1] = vminst.weightrange[i].frameweight6;
+									d27[0] = tt;
+									d27[1] = vminst.weightrange[i].frameweight7;
+									d28[0] = tt;
+									d28[1] = vminst.weightrange[i].frameweight8;
+									d2sum[0] = tt;
+									d2sum[1] = vminst.weightrange[i].frameweightsum;
+									weightarray1.push(d21);
+									weightarray2.push(d22);
+									weightarray3.push(d23);
+									weightarray4.push(d24);
+									weightarray5.push(d25);
+									weightarray6.push(d26);
+									weightarray7.push(d27);
+									weightarray8.push(d28);
+									weightarraysum.push(d2sum);
+									//$log.debug('htemp push',htemparray);
+								}
+							}
+						
+							dataarr1.push( { data: weightarray1, label: vminst.graphlabel1,  lines:{show:true}, points:{show:true}} );
+							dataarr2.push( { data: weightarray2, label: vminst.graphlabel2,  lines:{show:true}, points:{show:true}} );
+							dataarr3.push( { data: weightarray3, label: vminst.graphlabel3,  lines:{show:true}, points:{show:true}} );
+							dataarr4.push( { data: weightarray4, label: vminst.graphlabel4,  lines:{show:true}, points:{show:true}} );
+							dataarr5.push( { data: weightarray5, label: vminst.graphlabel5,  lines:{show:true}, points:{show:true}} );
+							dataarr6.push( { data: weightarray6, label: vminst.graphlabel6,  lines:{show:true}, points:{show:true}} );
+							dataarr7.push( { data: weightarray7, label: vminst.graphlabel7,  lines:{show:true}, points:{show:true}} );
+							dataarr8.push( { data: weightarray8, label: vminst.graphlabel8,  lines:{show:true}, points:{show:true}} );
+							dataarrsum.push( { data: weightarraysum, label: vminst.graphlabelsum,  lines:{show:true}, points:{show:true}} );
+							//$log.debug('darr',dataarr);
+						
 						}
-						$log.debug('weight array' ,weightarray);
-				//		graphid = 'LightSpline';
-				//		graphlabel = 'Light';
-				//		grapharray = lightarray;
-				//		legendcontainer = 'LightLegend';
-				//		getGraph(graphid, graphlabel, grapharray, legendcontainer);
+						$log.debug('weight array1',dataarr1);
+						$log.debug('weight array2',dataarr2);
+						$log.debug('weight array3',dataarr3);
+						$log.debug('weight array4',dataarr4);
+						$log.debug('weight array5',dataarr5);
+						$log.debug('weight array6',dataarr6);
+						$log.debug('weight array7',dataarr7);
+						$log.debug('weight array8',dataarr8);
+						$log.debug('weight arraysum',dataarrsum);
+						vminst.grapharray1 = dataarr1;
+						vminst.grapharray2 = dataarr2;
+						vminst.grapharray3 = dataarr3;
+						vminst.grapharray4 = dataarr4;
+						vminst.grapharray5 = dataarr5;
+						vminst.grapharray6 = dataarr6;
+						vminst.grapharray7 = dataarr7;
+						vminst.grapharray8 = dataarr8;
+						vminst.grapharraysum = dataarrsum;
+						getGraph(vminst.graphid1, vminst.graphlabel1, vminst.grapharray1, vminst.legendcontainer1);
+						getGraph(vminst.graphid2, vminst.graphlabel2, vminst.grapharray2, vminst.legendcontainer2);
+						getGraph(vminst.graphid3, vminst.graphlabel3, vminst.grapharray3, vminst.legendcontainer3);
+						getGraph(vminst.graphid4, vminst.graphlabel4, vminst.grapharray4, vminst.legendcontainer4);
+						getGraph(vminst.graphid5, vminst.graphlabel5, vminst.grapharray5, vminst.legendcontainer5);
+						getGraph(vminst.graphid6, vminst.graphlabel6, vminst.grapharray6, vminst.legendcontainer6);
+						getGraph(vminst.graphid7, vminst.graphlabel7, vminst.grapharray7, vminst.legendcontainer7);
+						getGraph(vminst.graphid8, vminst.graphlabel8, vminst.grapharray8, vminst.legendcontainer8);
+						getGraph(vminst.graphidsum, vminst.graphlabelsum, vminst.grapharraysum, vminst.legendcontainersum);
 
                     });
 				break;

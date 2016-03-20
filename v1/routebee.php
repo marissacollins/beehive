@@ -295,6 +295,14 @@ $app->get('/HiveWeightStatus',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
+            $tmp["frameweight1"] = (empty($slist["frameweight1"]) ? "NULL" : $slist["frameweight1"]);
+            $tmp["frameweight2"] = (empty($slist["frameweight2"]) ? "NULL" : $slist["frameweight2"]);
+            $tmp["frameweight3"] = (empty($slist["frameweight3"]) ? "NULL" : $slist["frameweight3"]);
+            $tmp["frameweight4"] = (empty($slist["frameweight4"]) ? "NULL" : $slist["frameweight4"]);
+            $tmp["frameweight5"] = (empty($slist["frameweight5"]) ? "NULL" : $slist["frameweight5"]);
+            $tmp["frameweight6"] = (empty($slist["frameweight6"]) ? "NULL" : $slist["frameweight6"]);
+            $tmp["frameweight7"] = (empty($slist["frameweight7"]) ? "NULL" : $slist["frameweight7"]);
+            $tmp["frameweight8"] = (empty($slist["frameweight8"]) ? "NULL" : $slist["frameweight8"]);
             $tmp["frameweightsum"] = (empty($slist["frameweightsum"]) ? "NULL" : $slist["frameweightsum"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
