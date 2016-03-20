@@ -416,23 +416,51 @@ $app->get('/beeFreqStatus',   function() use($app) {
 //Posts used for inserting into the database
 $app->post('/updateAudio', function() use($app){
 	$response = array();
-	//Reads the key values and extracts them
-	$data = file_get_contents("php://input");
+	
+	$allGetVars = $app->request->get();
+    error_log( print_R("updateAudio entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+
+    $thefile = '';
+	$thehive = '';
+    if(array_key_exists('filename', $allGetVars)){
+        $thefile = $allGetVars['filename'];
+    } else {
+        error_log( print_R("filename missing\n", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to create audio. Please try again";
+        echoRespnse(400, $response);
+    }
+	if(array_key_exists('hiveid', $allGetVars)){
+		$thehive = $allGetVars['hiveid'];
+    }
+    error_log( print_R("beeFreqStatus params:  thehive: $thehive \n ", TRUE), 3, LOG);
+
+	//Reads the key values and extracts them from the passed in uploaded file
+    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $thefile ;
+    error_log( print_R("uploaded file: $uploadPath\n ", TRUE), 3, LOG);
+	
+	$data = file_get_contents($uploadPath);
+
 	$dataJsonDecode = json_decode($data);
 	
 	error_log( print_R("audio post before update insert\n", TRUE ), 3, LOG);
-    $audio  = (isset($dataJsonDecode->audio) ? $dataJsonDecode->audio : "");
+    $thetype  = (isset($dataJsonDecode) ? $dataJsonDecode : "");
+    error_log( print_R($thetype, TRUE ), 3, LOG);
+
+    $audio  = (isset($dataJsonDecode->audio[0]) ? $dataJsonDecode->audio[0] : "");
     error_log( print_R($audio, TRUE ), 3, LOG);
 	
-	$datetime  = (isset($dataJsonDecode->audio->datetime) ? $dataJsonDecode->audio->datetime : "");
-    $hiveID      = (isset($dataJsonDecode->audio->hiveID)      ? $dataJsonDecode->audio->hiveID : "");
-    $freuencyStatus    = (isset($dataJsonDecode->audio->frequencyStatus)    ? $dataJsonDecode->audio->frequencyStatus : "");
+	$datetime  = (isset($dataJsonDecode->audio[0]->datetime) ? $dataJsonDecode->audio[0]->datetime : "");
+//    $hiveID      = (isset($dataJsonDecode->audio->hiveID)      ? $dataJsonDecode->audio->hiveID : "");
+	$hiveID = $thehive;
+    $frequencyStatus    = (isset($dataJsonDecode->audio[0]->frequencyStatus)    ? $dataJsonDecode->audio[0]->frequencyStatus : "");
 	
 	$db = new BeeDbHandler();
 	$response = array();
 	
 	//Updates Task
-	$audio_id = $db->updateAudio($datetime, $hiveID, $frequencyStatus);
+	$audio_id = $db->createAudio($datetime, $hiveID, $frequencyStatus);
 	
 	    if ($audio_id > 1) {
         $response["error"] = false;

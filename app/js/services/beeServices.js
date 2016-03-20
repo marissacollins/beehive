@@ -136,17 +136,11 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		function updateAudio(path, audio){
-			$log.debug('updateAudio data before post :' , audio);
+		function updateAudio(path){
+			$log.debug('updateAudio data before post :' , path);
 			var request = $http({
 				method: "POST",
 				url: path,
-			//    params: {
-			//        action: "add"
-			//    },
-				data: {
-					audio: audio
-				}
 			});
 			return( request.then( handleSuccess, handleError ) );
 		}

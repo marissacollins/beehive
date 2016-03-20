@@ -4,7 +4,8 @@
   angular
     .module('ng-admin')
     .controller('ModalUploadController', ModalUploadController)
-    .controller('ModalUploadInstanceController', ModalUploadInstanceController);
+    .controller('ModalUploadInstanceController', ModalUploadInstanceController)
+    .controller('FileUploadController', FileUploadController);
 
 
   ModalUploadController.$inject = [
@@ -21,14 +22,11 @@
       '$route'
     ];
 
-      '$scope',
-      '$log',
-      '$uibModalInstance',
-      'uploadfile',
-      'BeeServices',
-      'uiGridConstants',
-      '$timeout',
-      '$route'
+    FileUploadController.$inject = [
+    '$scope',
+    '$log',
+    'FileUploader',
+    'BeeServices'
     ];
 
 
@@ -39,7 +37,6 @@
     vmfilemodal.animationsEnabled = true;
 
     vmfilemodal.openpick = openpick;
-    vmfilemodal.opensearch = opensearch;
     vmfilemodal.file = ''; 
     vmfilemodal.modalInstance = undefined;
 
@@ -65,29 +62,7 @@
       });
     }
     
-
-      vmfilemodal.modalInstance = $uibModal.open({
-        animation: vmfilemodal.animationsEnabled,
-        templateUrl: 'myPicksearch.html',
-        controller: 'ModalUploadInstance2Controller as vmfilesearch',
-        size: 'lg',
-        resolve: {
-          uploadfile: function () {
-            return vmfilemodal.uploadfile;
-          }
-        }
-      });
-      vmfilemodal.modalInstance.result.then(function (selectedfile, hive) {
-          console.log('picsearch modalInstance result uploadfile:', selectedfile);
-        
-        vmfilemodal.uploadfile = selectedfile;
-        vmfilemodal.hive = hive;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-
-    }
-  }
+}
 
   function ModalUploadInstanceController($scope, $log, $uibModalInstance, uploadfile, BeeServices, $route) {
     /* jshint validthis: true */
@@ -98,7 +73,6 @@
 
     vmfileselect.uploadfilelist = [];
     vmfileselect.uploadpath = '';
-    vmfileselect.hive = BeeServices.getTheStudent();
     vmfileselect.okuploadfile = '';
 
 
@@ -111,40 +85,38 @@
 
     function ok() {
       console.log('hit ok');
-      var thisstudent = BeeServices.getTheStudent();
-      vmfileselect.okuploadfile = BeeServices.getstudentuploadfile();
       console.log('got file for ok:', vmfileselect.okuploadfile);
-      console.log('for hive:' ,thisstudent);
-      $uibModalInstance.close(vmfileselect.okuploadfile, thisstudent);
 	  vminst.uploadType = "";
-	switch(vmfileselect.uploadType)  {
-		case 'audiofile':
-			vmfileselect.uploadpath = '../v1/updateAudio';
-		break;
-		case 'lightfile':
-			vmfileselect.uploadpath = '../v1/updateLightHistory';
-		break;
-		case 'populationfile':
-			vmfileselect.uploadpath = '../v1/updatePopulation';
+		switch(vmfileselect.uploadType)  {
+			case 'audiofile':
+				vmfileselect.uploadpath = '../v1/updateAudio';
+			break;
+			case 'lightfile':
+				vmfileselect.uploadpath = '../v1/updateLightHistory';
+			break;
+			case 'populationfile':
+				vmfileselect.uploadpath = '../v1/updatePopulation';
 
-		break;
-		case 'hivefile':
-			vmfileselect.uploadpath = '../v1/updateHive';
+			break;
+			case 'hivefile':
+				vmfileselect.uploadpath = '../v1/updateHive';
 
-		break;
-		case 'otempfile':
-			vmfileselect.uploadpath = '../v1/updateOutsideTemp';
+			break;
+			case 'otempfile':
+				vmfileselect.uploadpath = '../v1/updateOutsideTemp';
 
-		break;
-		case 'frameweightfile':
-			vmfileselect.uploadpath = '../v1/updateFrameWeight';
+			break;
+			case 'frameweightfile':
+				vmfileselect.uploadpath = '../v1/updateFrameWeight';
 
-		break;
-		default:
-			vmfileselect.uploadpath = '';
+			break;
+			default:
+				vmfileselect.uploadpath = '';
 
-		
-	}
+			
+		}
+	    $uibModalInstance.close(vmfileselect.okuploadfile);
+
 	  }
 
 	
@@ -154,4 +126,41 @@
 
   }
  
-})();
+  function FileUploadController($scope, $log, FileUploader, BeeServices) {
+        /* jshint validthis: true */
+        var vmbeefileupload = this;
+		vmbeefileupload.beefile = '';
+
+        vmbeefileupload.uploader = new FileUploader({
+            url: '../v1/upload.php'
+        });
+        // FILTERS
+
+		vmbeefileupload.uploader.filters.push({
+            name: 'customFilter',
+            fn: function(item /*{File|FileLikeObject}*/, options) {
+                return this.queue.length < 10;
+            }
+        });
+		
+        // CALLBACKS
+
+      vmbeefileupload.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+            console.info('onSuccessItem', fileItem, response, status, headers);
+          vmbeefileupload.beefile = fileItem.file.name;
+		  var hiveid = BeeServices.getHiveId();
+		  BeeServices.updateAudio("../v1/updateAudio?filename=" + vmbeefileupload.beefile + "&hiveid=" + hiveid);
+        };
+        vmbeefileupload.uploader.onErrorItem = function (fileItem, response, status, headers) {
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+        vmbeefileupload.uploader.onCancelItem = function (fileItem, response, status, headers) {
+            console.info('onCancelItem', fileItem, response, status, headers);
+        };
+		vmbeefileupload.uploader.onCompleteAll = function() {
+            console.info('onCompleteAll');
+        };		
+        console.info('uploader', vmbeefileupload.uploader);
+
+    }
+ })();

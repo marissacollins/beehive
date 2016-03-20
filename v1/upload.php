@@ -1,11 +1,12 @@
 <?php
 if ( !empty( $_FILES ) ) {
     $tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
-    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads'  . $_FILES[ 'file' ][ 'name' ];
+    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR  . $_FILES[ 'file' ][ 'name' ] ;
     move_uploaded_file( $tempPath, $uploadPath );
-    $answer = array( 'answer' => 'File transfer completed' );
+    $answer = array( 'answer' => 'File transfer completed for:', $uploadPath );
     $json = json_encode( $answer );
-    echo $json;
+    echo $json;	
+	
 } else {
     echo 'No files';
 }

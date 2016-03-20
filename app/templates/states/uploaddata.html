@@ -1,9 +1,138 @@
 <!DOCTYPE html>
-    <div ng-controller="BeeController as vm">
+    <div ng-controller="UploadController as vm">
 		<div id="status">
 			<p>Hive Status: <span style="color:green">Good</span></p>
 		</div>
-		
 
-	</div>
+		<div class="panel panel-blue col-md-12">
+			<div class="col-md-offset-1 col-md-3 col-md-offset-2">
+				<h2>
+				<label for="hiveselect" class="control-label">Hive Name</label>
+				</h2>
+			</div>
+			<div class="col-md-6 ">
+				<h2>
+				<select  
+					id="hiveselect"
+					type="text" 
+					ng-model="vm.selectedHiveId" 
+					ng-change="vm.doHiveSelect()" 
+					>
+						<option 
+							ng-repeat="h in vm.HiveIdList" 
+							ng-selected="{{h.hiveid == vm.selectedHiveId}}" 
+							value="{{h.hiveid}}">{{h.name}}
+						</option>
+				</select>
+				</h2>
+			</div>
+		</div>
+		
+		<div class="row row-icons">
+		  <div ng-controller="ModalUploadController as vmmodal">
+			<!--                            <pre>{{ vmmodal }}</pre>
+-->
+			<script id="myPickupload.html" type="text/ng-template">
+				<div class="modal-header">
+				  <h3 class="modal-title">Select Bee File</h3>
+				</div>
+				<div class="modal-body">
+				  <div class="row" ng-controller="FileUploadController as vmbeefileupload" nv-file-drop="" uploader="vmbeefileupload.uploader" filters="queueLimit, customFilter>
+					<div class="col-lg-12">
+					  <div>
+
+						<div class="col-md-3">
+						  <input type="file" nv-file-select="" uploader="vmbeefileupload.uploader" multiple />
+					<!-- if you want to do one file at a time	  <input type="file" nv-file-select="" uploader="vmbeefileupload.uploader" single /> -->
+						  <br/>
+
+						</div>
+
+						<div class="col-md-9" style="margin-bottom: 40px">			
+						  <table class="table">
+							<thead>
+							  <tr>
+								<th width="20%">Name</th>
+								<th ng-show="vmbeefileupload.uploader.isHTML5">Size</th>
+								<th ng-show="vmbeefileupload.uploader.isHTML5">Progress</th>
+								<th>Status</th>
+								<th>Actions</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr ng-repeat="item in vmbeefileupload.uploader.queue">
+								<td>
+								  <strong>{{ item.file.name }}</strong>
+							<!--	  <div ng-show="vmbeefileupload.uploader.isHTML5" ng-thumbupload="{ file: item._file, height: 100 }"></div>
+							-->
+								</td>
+								<td ng-show="vmbeefileupload.uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:4 }} MB</td>
+								<td ng-show="vmbeefileupload.uploader.isHTML5">
+								  <div class="progress" style="margin-bottom: 0;">
+									<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+								  </div>
+								</td>
+								<td class="text-center">
+								  <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+								  <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+								  <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+								</td>
+								<td nowrap>
+								  <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+									<span class="glyphicon glyphicon-upload"></span> Upload
+								  </button>
+								  <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+									<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+								  </button>
+							<!--	  <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+									<span class="glyphicon glyphicon-trash"></span> Remove
+								  </button>
+								  -->
+								</td>
+							  </tr>
+							</tbody>
+						  </table>
+						  <div>
+								<div>
+									Queue progress:
+									<div class="progress" style="">
+										<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+									</div>
+								</div>
+								<button type="button" class="btn btn-success btn-s" ng-click="vmbeefileupload.uploader.uploadAll()" ng-disabled="!vmbeefileupload.uploader.getNotUploadedItems().length">
+									<span class="glyphicon glyphicon-upload"></span> Upload all
+								</button>
+								<button type="button" class="btn btn-warning btn-s" ng-click="vmbeefileupload.uploader.cancelAll()" ng-disabled="!vmbeefileupload.uploader.isUploading">
+									<span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+								</button>
+								<button type="button" class="btn btn-danger btn-s" ng-click="vmbeefileupload.uploader.clearQueue()" ng-disabled="!vmbeefileupload.uploader.queue.length">
+									<span class="glyphicon glyphicon-trash"></span> Remove all
+								</button>
+						   </div>
+						</div>
+
+
+
+					  </div>
+					</div>
+				  </div>
+
+
+				</div>
+				<div class="modal-footer">
+				  <button class="btn btn-primary" type="button" ng-click="vmpicselect.ok()">OK</button>
+				  <button class="btn btn-warning" type="button" ng-click="vmpicselect.cancel()">Cancel</button>
+				</div>
+			</script> 
+
+
+			<div class="col-md-12">
+			Pick files
+			  <a href ng-click="vmmodal.openpick()"><i class=
+			  "glyphicon glyphicon-upload"></i></a> 
+			</div>
+		  </div>
+		</div>
+	  </div>		
+
 			

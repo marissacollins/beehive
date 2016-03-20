@@ -327,7 +327,7 @@ class BeeDbHandler {
 	//INSERT STATEMENT FUNCTIONS
 	public function createAudio($datetime, $hiveID, $frequencyStatus){
 		
-		error_log( print_R("createAudio entered\n", TRUE ),3, LOG);
+		error_log( print_R("createAudio entered: date: $datetime freq: $frequencyStatus\n", TRUE ),3, LOG);
 		
 		$response = array();
 		
