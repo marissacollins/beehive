@@ -69,16 +69,53 @@
     var vmfileselect = this;
     vmfileselect.ok = ok;
     vmfileselect.cancel = cancel;
+    vmfileselect.uploadfile = uploadfile;
+
+    vmfileselect.uploadfilelist = [];
+    vmfileselect.uploadpath = '';
+    vmfileselect.okuploadfile = '';
+
 
     activate();
 
     function activate() {
       console.log("fileselect hive");
+      console.log(vmfileselect.hive);
     }
 
     function ok() {
       console.log('hit ok');
-	    $uibModalInstance.close();
+      console.log('got file for ok:', vmfileselect.okuploadfile);
+	  vminst.uploadType = "";
+		switch(vmfileselect.uploadType)  {
+			case 'audiofile':
+				vmfileselect.uploadpath = '../v1/updateAudio';
+			break;
+			case 'lightfile':
+				vmfileselect.uploadpath = '../v1/updateLightHistory';
+			break;
+			case 'populationfile':
+				vmfileselect.uploadpath = '../v1/updatePopulation';
+
+			break;
+			case 'hivefile':
+				vmfileselect.uploadpath = '../v1/updateHive';
+
+			break;
+			case 'otempfile':
+				vmfileselect.uploadpath = '../v1/updateOutsideTemp';
+
+			break;
+			case 'frameweightfile':
+				vmfileselect.uploadpath = '../v1/updateFrameWeight';
+
+			break;
+			default:
+				vmfileselect.uploadpath = '';
+
+			
+		}
+	    $uibModalInstance.close(vmfileselect.okuploadfile);
 
 	  }
 
@@ -112,7 +149,7 @@
             console.info('onSuccessItem', fileItem, response, status, headers);
           vmbeefileupload.beefile = fileItem.file.name;
 		  var hiveid = BeeServices.getHiveId();
-		  BeeServices.uploadData("../v1/uploadData?filename=" + vmbeefileupload.beefile + "&hiveid=" + hiveid);
+		  BeeServices.updateAudio("../v1/updateAudio?filename=" + vmbeefileupload.beefile + "&hiveid=" + hiveid);
         };
         vmbeefileupload.uploader.onErrorItem = function (fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);

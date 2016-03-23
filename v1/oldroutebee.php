@@ -414,13 +414,11 @@ $app->get('/beeFreqStatus',   function() use($app) {
 });
 
 //Posts used for inserting into the database
-$app->post('/uploadData', function() use($app){
-    //accumulate success/failures starting with 0 meaning good
-    $thesuccess = 0;
+$app->post('/updateAudio', function() use($app){
 	$response = array();
 	
 	$allGetVars = $app->request->get();
-    error_log( print_R("uploadData entered:\n ", TRUE), 3, LOG);
+    error_log( print_R("updateAudio entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
 
     $thefile = '';
@@ -433,12 +431,10 @@ $app->post('/uploadData', function() use($app){
         $response["message"] = "Failed to create audio. Please try again";
         echoRespnse(400, $response);
     }
-    
-    //hive is optional eq. outside temperature
 	if(array_key_exists('hiveid', $allGetVars)){
 		$thehive = $allGetVars['hiveid'];
-        error_log( print_R("uploaddata params:  thehive: $thehive \n ", TRUE), 3, LOG);
     }
+    error_log( print_R("beeFreqStatus params:  thehive: $thehive \n ", TRUE), 3, LOG);
 
 	//Reads the key values and extracts them from the passed in uploaded file
     $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $thefile ;
@@ -448,45 +444,42 @@ $app->post('/uploadData', function() use($app){
 
 	$dataJsonDecode = json_decode($data);
 	
-    $isAudio  = (isset($dataJsonDecode->audio) ? $dataJsonDecode->audio : "");
-    if ($isAudio != "") {
-        //we could have multiple records.  If end up with 0, all was good 
-        $thesuccess += uploadAudio(json_decode($data,true) , $thehive);
-    }
-    $isHive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
-    if ($isHive != "") {
-       // $thesuccess += uploadHive($dataJsonDecode, $thehive);
-    }
-    $isPopulation  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
-    if ($isPopulation != "") {
-     //   $thesuccess += uploadPopulation($dataJsonDecode, $thehive);
-    }
-    $isFrameWeight  = (isset($dataJsonDecode->frameweight) ? $dataJsonDecode->frameweight : "");
-    if ($isFrameWeight != "") {
-    //    $thesuccess += uploadFrameWeight($dataJsonDecode, $thehive);
-    }
-    $isLightHistory  = (isset($dataJsonDecode->lighthistory) ? $dataJsonDecode->lighthistory : "");
-    if ($isLightHistory != "") {
-    //    $thesuccess += uploadLightHistory($dataJsonDecode, $thehive);
-    }
-    $isOutsideTemp  = (isset($dataJsonDecode->outsidetemp) ? $dataJsonDecode->outsidetemp : "");
-    if ($isOutsideTemp != "") {
-   //     $thesuccess += uploadOutsideTemp($dataJsonDecode, $thehive);
-    }
+	error_log( print_R("audio post before update insert\n", TRUE ), 3, LOG);
+    $thetype  = (isset($dataJsonDecode) ? $dataJsonDecode : "");
+    error_log( print_R($thetype, TRUE ), 3, LOG);
 
-    if ($thesuccess == 0) {
+    $audio  = (isset($dataJsonDecode->audio[0]) ? $dataJsonDecode->audio[0] : "");
+    error_log( print_R($audio, TRUE ), 3, LOG);
+	
+	$datetime  = (isset($dataJsonDecode->audio[0]->datetime) ? $dataJsonDecode->audio[0]->datetime : "");
+//    $hiveID      = (isset($dataJsonDecode->audio->hiveID)      ? $dataJsonDecode->audio->hiveID : "");
+	$hiveID = $thehive;
+    $frequencyStatus    = (isset($dataJsonDecode->audio[0]->frequencyStatus)    ? $dataJsonDecode->audio[0]->frequencyStatus : "");
+	
+	$db = new BeeDbHandler();
+	$response = array();
+	
+	//Updates Task
+	$audio_id = $db->createAudio($datetime, $hiveID, $frequencyStatus);
+	
+	    if ($audio_id > 1) {
         $response["error"] = false;
-        $response["message"] = "frame created successfully";
-        error_log( print_R("upload success\n", TRUE ), 3, LOG);
+        $response["message"] = "audio created successfully";
+        $response["audio_id"] = $audio_id;
+        error_log( print_R("audio created: $audio_id\n", TRUE ), 3, LOG);
+        echoRespnse(201, $response);
+    } else if ($audio_id == 1) {
+        $response["error"] = false;
+        $response["message"] = "audio updated successfully";
+        error_log( print_R("audio already existed\n", TRUE ), 3, LOG);
         echoRespnse(201, $response);
     } else {
-        error_log( print_R("after upload result bad\n", TRUE), 3, LOG);
-        error_log( print_R( $thesuccess, TRUE), 3, LOG);
+        error_log( print_R("after audio result bad\n", TRUE), 3, LOG);
+        error_log( print_R( $audio_id, TRUE), 3, LOG);
         $response["error"] = true;
-        $response["message"] = "Failed to upload. Please try again";
+        $response["message"] = "Failed to create audio. Please try again";
         echoRespnse(400, $response);
     }
-    
 });
 $app->post('/updateFrameWeight', function() use($app){
 	$response = array();
@@ -694,47 +687,5 @@ $app->post('/updatePopulation', function() use($app){
     }
 });
 
-function uploadAudio($dataJsonDecode, $thehive) {
-    $app = \Slim\Slim::getInstance();
-
-    $db = new BeeDbHandler();
-    $audio_cnt = 0;
-    
-    foreach ($dataJsonDecode["audio"] as $loop) {
-        
-        $hiveID = $thehive;
-        $datetime  = (isset($loop["datetime"]) ? 
-                            $loop["datetime"] : "");
-        $frequencyStatus = (isset($loop["frequencyStatus"]) ?
-                                  $loop["frequencyStatus"] : "");
-        
-        $response = array();
-
-        error_log( print_R("before audio created: datetime $datetime hive $hiveID Freq $frequencyStatus\n", TRUE ), 3, LOG);
-        
-        //Updates Task
-        $audio_id = $db->createAudio($datetime, $hiveID, $frequencyStatus);
-        error_log( print_R("audio return: $audio_id\n", TRUE ), 3, LOG);
-        if ($audio_id > 0) {
-            $audio_cnt += 0;
-        } else {
-            $audio_cnt += 1;
-        }
-        error_log( print_R("audio cnt: $audio_cnt\n", TRUE ), 3, LOG);
-        
-    }
-    error_log( print_R("audio final cnt: $audio_cnt\n", TRUE ), 3, LOG);
-        
-    if ($audio_cnt == 0) {
-        error_log( print_R("audio created\n", TRUE ), 3, LOG);
-        return 0;
-    } else {
-        error_log( print_R("after audio result bad\n", TRUE), 3, LOG);
-        return 1;
-    }
-
-    
-
-}
 
 ?>

@@ -341,7 +341,6 @@ class BeeDbHandler {
 				//Check if it inserted correctly
 				$stmt->execute();
                 $num_affected_rows = $stmt->affected_rows;
-                error_log( print_R("createAudio numrows: $num_affected_rows\n", TRUE ),3, LOG);
                 $stmt->close();
                 return $num_affected_rows >= 0;
 			}

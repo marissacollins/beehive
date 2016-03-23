@@ -24,7 +24,7 @@
 			getLight: getLight,
 			getPopulation: getPopulation,
 			getBeeFrequency: getBeeFrequency,
-			uploadData: uploadData,
+			updateAudio: updateAudio,
 			updateFrameWeight: updateFrameWeight,
 			updateHive: updateHive,
 			updateLightHistory: updateLightHistory,
@@ -136,8 +136,8 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
-		function uploadData(path){
-			$log.debug('uploadData data before post :' , path);
+		function updateAudio(path){
+			$log.debug('updateAudio data before post :' , path);
 			var request = $http({
 				method: "POST",
 				url: path,
@@ -159,7 +159,7 @@
 			return( request.then( handleSuccess, handleError ) );
 		}
  		function updateHive(path, hive){
-			$log.debug('updateHive data before post :' , hive);
+			$log.debug('updateAudio data before post :' , hive);
 			var request = $http({
 				method: "POST",
 				url: path,
