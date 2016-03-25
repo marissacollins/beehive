@@ -2,18 +2,30 @@
 	font-family:Arial black;
 	float:right;
 }
+
 h1{
-	position:absolute;
-	margin-top:-100px;
 	margin-left:10px;
-	color:white;
+	color: #36658C;
 	font-family:Tahoma;
 	font-size:60px;
-	text-shadow:-3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
 }
-div img{
-	position:relative;
-	width:100%;
+h2{
+	font-size:30px;
+	font-family:Tahoma;
+	color: #36658C;
+}
+h3{
+	font-size:20px;
+	font-family:Tahoma;
+}
+h4{
+	font-family:Tahoma;
+	color: #252525;
+    font-size: 18px;
+}
+p{
+	font-family:Tahoma;
+	font-size:18px;
 }
 
 /*Navigation Bar*/
@@ -22,32 +34,30 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: white;
 }
 li {
     float: left;
 }
-li a {
+/*li a {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-}
+}*/
 /* Change the link color to #111 (black) on hover */
-li a:hover {
+/*li a:hover {
     background-color: #111;
-}
+}*/
 
-#table tr td{
-	/*border:1px solid black;*/
-}
 /*Notes*/
 #notes{
-	border:2px solid black;
+	/*border:2px solid black;*/
+	padding: 10px;
 	color:black;
 	font-family:Tahoma;
-	font-size:20px;
+	font-size:16px;
 }
 #notes p{
 	margin-top: -50px;
@@ -55,8 +65,11 @@ li a:hover {
 #inputTextToSave{
 	margin-left:1.5%;
 }
+#topbar{
+	background-color:rgb(251, 251, 200);
+}
 
-#table{
+.maintable{
 	width:90%;
 	margin-left:5%;
 }

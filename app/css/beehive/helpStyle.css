@@ -1,10 +1,8 @@
-#status{
+/*#status{
 	font-family:Arial black;
 	float:right;
 }
 h1{
-	position:absolute;
-	margin-top:-100px;
 	margin-left:10px;
 	color:white;
 	font-family:Tahoma;
@@ -14,10 +12,10 @@ h1{
 div img{
 	position:relative;
 	width:100%;
-}
+}*/
 
 /*Navigation Bar*/
-#nav {
+/*#nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -33,9 +31,9 @@ div img{
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-}
+}*/
 /* Change the link color to #111 (black) on hover */
-#nav li a:hover {
+/*#nav li a:hover {
     background-color: #111;
 }
 
@@ -74,7 +72,7 @@ div img{
 #description ul li{
 	font-size:24px;
 }
-h3{
-	font-size:40px;
-	font-family:Tahoma;
-}
+
+#instruction{
+	float: top;
+}*/
