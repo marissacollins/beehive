@@ -234,7 +234,7 @@
 		function doHiveSelect() {
 			$log.debug('doHiveSelect',vmbee.HiveIdList, vmbee.selectedHiveId);
 			//set it in services so we can get it in another controller
-			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
+			//? bad ? BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
 			
 			for(var i=0,len=vmbee.HiveIdList.length; i< len; i++) {
 				$log.debug('doHiveSelect loop',vmbee.HiveIdList[i], vmbee.selectedHiveId);				
@@ -255,8 +255,13 @@
             var thepath = '../v1/hivelist';
             return BeeServices.getHiveList(thepath).then(function (data) {
                 $log.debug('getHiveList returned data');
-                $log.debug(data.data);
+                $log.debug(data);
+				var tmp = {
+					'hiveid' : 'All',
+					'name' : 'All'
+				}
                     vmbee.HiveIdList = data.HiveIdList;
+					vmbee.HiveIdList.push(tmp);
                     return;
 			},
 			function (error) {
@@ -833,7 +838,7 @@
 							}
 							dataarrsum.push( { data: weightarraysum, label: vminst.graphlabelsum,  lines:{show:true}, points:{show:true}} );
 							//$log.debug('darr',dataarr);
-						
+						}
 						//FRAME WEIGHTS						
 						//loop through hives to match
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
@@ -910,7 +915,7 @@
 						
 						}
 
-						}
+						
 						$log.debug('weight array1',dataarr1);
 						$log.debug('weight arraysum',dataarrsum);
 						vminst.grapharray1 = dataarr1;
