@@ -145,17 +145,18 @@
 								<div class="dta">as of: {{vm.hivehumidity[0].datetime}}
 								</div></h2></div></div>
 				</div>
-				<!--Weight Status-->
-				<div class="row">
-					<div class="col-md-offset-1 col-md-5"><h2 id="weight">Total Hive Weight:</h2></div>
-					<div class="col-md-6"><div class="weightVar">
-						<h2>
-							<a href="" ng-click="vmmodal.openmodal('weightstatus')">
-								{{vm.HiveWeightStatus[0].frameweightsum}} </a>
-								</br>
-								<div class="dta">as of: {{vm.HiveWeightStatus[0].datetime}}
-								</div></h2></div></div>
-				</div>
+<!--Weight Status-->
+	<div class="row">
+		<div class="col-md-offset-1 col-md-5"><h2 id="weight">Total Hive Weight:</h2></div>
+			<div class="col-md-6"><div class="weightVar" ng-style="{ 'border' : vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum) ?  '4px solid red' : ''}">
+				<h2>
+					<a href=""  ng-click="vmmodal.openmodal('weightstatus')">
+						{{vm.HiveWeightStatus[0].frameweightsum}} </a>
+						</br>
+						<div class="dta">as of: {{vm.HiveWeightStatus[0].datetime}}
+						<div ng-show="vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum)">Alert: Weight > {{vm.weightAlertAmt}}</div>
+						</div></h2></div></div>
+	</div>
 				<!--Light-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="light">Hive Light:</h2></div>

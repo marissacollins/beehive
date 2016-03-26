@@ -74,7 +74,9 @@
 			//Get Population
 			vmbee.getPopulation = getPopulation;
 			vmbee.PopulationList = [];
-
+			vmbee.weightAlert = weightAlert;
+			vmbee.weightAlertAmt = 110;
+			
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
@@ -87,6 +89,9 @@
 		//load the data for the initial display
         activate();
 
+		function weightAlert(weighttest) {
+			return weighttest > vmbee.weightAlertAmt;
+		}
 		//Functions to actually retrieve the latest values
         function activate() {
             $log.debug('about activate bee ');
@@ -203,7 +208,7 @@
 			//set it in services so we can get it in another controller
 			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
 			
-			var themsg = "you selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName + ', now do something with it';
+			var themsg = "You have selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName;
 			Notification.info({message: themsg, delay: 5000});
 			activate();
 		}
