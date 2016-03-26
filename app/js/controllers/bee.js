@@ -74,6 +74,15 @@
 			//Get Population
 			vmbee.getPopulation = getPopulation;
 			vmbee.PopulationList = [];
+			//Get Outside Temp
+			vmbee.getOTemp = getOTemp;
+			vmbee.OutsideTempList = [];
+			//Get Audio
+			vmbee.getAudio = getAudio;
+			vmbee.BeeFreqStatusList= [];
+			//Get FrameWeight
+			vmbee.getFrameWeight = getFrameWeight;
+			vmbee.HiveWeightStatusList = [];
 			
 			//Hive Temperature Alert
 			vmbee.hiveTempMaxAlert = hiveTempMaxAlert;
@@ -97,6 +106,10 @@
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
 		vmbee.setGridPopulationOptions = setGridPopulationOptions;
+		vmbee.setGridOutsideTempOptions = setGridOutsideTempOptions;
+		vmbee.setGridAudioOptions = setGridAudioOptions;
+		vmbee.setGridFrameWeightOptions = setGridFrameWeightOptions;
+		
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
         vmbee.limits = [10,20,50,100,200,500,5000];
@@ -136,88 +149,119 @@
             setGridHiveOptions();
 			setGridLightHistoryOptions();
 			setGridPopulationOptions();
+			setGridOutsideTempOptions();
+			setGridAudioOptions();
+			setGridFrameWeightOptions();
             $q.all([
-					getBeeHives().then(
-					function () {
-						$log.debug('activated Beehive view');
-					}, 
-					function(error) {
-                    $log.debug('Caught an error getting hivelist, going to notify:', error); 
+				getBeeHives().then(
+				function () {
+					$log.debug('activated Beehive view');
+				}, 
+				function(error) {
+				$log.debug('Caught an error getting hivelist, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),	
+				getHiveList().then(
+				function () {
+					$log.debug('hivelist returned');
+				}, 
+				function(error) {
+				$log.debug('Caught an error getting hivelist, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),
+				getLight().then(
+				function () {
+					$log.debug('getLight returned');
+				}, 
+				function(error) {
+					
+				$log.debug('Caught an error getting light, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),
+				getPopulation().then(
+				function () {
+					$log.debug('getPopulation returned');
+				}, 
+				function(error) {
+				$log.debug('Caught an error getting population, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),
+				getOTemp().then(
+				function () {
+					$log.debug('getOTemp returned');
+				}, 
+				function(error) {
+					
+				$log.debug('Caught an error getting outsidetemp, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),
+				getAudio().then(
+				function () {
+					$log.debug('getAudio returned');
+				}, 
+				function(error) {
+				$log.debug('Caught an error getting Adui, going to notify:', error); 
+				Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+				}),	
+				getFrameWeight().then(
+				function () {
+					$log.debug('getFrameWeight returned');
+				}, 
+				function(error) {
+                    $log.debug('Caught an error getting getFrameWeight, going to notify:', error); 
                     Notification.error({message: error, delay: 5000});
 						return ($q.reject(error));
-					}),	
-					getHiveList().then(
-					function () {
-						$log.debug('hivelist returned');
-					}, 
-					function(error) {
-                    $log.debug('Caught an error getting hivelist, going to notify:', error); 
-                    Notification.error({message: error, delay: 5000});
-						return ($q.reject(error));
-					}),
-					getLight().then(
-					function () {
-						$log.debug('getLight returned');
-					}, 
-					function(error) {
-						
-                    $log.debug('Caught an error getting light, going to notify:', error); 
-                    Notification.error({message: error, delay: 5000});
-						return ($q.reject(error));
-					}),
-					getPopulation().then(
-					function () {
-						$log.debug('getPopulation returned');
-					}, 
-					function(error) {
-                    $log.debug('Caught an error getting population, going to notify:', error); 
-                    Notification.error({message: error, delay: 5000});
-						return ($q.reject(error));
-					}),
+					}),					
 				//Latest	
-                    getLatestOutsideTemp().then(function () {
-                        $log.debug('got latestoutsidetemp');
+				 getLatestOutsideTemp().then(function () {
+					$log.debug('got latestoutsidetemp');
 
-                    }, function(error) {
-                        vmbee.outsidetemp=[];
-                             return ($q.reject(error));
-                    }),	
-					 getLatestHiveTemp().then(function () {
-                        $log.debug('got latesthivetemp');
+				}, function(error) {
+					vmbee.outsidetemp=[];
+						 return ($q.reject(error));
+				}),	
+				 getLatestHiveTemp().then(function () {
+					$log.debug('got latesthivetemp');
 
-                    }, function(error) {
-                        vmbee.hivetemp=[];
-                             return ($q.reject(error));
-                    }),
-					 getLatestHiveHumidity().then(function () {
-                        $log.debug('got latesthivehumidity');
+				}, function(error) {
+					vmbee.hivetemp=[];
+						 return ($q.reject(error));
+				}),
+				 getLatestHiveHumidity().then(function () {
+					$log.debug('got latesthivehumidity');
 
-                    }, function(error) {
-                        vmbee.hivehumidity=[];
-                             return ($q.reject(error));
-                    }),
-					 getLatestHiveWeight().then(function () {
-                        $log.debug('got latesthiveweight');
+				}, function(error) {
+					vmbee.hivehumidity=[];
+						 return ($q.reject(error));
+				}),
+				 getLatestHiveWeight().then(function () {
+					$log.debug('got latesthiveweight');
 
-                    }, function(error) {
-                        vmbee.HiveWeightStatus=[];
-                             return ($q.reject(error));
-                    }),
-					 getLatestLight().then(function () {
-                        $log.debug('got latestlight');
+				}, function(error) {
+					vmbee.HiveWeightStatus=[];
+						 return ($q.reject(error));
+				}),
+				 getLatestLight().then(function () {
+					$log.debug('got latestlight');
 
-                    }, function(error) {
-                        vmbee.light=[];
-                             return ($q.reject(error));
-                    }),
-					 getLatestBeePopulation().then(function () {
-                        $log.debug('got latestbeepopulation');
+				}, function(error) {
+					vmbee.light=[];
+						 return ($q.reject(error));
+				}),
+				 getLatestBeePopulation().then(function () {
+					$log.debug('got latestbeepopulation');
 
-                    }, function(error) {
-                        vmbee.populations=[];
-                             return ($q.reject(error));
-                    }),
-					 getLatestBeeFreq().then(function () {
+				}, function(error) {
+					vmbee.populations=[];
+						 return ($q.reject(error));
+				}),
+				 getLatestBeeFreq().then(function () {
                         $log.debug('got latestbeefrequency');
 
                     }, function(error) {
@@ -300,7 +344,50 @@
                     return ($q.reject(error));
             });
         }
-        function getBeeHives() {
+		function getAudio() {
+			var thepath = '../v1//beeFreqStatus';
+			return BeeServices.getBeeFrequency(thepath).then(function (data) {
+				$log.debug('getBeeFrequency returned data');
+				$log.debug(data);
+					vmbee.gridAudioOptions.data = data.BeeFreqStatusList;
+					return vmbee.gridAudioOptions.data;
+			},
+			function (error) {
+					$log.debug('Caught an error getting beefreqstatuslist, going to notify:', error); 
+					Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+			});
+		}
+		function getOTemp() {
+			var thepath = '../v1/outsidetemp';
+			return BeeServices.getOutsideTemp(thepath).then(function (data) {
+				$log.debug('getOutsideTemp returned data');
+				$log.debug(data);
+					vmbee.gridOutsideTempOptions.data = data.OutsideTempList;
+					return vmbee.gridOutsideTempOptions.data;
+			},
+			function (error) {
+					$log.debug('Caught an error getting outsidetemplist, going to notify:', error); 
+					Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+			});
+		}
+		function getFrameWeight() {
+			var thepath = '../v1/HiveWeightStatus';
+			return BeeServices.getHiveWeight(thepath).then(function (data) {
+				$log.debug('getHiveWeight returned data');
+				$log.debug(data);
+					vmbee.gridFrameWeightOptions.data = data.HiveWeightStatusList;
+					return vmbee.gridFrameWeightOptions.data;
+			},
+			function (error) {
+					$log.debug('Caught an error getting HiveWeightStatusList, going to notify:', error); 
+					Notification.error({message: error, delay: 5000});
+					return ($q.reject(error));
+			});
+		}
+
+		function getBeeHives() {
             var thepath = '../v1/bees';
             return BeeServices.getAllBeehives(thepath).then(function (data) {
                 $log.debug('getAllBeehives returned data');
@@ -600,6 +687,312 @@
             $log.debug('setgridPopulationOptions Options:', vmbee.gridPopulationOptions);
 
         } 
+   function setGridOutsideTempOptions() {
+
+            vmbee.gridOutsideTempOptions = {
+                enableFiltering: true,
+                paginationPageSizes: vmbee.limits,
+                paginationPageSize: 10,
+            columnDefs: [
+                {
+                    field: 'datetime',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }, {
+                    field: 'temp',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than'
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than'
+                            }
+                          ]
+                }
+                ],
+
+                //rowHeight: 15,
+                showGridFooter: true,
+                enableColumnResizing: true,
+                appScopeProvider: vmbee,
+
+                onRegisterApi: function(gridApi) {
+                    $log.debug('vm gridapi onRegisterApi');
+                     vmbee.gridOutsideTempApi = gridApi;
+
+                    }
+            };
+
+            $log.debug('setgridOutsideTempOptions Options:', vmbee.gridOutsideTempOptions);
+
+        } 
+   function setGridAudioOptions() {
+
+            vmbee.gridAudioOptions = {
+                enableFiltering: true,
+                paginationPageSizes: vmbee.limits,
+                paginationPageSize: 10,
+            columnDefs: [
+                {
+                    field: 'hiveID',
+                    enableCellEdit: false,
+                    enableFiltering: true
+                }, {
+                    field: 'datetime',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }, {
+                    field: 'frequencyStatus',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+                }
+                ],
+
+                //rowHeight: 15,
+                showGridFooter: true,
+                enableColumnResizing: true,
+                appScopeProvider: vmbee,
+
+                onRegisterApi: function(gridApi) {
+                    $log.debug('vm gridapi onRegisterApi');
+                     vmbee.gridAudioApi = gridApi;
+
+                    }
+            };
+
+            $log.debug('setgridAudioOptions Options:', vmbee.gridAudioOptions);
+
+        } 
+   function setGridFrameWeightOptions() {
+
+            vmbee.gridFrameWeightOptions = {
+                enableFiltering: true,
+                paginationPageSizes: vmbee.limits,
+                paginationPageSize: 10,
+            columnDefs: [
+                {
+                    field: 'hiveid',
+                    enableCellEdit: false,
+                    enableFiltering: true
+                }, {
+                    field: 'datetime',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }, {
+                    field: 'frameweight1',
+					name: 'Frame 1',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight2',
+					name: 'Frame 2',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight3',
+					name: 'Frame 3',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight4',
+					name: 'Frame 4',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight5',
+					name: 'Frame 5',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight6',
+					name: 'Frame 6',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight7',
+					name: 'Frame 7',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweight8',
+					name: 'Frame 8',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                },{
+                    field: 'frameweightsum',
+					name: 'Frame Weight Sum',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }
+                ],
+
+                //rowHeight: 15,
+                showGridFooter: true,
+                enableColumnResizing: true,
+                appScopeProvider: vmbee,
+
+                onRegisterApi: function(gridApi) {
+                    $log.debug('vm gridapi onRegisterApi');
+                     vmbee.gridFrameWeightApi = gridApi;
+
+                    }
+            };
+
+            $log.debug('setgridFrameWeightOptions Options:', vmbee.gridFrameWeightOptions);
+
+        } 
+ 
  
 	}
 			function ModalController( $log, $uibModal, $location, BeeServices) {
