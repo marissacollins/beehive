@@ -18,7 +18,7 @@ $app->get('/bees',   function() use($app) {
             $tmp["humidity"] =  (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
-            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+            $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
         } 
 		else {
             $tmp["id"] = "NULL";

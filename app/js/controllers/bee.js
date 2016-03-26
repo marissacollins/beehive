@@ -68,8 +68,13 @@
 			vmbee.selectedHiveId = 'All';
 			vmbee.selectedHiveName = 'All';
 			vmbee.doHiveSelect = doHiveSelect;
+			//Get Light History
+			vmbee.getLight = getLight;
+			vmbee.LightList = [];
+
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
+		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
         vmbee.limits = [10,20,50,100,200,500,5000];
@@ -82,6 +87,7 @@
         function activate() {
             $log.debug('about activate bee ');
             setGridHiveOptions();
+			setGridLightHistoryOptions();
             $q.all([
 					getBeeHives().then(
 					function () {
@@ -100,7 +106,16 @@
                     $log.debug('Caught an error getting hivelist, going to notify:', error); 
                     Notification.error({message: error, delay: 5000});
 						return ($q.reject(error));
-					}),	
+					}),
+					getLight().then(
+					function () {
+						$log.debug('getLight returned');
+					}, 
+					function(error) {
+                    $log.debug('Caught an error getting light, going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+						return ($q.reject(error));
+					}),
 				//Latest	
                     getLatestOutsideTemp().then(function () {
                         $log.debug('got latestoutsidetemp');
@@ -150,7 +165,7 @@
                     }, function(error) {
                         vmbee.beeFreqStatus=[];
                              return ($q.reject(error));
-                    }),
+                    })
 					
 
                 ])
@@ -192,7 +207,21 @@
                     return ($q.reject(error));
             });
         }
-		
+		function getLight() {
+            var thepath = '../v1/light';
+            return BeeServices.getLight(thepath).then(function (data) {
+                $log.debug('getLight returned data');
+                $log.debug(data);
+                    vmbee.gridLightHistoryOptions.data = data.LightList;
+
+                    return vmbee.gridLightHistoryOptions.data;
+			},
+			function (error) {
+                    $log.debug('Caught an error getting lightlist, going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+                    return ($q.reject(error));
+            });
+        }
         function getBeeHives() {
             var thepath = '../v1/bees';
             return BeeServices.getAllBeehives(thepath).then(function (data) {
@@ -201,6 +230,12 @@
                     vmbee.gridHiveOptions.data = data.HivesList;
 
                     return vmbee.gridHiveOptions.data;
+			},
+			function (error) {
+                    $log.debug('Caught an error getting hiveoptions, going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+                    return ($q.reject(error));
+            
             });
         }
         function getLatestOutsideTemp() {
@@ -291,14 +326,13 @@
             }
         }
    function setGridHiveOptions() {
-
             vmbee.gridHiveOptions = {
                 enableFiltering: true,
                 paginationPageSizes: vmbee.limits,
                 paginationPageSize: 10,
             columnDefs: [
                 {
-                    field: 'name',
+                    field: 'hiveid',
                     enableCellEdit: false,
                     enableFiltering: true
                 }, {
@@ -368,7 +402,66 @@
             $log.debug('setgridHiveOptions Options:', vmbee.gridHiveOptions);
 
         }        
- 
+   function setGridLightHistoryOptions() {
+
+            vmbee.gridLightHistoryOptions = {
+                enableFiltering: true,
+                paginationPageSizes: vmbee.limits,
+                paginationPageSize: 10,
+            columnDefs: [
+                {
+                    field: 'hiveid',
+                    enableCellEdit: false,
+                    enableFiltering: true
+                }, {
+                    field: 'datetime',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }, {
+                    field: 'lumen',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than'
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than'
+                            }
+                          ]
+                }
+                ],
+
+                //rowHeight: 15,
+                showGridFooter: true,
+                enableColumnResizing: true,
+                appScopeProvider: vmbee,
+
+                onRegisterApi: function(gridApi) {
+                    $log.debug('vm gridapi onRegisterApi');
+                     vmbee.gridLightApi = gridApi;
+
+                    }
+            };
+
+            $log.debug('setgridHiveOptions Options:', vmbee.gridLightHistoryOptions);
+
+        } 
  
 	}
 			function ModalController( $log, $uibModal, $location, BeeServices) {
