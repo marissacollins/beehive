@@ -132,19 +132,21 @@
 								{{vm.hivetemp[0].temp}} </a>
 								</br>
 								<div class="dta"> as of: {{vm.hivetemp[0].datetime}}
-								<div ng-show="vm.hiveTempMaxAlert(vm.hivetemp[0].temp)">Alert: Temp > {{vm.hiveTempAlertAmtMax}}</div>
-								<div ng-show="vm.hiveTempMinAlert(vm.hivetemp[0].temp)">Alert: Temp &lt; {{vm.hiveTempAlertAmtMin}}</div>
+								<div ng-show="vm.hiveTempMaxAlert(vm.hivetemp[0].temp)">Alert: Temperature > {{vm.hiveTempAlertAmtMax}}</div>
+								<div ng-show="vm.hiveTempMinAlert(vm.hivetemp[0].temp)">Alert: Temperature &lt; {{vm.hiveTempAlertAmtMin}}</div>
 								</div></h2></div></div>
 				</div>
 				<!--Hive Humidity-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="humidity">Hive Humidity:</h2></div>
-					<div class="col-md-6"><div class="humidVar">
+					<div class="col-md-6"><div class="humidVar" ng-style="{ 'border' : vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity) || vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity) ? '4px solid red' : ''}">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('hivehumidity')">
 								{{vm.hivehumidity[0].humidity}} </a>
 								</br>
 								<div class="dta">as of: {{vm.hivehumidity[0].datetime}}
+								<div ng-show="vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity)">Alert: Humidity > {{vm.hiveHumidityAlertAmtMax}}</div>
+								<div ng-show="vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity)">Alert: Humidity &lt; {{vm.hiveHumidityAlertAmtMin}}</div>
 								</div></h2></div></div>
 				</div>
 <!--Weight Status-->
@@ -173,13 +175,15 @@
 				<!--Population Count-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="population">Bee Population:</h2></div>
-					<div class="col-md-6"><div class="popVar">
+					<div class="col-md-6"><div class="popVar" <!--ng-style="{ 'border' : vm.populationMaxAlert(vm.population[0].count || vm.populationMinAlert(vm.population[0].count) ?  '4px solid red' : ''}"-->>
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('population')">
 								{{vm.populations[0].count}} </a>
 								</br>
 								<div class="dta">as of: {{vm.populations[0].datetime}}
-								</div></h2></div></div>
+								<!--<div ng-show="vm.populationMaxAlert(vm.population[0].count)">Alert: Population > {{vm.populationAlertAmtMax}}</div>
+								<div ng-show="vm.populationMinAlert(vm.population[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
+								--></div></h2></div></div>
 				</div>
 				<!--Frequency Status-->
 				<div class="row">

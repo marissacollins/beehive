@@ -80,10 +80,19 @@
 			vmbee.hiveTempAlertAmtMax = 95;
 			vmbee.hiveTempMinAlert = hiveTempMinAlert;
 			vmbee.hiveTempAlertAmtMin = 90;
+			//Hive Humidity Alert
+			vmbee.hiveHumidityMaxAlert = hiveHumidityMaxAlert;
+			vmbee.hiveHumidityAlertAmtMax = 60;
+			vmbee.hiveHumidityMinAlert = hiveHumidityMinAlert;
+			vmbee.hiveHumidityAlertAmtMin = 50;
 			//Weight Alert
 			vmbee.weightAlert = weightAlert;
 			vmbee.weightAlertAmt = 60;
-			
+			//Population Alert
+			/*vmbee.populationMaxAlert = populationMaxAlert;
+			vmbee.populationAlertAmtMax = 80000;
+			vmbee.populationMinAlert = populationMinAlert;
+			vmbee.populationAlertAmtMin = 20000;*/
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
@@ -103,10 +112,24 @@
 		function hiveTempMinAlert(hiveTemptest){
 			return hiveTemptest < vmbee.hiveTempAlertAmtMin;
 		}
+		//hive humidity alert function
+		function hiveHumidityMaxAlert(hiveHumiditytest){
+			return hiveHumiditytest > vmbee.hiveHumidityAlertAmtMax;
+		}
+		function hiveHumidityMinAlert(hiveHumiditytest){
+			return hiveHumiditytest < vmbee.hiveHumidityAlertAmtMin;
+		}
 		//weight alert function
 		function weightAlert(weighttest) {
 			return weighttest > vmbee.weightAlertAmt;
 		}
+		//population alert function
+		/*function populationMaxAlert(populationtest){
+			return populationtest > vmbee.populationAlertAmtMax;
+		}
+		function populationMinAlert(populationtest){
+			return populationtest < vmbee.populationAlertAmtMin;
+		}*/
 		//Functions to actually retrieve the latest values
         function activate() {
             $log.debug('about activate bee ');
