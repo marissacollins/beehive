@@ -74,8 +74,15 @@
 			//Get Population
 			vmbee.getPopulation = getPopulation;
 			vmbee.PopulationList = [];
+			
+			//Hive Temperature Alert
+			vmbee.hiveTempMaxAlert = hiveTempMaxAlert;
+			vmbee.hiveTempAlertAmtMax = 95;
+			vmbee.hiveTempMinAlert = hiveTempMinAlert;
+			vmbee.hiveTempAlertAmtMin = 90;
+			//Weight Alert
 			vmbee.weightAlert = weightAlert;
-			vmbee.weightAlertAmt = 110;
+			vmbee.weightAlertAmt = 60;
 			
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
@@ -89,6 +96,14 @@
 		//load the data for the initial display
         activate();
 
+		//hive temp alert function
+		function hiveTempMaxAlert(hiveTemptest){
+			return hiveTemptest > vmbee.hiveTempAlertAmtMax;
+		}
+		function hiveTempMinAlert(hiveTemptest){
+			return hiveTemptest < vmbee.hiveTempAlertAmtMin;
+		}
+		//weight alert function
 		function weightAlert(weighttest) {
 			return weighttest > vmbee.weightAlertAmt;
 		}

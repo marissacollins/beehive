@@ -126,12 +126,14 @@
 				<!--Hive Temp-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="inside">Hive Temperature:</h2></div>
-					<div class="col-md-6"><div class="inVar">
+					<div class="col-md-6"><div class="inVar" ng-style="{ 'border' : vm.hiveTempMaxAlert(vm.hivetemp[0].temp) || vm.hiveTempMinAlert(vm.hivetemp[0].temp) ? '4px solid red' : ''}">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('hivetemp')">
 								{{vm.hivetemp[0].temp}} </a>
 								</br>
 								<div class="dta"> as of: {{vm.hivetemp[0].datetime}}
+								<div ng-show="vm.hiveTempMaxAlert(vm.hivetemp[0].temp)">Alert: Temp > {{vm.hiveTempAlertAmtMax}}</div>
+								<div ng-show="vm.hiveTempMinAlert(vm.hivetemp[0].temp)">Alert: Temp &lt; {{vm.hiveTempAlertAmtMin}}</div>
 								</div></h2></div></div>
 				</div>
 				<!--Hive Humidity-->
