@@ -206,7 +206,6 @@
 			});
 			return( request.then( handleSuccess, handleError ) );
 		}
-		/*hi*/
  		function updatePopulation(path, population){
 			$log.debug('updatePopulation data before post :' , population);
 			var request = $http({

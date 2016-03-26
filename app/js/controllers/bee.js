@@ -71,10 +71,14 @@
 			//Get Light History
 			vmbee.getLight = getLight;
 			vmbee.LightList = [];
+			//Get Population
+			vmbee.getPopulation = getPopulation;
+			vmbee.PopulationList = [];
 
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
+		vmbee.setGridPopulationOptions = setGridPopulationOptions;
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
         vmbee.limits = [10,20,50,100,200,500,5000];
@@ -88,6 +92,7 @@
             $log.debug('about activate bee ');
             setGridHiveOptions();
 			setGridLightHistoryOptions();
+			setGridPopulationOptions();
             $q.all([
 					getBeeHives().then(
 					function () {
@@ -112,7 +117,17 @@
 						$log.debug('getLight returned');
 					}, 
 					function(error) {
+						
                     $log.debug('Caught an error getting light, going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+						return ($q.reject(error));
+					}),
+					getPopulation().then(
+					function () {
+						$log.debug('getPopulation returned');
+					}, 
+					function(error) {
+                    $log.debug('Caught an error getting population, going to notify:', error); 
                     Notification.error({message: error, delay: 5000});
 						return ($q.reject(error));
 					}),
@@ -218,6 +233,21 @@
 			},
 			function (error) {
                     $log.debug('Caught an error getting lightlist, going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+                    return ($q.reject(error));
+            });
+        }
+		function getPopulation() {
+            var thepath = '../v1/populations';
+            return BeeServices.getPopulation(thepath).then(function (data) {
+                $log.debug('getPopulation returned data');
+                $log.debug(data);
+                    vmbee.gridPopulationOptions.data = data.PopulationList;
+
+                    return vmbee.gridPopulationOptions.data;
+			},
+			function (error) {
+                    $log.debug('Caught an error getting populationlist, going to notify:', error); 
                     Notification.error({message: error, delay: 5000});
                     return ($q.reject(error));
             });
@@ -460,6 +490,66 @@
             };
 
             $log.debug('setgridHiveOptions Options:', vmbee.gridLightHistoryOptions);
+
+        } 
+   function setGridPopulationOptions() {
+
+            vmbee.gridPopulationOptions = {
+                enableFiltering: true,
+                paginationPageSizes: vmbee.limits,
+                paginationPageSize: 10,
+            columnDefs: [
+                {
+                    field: 'hiveid',
+                    enableCellEdit: false,
+                    enableFiltering: true
+                }, {
+                    field: 'datetime',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					type: 'date',
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than',
+							  flags: { date: true }							  
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than',
+							  flags: { date: true }							  
+                            }
+                          ]
+                }, {
+                    field: 'count',
+                    enableCellEdit: false,
+                    enableFiltering: true,
+					filters:  [
+                            {
+                              condition: uiGridConstants.filter.GREATER_THAN,
+                              placeholder: '> than'
+                            },
+                            {
+                              condition: uiGridConstants.filter.LESS_THAN,
+                              placeholder: '< than'
+                            }
+                          ]
+                }
+                ],
+
+                //rowHeight: 15,
+                showGridFooter: true,
+                enableColumnResizing: true,
+                appScopeProvider: vmbee,
+
+                onRegisterApi: function(gridApi) {
+                    $log.debug('vm gridapi onRegisterApi');
+                     vmbee.gridPopulationApi = gridApi;
+
+                    }
+            };
+
+            $log.debug('setgridPopulationOptions Options:', vmbee.gridPopulationOptions);
 
         } 
  

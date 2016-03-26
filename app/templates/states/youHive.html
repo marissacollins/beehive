@@ -59,15 +59,15 @@
 							  </div>
 							  
 							  <!--WeightSummary Graph-->
-							  <div ng-show="vminst.graphidsum == 'weightSplineSum'" ng-hide="vminst.graphidsum != 'weightSplineSum'"  class="panel">
+							  <div ng-show="vminst.graphidsum == 'weightSplineSum'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Sum Trend for Hive: {{vminst.selectedHiveName}}</h4>
 								  <div class="col-md-9" id="weightSplineSum" style="height:200px"></div>
 								  <div class="col-md-3" id="weightLegendsum"></div>
 							   </div>
 							  </div>
-							  							  <!--Frame Weight 1 Graph-->
-							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1'" ng-hide="vminst.graphid1 != 'weightSplineFrame1'"  class="panel">
+						 <!--Frame Weight Graph-->
+							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveName != 'All'"  class="panel">
 								<div class="panel-body">
 								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveName}}</h4>
 								  <div class="col-md-9" id="weightSplineFrame1" style="height:400px"></div>
