@@ -221,7 +221,7 @@ class BeeDbHandler {
 	private function doesFWIDExist($hiveID, $datetime){
 		
 		error_log( print_R("before doesFWIDExist\n", TRUE ), 3, LOG);
-		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
+		error_log( print_R("hiveid: $hiveID\n", TRUE ), 3, LOG);
 		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
 	
 	    $stmt = $this->conn->prepare("SELECT hiveID from frameweight WHERE hiveID = ? and datetime = ?");
@@ -239,28 +239,43 @@ class BeeDbHandler {
 		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
 		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
 	
-	    $stmt = $this->conn->prepare("SELECT hiveID from hive WHERE hiveID = ? and datetime = ?");
-        $stmt->bind_param("ss", $hiveID, $datetime);
-        $stmt->execute();
-        $stmt->store_result();
-        $num_rows = $stmt->num_rows;
-        $stmt->close();
-        return $num_rows > 0;
+	    $sql ="SELECT hiveID from hive WHERE hiveID = ? and datetime = ?";
+		if ($stmt = $this->conn->prepare($sql)) {
+			$stmt->bind_param("ss", $hiveID, $datetime);
+			$stmt->execute();
+			$stmt->store_result();
+			$num_rows = $stmt->num_rows;
+			$stmt->close();
+			error_log( print_R("hiveidexist result: $num_rows\n", TRUE ), 3, LOG);
+			return $num_rows > 0;
+		}
+		else{
+			printf("Errormessage: %s\n", $this->conn->error);
+			return false;
+		}
 	
 	}
 	private function doesHiveNameExist($name, $datetime){
 		
-		error_log( print_R("before doesHiveID2Exist\n", TRUE ), 3, LOG);
+		error_log( print_R("before doesHiveNameExist\n", TRUE ), 3, LOG);
 		error_log( print_R("name: $name\n", TRUE ), 3, LOG);
 		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+
+		$sql = "SELECT name from hive WHERE name = ? and datetime = ?";
 	
-	    $stmt = $this->conn->prepare("SELECT name from hive WHERE name = ? and datetime = ?");
+	    if( $stmt = $this->conn->prepare($sql)){
         $stmt->bind_param("ss", $name, $datetime);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;
         $stmt->close();
+		error_log( print_R("hivenameexist result: $num_rows\n", TRUE ), 3, LOG);
         return $num_rows > 0;
+		}
+		else{
+			printf("Errormessage: %s\n", $this->conn->error);
+			return false;
+		}
 	
 	}
 	private function doesLightIDExist($hiveID, $datetime){
@@ -390,20 +405,22 @@ class BeeDbHandler {
 		
 		return $response;
 	}
-	public function createHive($hiveID, $name, $datetime, $temp, $weight, $humidity){
+	public function createHive($hiveID, $name, $datetime, $temp, $humidity){
 		
 		error_log( print_R("createHive entered\n", TRUE ),3, LOG);
 		
 		$response = array();
 		
-		$sql = "INSERT INTO hive (hiveID, name, datetime, temp, weight, humidity)VALUES ";
+		$sql = "INSERT INTO hive (hiveID, name, datetime, temp, humidity)VALUES ";
 		$sql .= "(?,?,? ";
-		$sql .= " ?,?,?)";
+		$sql .= " ,?,?)";
 		
 		//Check if hiveID already exists in database
 		if (!$this->doesHiveIDExist($hiveID, $datetime) && !$this->doesHiveNameExist($name, $datetime)){
+			error_log( print_R("createHive about to prepare stmt\n", TRUE ),3, LOG);
 			if ($stmt = $this->conn->prepare($sql)) {
-                $stmt->bind_param("ssssss", $hiveID, $name, $datetime, $temp, $weight, $humidity);
+                $stmt->bind_param("sssss", $hiveID, $name, $datetime, $temp, $humidity);
+				error_log( print_R("createHive about to insert\n", TRUE ),3, LOG);
 				//Check if it inserted correctly
 				$stmt->execute();
                 $num_affected_rows = $stmt->affected_rows;
@@ -411,11 +428,14 @@ class BeeDbHandler {
                 return $num_affected_rows >= 0;
 			}
 			else{
+				$e = sprintf("Errormessage: %s\n", $this->conn->error);
+				error_log( print_R("createHive prep sql failed: $e\n", TRUE ),3, LOG);
 				printf("Errormessage: %s\n", $this->conn->error);
                 return NULL;
 			}
 		}
 		else{
+			error_log( print_R("createHive exist failed\n", TRUE ),3, LOG);
 			// datetime with same hiveID existed
             return RECORD_ALREADY_EXISTED;
 		}

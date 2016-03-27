@@ -295,7 +295,9 @@ $app->get('/HiveWeightStatus',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
-            $tmp["frameweight1"] = (empty($slist["frameweight1"]) ? "NULL" : $slist["frameweight1"]);
+			 $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveID"]);
+		   $tmp["frameweight1"] = (empty($slist["frameweight1"]) ? "NULL" : $slist["frameweight1"]);
             $tmp["frameweight2"] = (empty($slist["frameweight2"]) ? "NULL" : $slist["frameweight2"]);
             $tmp["frameweight3"] = (empty($slist["frameweight3"]) ? "NULL" : $slist["frameweight3"]);
             $tmp["frameweight4"] = (empty($slist["frameweight4"]) ? "NULL" : $slist["frameweight4"]);
@@ -304,8 +306,7 @@ $app->get('/HiveWeightStatus',   function() use($app) {
             $tmp["frameweight7"] = (empty($slist["frameweight7"]) ? "NULL" : $slist["frameweight7"]);
             $tmp["frameweight8"] = (empty($slist["frameweight8"]) ? "NULL" : $slist["frameweight8"]);
             $tmp["frameweightsum"] = (empty($slist["frameweightsum"]) ? "NULL" : $slist["frameweightsum"]);
-            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
-            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+           
         } 
 		else {
             $tmp["hiveid"] = "NULL";
@@ -455,25 +456,24 @@ $app->post('/uploadData', function() use($app){
     }
     $isHive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
     if ($isHive != "") {
-       $thesuccess += uploadHive($dataJsonDecode, $thehive);
-    }
+       $thesuccess += uploadHive(json_decode($data,true) , $thehive);
+	}
     $isPopulation  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
     if ($isPopulation != "") {
-		$thesuccess += uploadPopulation($dataJsonDecode, $thehive);
+		$thesuccess += uploadPopulation(json_decode($data,true) , $thehive);
     }
     $isFrameWeight  = (isset($dataJsonDecode->frameweight) ? $dataJsonDecode->frameweight : "");
     if ($isFrameWeight != "") {
-		$thesuccess += uploadFrameWeight($dataJsonDecode, $thehive);
+		$thesuccess += uploadFrameWeight(json_decode($data,true) , $thehive);
     }
     $isLightHistory  = (isset($dataJsonDecode->lighthistory) ? $dataJsonDecode->lighthistory : "");
     if ($isLightHistory != "") {
-		$thesuccess += uploadLightHistory($dataJsonDecode, $thehive);
+		$thesuccess += uploadLightHistory(json_decode($data,true) , $thehive);
     }
     $isOutsideTemp  = (isset($dataJsonDecode->outsidetemp) ? $dataJsonDecode->outsidetemp : "");
     if ($isOutsideTemp != "") {
-		$thesuccess += uploadOutsideTemp($dataJsonDecode, $thehive);
+		$thesuccess += uploadOutsideTemp(json_decode($data,true) , $thehive);
     }
-
     if ($thesuccess == 0) {
         $response["error"] = false;
         $response["message"] = "frame created successfully";
@@ -543,13 +543,13 @@ $app->post('/updateHive', function() use($app){
 	error_log( print_R("hive post before update insert\n", TRUE ), 3, LOG);
     $hive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
     error_log( print_R($hive, TRUE ), 3, LOG);
-	
-	$datetime  = (isset($dataJsonDecode->hive->datetime)? $dataJsonDecode->hive->datetime : "");
-    $hiveID   = (isset($dataJsonDecode->hive->hiveID)? $dataJsonDecode->hive->hiveID : "");
+	   
+	$hiveID   = (isset($dataJsonDecode->hive->hiveID)? $dataJsonDecode->hive->hiveID : "");
     $name = (isset($dataJsonDecode->hive->name) ? $dataJsonDecode->hive->name : "");
+	$datetime  = (isset($dataJsonDecode->hive->datetime)? $dataJsonDecode->hive->datetime : "");
+	$temp = (isset($dataJsonDecode->hive->temp) ? $dataJsonDecode->hive->temp : "");
 	$weight = (isset($dataJsonDecode->hive->weight) ? $dataJsonDecode->hive->weight : "");
 	$humidity = (isset($dataJsonDecode->hive->humidity) ? $dataJsonDecode->hive->humidity : "");	
-	$temp = (isset($dataJsonDecode->hive->temp) ? $dataJsonDecode->hive->temp : "");
 	
 	
 	$db = new BeeDbHandler();
@@ -587,8 +587,8 @@ $app->post('/updateLightHistory', function() use($app){
     $light  = (isset($dataJsonDecode->light) ? $dataJsonDecode->light : "");
     error_log( print_R($light, TRUE ), 3, LOG);
 	
+	$hiveID      = (isset($dataJsonDecode->light->hiveID)      ? $dataJsonDecode->light->hiveID : "");
 	$datetime  = (isset($dataJsonDecode->light->datetime) ? $dataJsonDecode->light->datetime : "");
-    $hiveID      = (isset($dataJsonDecode->light->hiveID)      ? $dataJsonDecode->light->hiveID : "");
     $lumen    = (isset($dataJsonDecode->light->lumen)    ? $dataJsonDecode->light->lumen : "");
 	
 	$db = new BeeDbHandler();
@@ -664,8 +664,8 @@ $app->post('/updatePopulation', function() use($app){
     $population  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
     error_log( print_R($population, TRUE ), 3, LOG);
 	
+	$hiveID      = (isset($dataJsonDecode->population->hiveID)      ? $dataJsonDecode->population->hiveID : "");
 	$datetime  = (isset($dataJsonDecode->population->datetime) ? $dataJsonDecode->population->datetime : "");
-    $hiveID      = (isset($dataJsonDecode->population->hiveID)      ? $dataJsonDecode->population->hiveID : "");
     $count    = (isset($dataJsonDecode->population->count)    ? $dataJsonDecode->population->count : "");
 	
 	$db = new BeeDbHandler();
@@ -793,7 +793,7 @@ function uploadHive($dataJsonDecode, $thehive) {
         error_log( print_R("before hive created: datetime $datetime name $name temp $temp humidity $humidity \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $hive_id = $db->createHive($datetime, $name, $temp, $humidity);
+        $hive_id = $db->createHive($thehive, $name,$datetime,  $temp, $humidity);
         error_log( print_R("hive return: $hive_id\n", TRUE ), 3, LOG);
         if ($hive_id > 0) {
             $hive_cnt += 0;
@@ -831,7 +831,7 @@ function uploadLightHistory($dataJsonDecode, $thehive) {
         error_log( print_R("before lighthistory created: datetime $datetime lumen $lumen \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $light_id = $db->createLightHistory($datetime, $lumen);
+        $light_id = $db->createLightHistory($thehive, $datetime, $lumen);
         error_log( print_R("light return: $light_id\n", TRUE ), 3, LOG);
         if ($light_id > 0) {
             $light_cnt += 0;
@@ -861,6 +861,8 @@ function uploadFrameWeight($dataJsonDecode, $thehive) {
         
         $datetime  = (isset($loop["datetime"]) ? 
                             $loop["datetime"] : "");
+		 $hiveID  = (isset($loop["hiveID"]) ? 
+                            $loop["hiveID"] : "");					
         $frameweight1 = (isset($loop["frameweight1"]) ?
                              $loop["frameweight1"] : "");
 		$frameweight2 = (isset($loop["frameweight2"]) ?
@@ -880,10 +882,10 @@ function uploadFrameWeight($dataJsonDecode, $thehive) {
         
         $response = array();
 
-        error_log( print_R("before frameweight created: datetime $datetime frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
+        error_log( print_R("before frameweight created: datetime $datetime hiveID $hiveID, frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $light_id = $db->createFrameWeight($datetime, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
+        $weight_id = $db->createFrameWeight($datetime, $thehive, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
         error_log( print_R("weight return: $weight_id\n", TRUE ), 3, LOG);
         if ($weight_id > 0) {
             $weight_cnt += 0;
@@ -921,7 +923,7 @@ function uploadPopulation($dataJsonDecode, $thehive) {
         error_log( print_R("before population created: datetime $datetime count $count  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $light_id = $db->createPopulation($datetime, $count);
+        $light_id = $db->createPopulation($thehive, $datetime, $count);
         error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
         if ($population_id > 0) {
             $population_cnt += 0;
@@ -941,6 +943,5 @@ function uploadPopulation($dataJsonDecode, $thehive) {
         return 1;
     }
 }
-
 
 ?>
