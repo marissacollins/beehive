@@ -483,317 +483,317 @@
         }
    
 
-   function highlightFilteredHeader(row, rowRenderIndex, col, colRenderIndex) {
-            if (col.filters[0].term) {
-                return 'header-filtered';
-            } else {
-                return '';
-            }
-        }
-   function setGridHiveOptions() {
-            vmbee.gridHiveOptions = {
-                enableFiltering: true,
-                paginationPageSizes: vmbee.limits,
-                paginationPageSize: 10,
-            columnDefs: [
-                {
-                    field: 'hiveid',
-                    enableCellEdit: false,
-                    enableFiltering: true
-                }, {
-                    field: 'datetime',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					type: 'date',
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than',
-							  flags: { date: true }							  
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than',
-							  flags: { date: true }							  
-                            }
-                          ]
-                }, {
-                    field: 'temp',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than'
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than'
-                            }
-                          ]
-                }, {
-                    field: 'weight',
-                    enableCellEdit: false,
-                    enableFiltering: true
-				}, {
-                    field: 'humidity',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than'
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than'
-                            }
-                          ]
-                }
-                ],
+	   function highlightFilteredHeader(row, rowRenderIndex, col, colRenderIndex) {
+				if (col.filters[0].term) {
+					return 'header-filtered';
+				} else {
+					return '';
+				}
+			}
+	   function setGridHiveOptions() {
+				vmbee.gridHiveOptions = {
+					enableFiltering: true,
+					paginationPageSizes: vmbee.limits,
+					paginationPageSize: 10,
+				columnDefs: [
+					{
+						field: 'hiveid',
+						enableCellEdit: false,
+						enableFiltering: true
+					}, {
+						field: 'datetime',
+						enableCellEdit: false,
+						enableFiltering: true,
+						type: 'date',
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'temp',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}, {
+						field: 'weight',
+						enableCellEdit: false,
+						enableFiltering: true
+					}, {
+						field: 'humidity',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}
+					],
 
-                //rowHeight: 15,
-                showGridFooter: true,
-                enableColumnResizing: true,
-                appScopeProvider: vmbee,
+					//rowHeight: 15,
+					showGridFooter: true,
+					enableColumnResizing: true,
+					appScopeProvider: vmbee,
 
-                onRegisterApi: function(gridApi) {
-                    $log.debug('vm gridapi onRegisterApi');
-                     vmbee.gridHiveApi = gridApi;
+					onRegisterApi: function(gridApi) {
+						$log.debug('vm gridapi onRegisterApi');
+						 vmbee.gridHiveApi = gridApi;
 
-                    }
-            };
+						}
+				};
 
-            $log.debug('setgridHiveOptions Options:', vmbee.gridHiveOptions);
+				$log.debug('setgridHiveOptions Options:', vmbee.gridHiveOptions);
 
-        }        
-   function setGridLightHistoryOptions() {
+			}        
+	   function setGridLightHistoryOptions() {
 
-            vmbee.gridLightHistoryOptions = {
-                enableFiltering: true,
-                paginationPageSizes: vmbee.limits,
-                paginationPageSize: 10,
-            columnDefs: [
-                {
-                    field: 'hiveid',
-                    enableCellEdit: false,
-                    enableFiltering: true
-                }, {
-                    field: 'datetime',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					type: 'date',
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than',
-							  flags: { date: true }							  
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than',
-							  flags: { date: true }							  
-                            }
-                          ]
-                }, {
-                    field: 'lumen',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than'
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than'
-                            }
-                          ]
-                }
-                ],
+				vmbee.gridLightHistoryOptions = {
+					enableFiltering: true,
+					paginationPageSizes: vmbee.limits,
+					paginationPageSize: 10,
+				columnDefs: [
+					{
+						field: 'hiveid',
+						enableCellEdit: false,
+						enableFiltering: true
+					}, {
+						field: 'datetime',
+						enableCellEdit: false,
+						enableFiltering: true,
+						type: 'date',
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'lumen',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}
+					],
 
-                //rowHeight: 15,
-                showGridFooter: true,
-                enableColumnResizing: true,
-                appScopeProvider: vmbee,
+					//rowHeight: 15,
+					showGridFooter: true,
+					enableColumnResizing: true,
+					appScopeProvider: vmbee,
 
-                onRegisterApi: function(gridApi) {
-                    $log.debug('vm gridapi onRegisterApi');
-                     vmbee.gridLightApi = gridApi;
+					onRegisterApi: function(gridApi) {
+						$log.debug('vm gridapi onRegisterApi');
+						 vmbee.gridLightApi = gridApi;
 
-                    }
-            };
+						}
+				};
 
-            $log.debug('setgridHiveOptions Options:', vmbee.gridLightHistoryOptions);
+				$log.debug('setgridHiveOptions Options:', vmbee.gridLightHistoryOptions);
 
-        } 
-   function setGridPopulationOptions() {
+			} 
+	   function setGridPopulationOptions() {
 
-            vmbee.gridPopulationOptions = {
-                enableFiltering: true,
-                paginationPageSizes: vmbee.limits,
-                paginationPageSize: 10,
-            columnDefs: [
-                {
-                    field: 'hiveid',
-                    enableCellEdit: false,
-                    enableFiltering: true
-                }, {
-                    field: 'datetime',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					type: 'date',
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than',
-							  flags: { date: true }							  
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than',
-							  flags: { date: true }							  
-                            }
-                          ]
-                }, {
-                    field: 'count',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than'
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than'
-                            }
-                          ]
-                }
-                ],
+				vmbee.gridPopulationOptions = {
+					enableFiltering: true,
+					paginationPageSizes: vmbee.limits,
+					paginationPageSize: 10,
+				columnDefs: [
+					{
+						field: 'hiveid',
+						enableCellEdit: false,
+						enableFiltering: true
+					}, {
+						field: 'datetime',
+						enableCellEdit: false,
+						enableFiltering: true,
+						type: 'date',
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'count',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}
+					],
 
-                //rowHeight: 15,
-                showGridFooter: true,
-                enableColumnResizing: true,
-                appScopeProvider: vmbee,
+					//rowHeight: 15,
+					showGridFooter: true,
+					enableColumnResizing: true,
+					appScopeProvider: vmbee,
 
-                onRegisterApi: function(gridApi) {
-                    $log.debug('vm gridapi onRegisterApi');
-                     vmbee.gridPopulationApi = gridApi;
+					onRegisterApi: function(gridApi) {
+						$log.debug('vm gridapi onRegisterApi');
+						 vmbee.gridPopulationApi = gridApi;
 
-                    }
-            };
+						}
+				};
 
-            $log.debug('setgridPopulationOptions Options:', vmbee.gridPopulationOptions);
+				$log.debug('setgridPopulationOptions Options:', vmbee.gridPopulationOptions);
 
-        } 
-   function setGridOutsideTempOptions() {
+			} 
+	   function setGridOutsideTempOptions() {
 
-            vmbee.gridOutsideTempOptions = {
-                enableFiltering: true,
-                paginationPageSizes: vmbee.limits,
-                paginationPageSize: 10,
-            columnDefs: [
-                {
-                    field: 'datetime',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					type: 'date',
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than',
-							  flags: { date: true }							  
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than',
-							  flags: { date: true }							  
-                            }
-                          ]
-                }, {
-                    field: 'temp',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than'
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than'
-                            }
-                          ]
-                }
-                ],
+				vmbee.gridOutsideTempOptions = {
+					enableFiltering: true,
+					paginationPageSizes: vmbee.limits,
+					paginationPageSize: 10,
+				columnDefs: [
+					{
+						field: 'datetime',
+						enableCellEdit: false,
+						enableFiltering: true,
+						type: 'date',
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'temp',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}
+					],
 
-                //rowHeight: 15,
-                showGridFooter: true,
-                enableColumnResizing: true,
-                appScopeProvider: vmbee,
+					//rowHeight: 15,
+					showGridFooter: true,
+					enableColumnResizing: true,
+					appScopeProvider: vmbee,
 
-                onRegisterApi: function(gridApi) {
-                    $log.debug('vm gridapi onRegisterApi');
-                     vmbee.gridOutsideTempApi = gridApi;
+					onRegisterApi: function(gridApi) {
+						$log.debug('vm gridapi onRegisterApi');
+						 vmbee.gridOutsideTempApi = gridApi;
 
-                    }
-            };
+						}
+				};
 
-            $log.debug('setgridOutsideTempOptions Options:', vmbee.gridOutsideTempOptions);
+				$log.debug('setgridOutsideTempOptions Options:', vmbee.gridOutsideTempOptions);
 
-        } 
-   function setGridAudioOptions() {
+			} 
+	   function setGridAudioOptions() {
 
-            vmbee.gridAudioOptions = {
-                enableFiltering: true,
-                paginationPageSizes: vmbee.limits,
-                paginationPageSize: 10,
-            columnDefs: [
-                {
-                    field: 'hiveID',
-                    enableCellEdit: false,
-                    enableFiltering: true
-                }, {
-                    field: 'datetime',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-					type: 'date',
-					filters:  [
-                            {
-                              condition: uiGridConstants.filter.GREATER_THAN,
-                              placeholder: '> than',
-							  flags: { date: true }							  
-                            },
-                            {
-                              condition: uiGridConstants.filter.LESS_THAN,
-                              placeholder: '< than',
-							  flags: { date: true }							  
-                            }
-                          ]
-                }, {
-                    field: 'frequencyStatus',
-                    enableCellEdit: false,
-                    enableFiltering: true,
-                }
-                ],
+				vmbee.gridAudioOptions = {
+					enableFiltering: true,
+					paginationPageSizes: vmbee.limits,
+					paginationPageSize: 10,
+				columnDefs: [
+					{
+						field: 'hiveID',
+						enableCellEdit: false,
+						enableFiltering: true
+					}, {
+						field: 'datetime',
+						enableCellEdit: false,
+						enableFiltering: true,
+						type: 'date',
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'frequencyStatus',
+						enableCellEdit: false,
+						enableFiltering: true,
+					}
+					],
 
-                //rowHeight: 15,
-                showGridFooter: true,
-                enableColumnResizing: true,
-                appScopeProvider: vmbee,
+					//rowHeight: 15,
+					showGridFooter: true,
+					enableColumnResizing: true,
+					appScopeProvider: vmbee,
 
-                onRegisterApi: function(gridApi) {
-                    $log.debug('vm gridapi onRegisterApi');
-                     vmbee.gridAudioApi = gridApi;
+					onRegisterApi: function(gridApi) {
+						$log.debug('vm gridapi onRegisterApi');
+						 vmbee.gridAudioApi = gridApi;
 
-                    }
-            };
+						}
+				};
 
-            $log.debug('setgridAudioOptions Options:', vmbee.gridAudioOptions);
+				$log.debug('setgridAudioOptions Options:', vmbee.gridAudioOptions);
 
-        } 
-   function setGridFrameWeightOptions() {
+			} 
+	   function setGridFrameWeightOptions() {
 
             vmbee.gridFrameWeightOptions = {
                 enableFiltering: true,

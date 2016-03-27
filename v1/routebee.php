@@ -455,23 +455,23 @@ $app->post('/uploadData', function() use($app){
     }
     $isHive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
     if ($isHive != "") {
-       // $thesuccess += uploadHive($dataJsonDecode, $thehive);
+       $thesuccess += uploadHive($dataJsonDecode, $thehive);
     }
     $isPopulation  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
     if ($isPopulation != "") {
-     //   $thesuccess += uploadPopulation($dataJsonDecode, $thehive);
+		$thesuccess += uploadPopulation($dataJsonDecode, $thehive);
     }
     $isFrameWeight  = (isset($dataJsonDecode->frameweight) ? $dataJsonDecode->frameweight : "");
     if ($isFrameWeight != "") {
-    //    $thesuccess += uploadFrameWeight($dataJsonDecode, $thehive);
+		$thesuccess += uploadFrameWeight($dataJsonDecode, $thehive);
     }
     $isLightHistory  = (isset($dataJsonDecode->lighthistory) ? $dataJsonDecode->lighthistory : "");
     if ($isLightHistory != "") {
-    //    $thesuccess += uploadLightHistory($dataJsonDecode, $thehive);
+		$thesuccess += uploadLightHistory($dataJsonDecode, $thehive);
     }
     $isOutsideTemp  = (isset($dataJsonDecode->outsidetemp) ? $dataJsonDecode->outsidetemp : "");
     if ($isOutsideTemp != "") {
-   //     $thesuccess += uploadOutsideTemp($dataJsonDecode, $thehive);
+		$thesuccess += uploadOutsideTemp($dataJsonDecode, $thehive);
     }
 
     if ($thesuccess == 0) {
@@ -732,9 +732,215 @@ function uploadAudio($dataJsonDecode, $thehive) {
         error_log( print_R("after audio result bad\n", TRUE), 3, LOG);
         return 1;
     }
-
-    
-
 }
+function uploadOutsideTemp($dataJsonDecode, $thehive) {
+    $app = \Slim\Slim::getInstance();
+
+    $db = new BeeDbHandler();
+    $otemp_cnt = 0;
+    
+    foreach ($dataJsonDecode["outsidetemp"] as $loop) {
+        
+        $datetime  = (isset($loop["datetime"]) ? 
+                            $loop["datetime"] : "");
+        $count = (isset($loop["count"]) ?
+                                  $loop["count"] : "");
+        
+        $response = array();
+
+        error_log( print_R("before otemp created: datetime $datetime count $count \n", TRUE ), 3, LOG);
+        
+        //Updates Task
+        $otemp_id = $db->createOutsideTemp($datetime, $count);
+        error_log( print_R("outsidetemp return: $otemp_id\n", TRUE ), 3, LOG);
+        if ($otemp_id > 0) {
+            $otemp_cnt += 0;
+        } else {
+            $otemp_cnt += 1;
+        }
+        error_log( print_R("outsidetemp cnt: $otemp_cnt\n", TRUE ), 3, LOG);
+        
+    }
+    error_log( print_R("otemp final cnt: $otemp_cnt\n", TRUE ), 3, LOG);
+        
+    if ($otemp_cnt == 0) {
+        error_log( print_R("otemp created\n", TRUE ), 3, LOG);
+        return 0;
+    } else {
+        error_log( print_R("after otemp result bad\n", TRUE), 3, LOG);
+        return 1;
+    }
+}
+function uploadHive($dataJsonDecode, $thehive) {
+    $app = \Slim\Slim::getInstance();
+
+    $db = new BeeDbHandler();
+    $hive_cnt = 0;
+    
+    foreach ($dataJsonDecode["hive"] as $loop) {
+        
+        $datetime  = (isset($loop["datetime"]) ? 
+                            $loop["datetime"] : "");
+        $name = (isset($loop["name"]) ?
+                             $loop["name"] : "");
+		$temp = (isset($loop["temp"]) ?
+                             $loop["temp"] : "");
+		$humidity = (isset($loop["humidity"]) ?
+                             $loop["humidity"] : "");
+        
+        $response = array();
+
+        error_log( print_R("before hive created: datetime $datetime name $name temp $temp humidity $humidity \n", TRUE ), 3, LOG);
+        
+        //Updates Task
+        $hive_id = $db->createHive($datetime, $name, $temp, $humidity);
+        error_log( print_R("hive return: $hive_id\n", TRUE ), 3, LOG);
+        if ($hive_id > 0) {
+            $hive_cnt += 0;
+        } else {
+            $hive_cnt += 1;
+        }
+        error_log( print_R("hive cnt: $hive_cnt\n", TRUE ), 3, LOG);
+        
+    }
+    error_log( print_R("hive final cnt: $hive_cnt\n", TRUE ), 3, LOG);
+        
+    if ($hive_cnt == 0) {
+        error_log( print_R("hive created\n", TRUE ), 3, LOG);
+        return 0;
+    } else {
+        error_log( print_R("after hive result bad\n", TRUE), 3, LOG);
+        return 1;
+    }
+}
+function uploadLightHistory($dataJsonDecode, $thehive) {
+    $app = \Slim\Slim::getInstance();
+
+    $db = new BeeDbHandler();
+    $light_cnt = 0;
+    
+    foreach ($dataJsonDecode["lighthistory"] as $loop) {
+        
+        $datetime  = (isset($loop["datetime"]) ? 
+                            $loop["datetime"] : "");
+        $lumen = (isset($loop["lumen"]) ?
+                             $loop["lumen"] : "");
+        
+        $response = array();
+
+        error_log( print_R("before lighthistory created: datetime $datetime lumen $lumen \n", TRUE ), 3, LOG);
+        
+        //Updates Task
+        $light_id = $db->createLightHistory($datetime, $lumen);
+        error_log( print_R("light return: $light_id\n", TRUE ), 3, LOG);
+        if ($light_id > 0) {
+            $light_cnt += 0;
+        } else {
+            $light_cnt += 1;
+        }
+        error_log( print_R("light cnt: $light_cnt\n", TRUE ), 3, LOG);
+        
+    }
+    error_log( print_R("light final cnt: $light_cnt\n", TRUE ), 3, LOG);
+        
+    if ($light_cnt == 0) {
+        error_log( print_R("light created\n", TRUE ), 3, LOG);
+        return 0;
+    } else {
+        error_log( print_R("after light result bad\n", TRUE), 3, LOG);
+        return 1;
+    }
+}
+function uploadFrameWeight($dataJsonDecode, $thehive) {
+    $app = \Slim\Slim::getInstance();
+
+    $db = new BeeDbHandler();
+    $weight_cnt = 0;
+    
+    foreach ($dataJsonDecode["frameweight"] as $loop) {
+        
+        $datetime  = (isset($loop["datetime"]) ? 
+                            $loop["datetime"] : "");
+        $frameweight1 = (isset($loop["frameweight1"]) ?
+                             $loop["frameweight1"] : "");
+		$frameweight2 = (isset($loop["frameweight2"]) ?
+							$loop["frameweight2"] : "");
+		$frameweight3 = (isset($loop["frameweight3"]) ?
+							$loop["frameweight3"] : "");
+		$frameweight4 = (isset($loop["frameweight4"]) ?
+							$loop["frameweight4"] : "");
+		$frameweight5 = (isset($loop["frameweight5"]) ?
+							$loop["frameweight5"] : "");
+		$frameweight6 = (isset($loop["frameweight6"]) ?
+							$loop["frameweight6"] : "");
+		$frameweight7 = (isset($loop["frameweight7"]) ?
+							$loop["frameweight7"] : "");
+		$frameweight8 = (isset($loop["frameweight8"]) ?
+							$loop["frameweight8"] : "");
+        
+        $response = array();
+
+        error_log( print_R("before frameweight created: datetime $datetime frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
+        
+        //Updates Task
+        $light_id = $db->createFrameWeight($datetime, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
+        error_log( print_R("weight return: $weight_id\n", TRUE ), 3, LOG);
+        if ($weight_id > 0) {
+            $weight_cnt += 0;
+        } else {
+            $weight_cnt += 1;
+        }
+        error_log( print_R("weight cnt: $weight_cnt\n", TRUE ), 3, LOG);
+        
+    }
+    error_log( print_R("weight final cnt: $weight_cnt\n", TRUE ), 3, LOG);
+        
+    if ($weight_cnt == 0) {
+        error_log( print_R("weight created\n", TRUE ), 3, LOG);
+        return 0;
+    } else {
+        error_log( print_R("after weight result bad\n", TRUE), 3, LOG);
+        return 1;
+    }
+}
+function uploadPopulation($dataJsonDecode, $thehive) {
+    $app = \Slim\Slim::getInstance();
+
+    $db = new BeeDbHandler();
+    $population_cnt = 0;
+    
+    foreach ($dataJsonDecode["population"] as $loop) {
+        
+        $datetime  = (isset($loop["datetime"]) ? 
+                            $loop["datetime"] : "");
+        $count = (isset($loop["count"]) ?
+                             $loop["count"] : "");
+        
+        $response = array();
+
+        error_log( print_R("before population created: datetime $datetime count $count  \n", TRUE ), 3, LOG);
+        
+        //Updates Task
+        $light_id = $db->createPopulation($datetime, $count);
+        error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
+        if ($population_id > 0) {
+            $population_cnt += 0;
+        } else {
+            $population_cnt += 1;
+        }
+        error_log( print_R("population cnt: $population_cnt\n", TRUE ), 3, LOG);
+        
+    }
+    error_log( print_R("population final cnt: $population_cnt\n", TRUE ), 3, LOG);
+        
+    if ($population_cnt == 0) {
+        error_log( print_R("population created\n", TRUE ), 3, LOG);
+        return 0;
+    } else {
+        error_log( print_R("after population result bad\n", TRUE), 3, LOG);
+        return 1;
+    }
+}
+
 
 ?>
