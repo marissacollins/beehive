@@ -296,7 +296,7 @@ $app->get('/HiveWeightStatus',   function() use($app) {
         $tmp = array();
         if (count($slist) > 0) {
 			 $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
-            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveID"]);
+            $tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
 		   $tmp["frameweight1"] = (empty($slist["frameweight1"]) ? "NULL" : $slist["frameweight1"]);
             $tmp["frameweight2"] = (empty($slist["frameweight2"]) ? "NULL" : $slist["frameweight2"]);
             $tmp["frameweight3"] = (empty($slist["frameweight3"]) ? "NULL" : $slist["frameweight3"]);
@@ -446,8 +446,53 @@ $app->post('/uploadData', function() use($app){
     error_log( print_R("uploaded file: $uploadPath\n ", TRUE), 3, LOG);
 	
 	$data = file_get_contents($uploadPath);
+    error_log( print_R("uploaded data:\n ", TRUE), 3, LOG);
+    error_log( print_R($data, TRUE), 3, LOG);
 
 	$dataJsonDecode = json_decode($data);
+
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+			error_log( print_R("No errors:\n ", TRUE), 3, LOG);
+        break;
+        case JSON_ERROR_DEPTH:
+			error_log( print_R("- Maximum stack depth exceeded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+			error_log( print_R("- Underflow or the modes mismatch:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_CTRL_CHAR:
+			error_log( print_R("- Unexpected control character found:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_SYNTAX:
+			error_log( print_R("- Syntax error, malformed JSON:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_UTF8:
+			error_log( print_R("- Malformed UTF-8 characters, possibly incorrectly encoded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        default:
+			error_log( print_R("- Unknown error:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+    }
+
 	
     $isAudio  = (isset($dataJsonDecode->audio) ? $dataJsonDecode->audio : "");
     if ($isAudio != "") {
@@ -476,7 +521,7 @@ $app->post('/uploadData', function() use($app){
     }
     if ($thesuccess == 0) {
         $response["error"] = false;
-        $response["message"] = "frame created successfully";
+        $response["message"] = "data upload created successfully";
         error_log( print_R("upload success\n", TRUE ), 3, LOG);
         echoRespnse(201, $response);
     } else {
@@ -882,7 +927,7 @@ function uploadFrameWeight($dataJsonDecode, $thehive) {
         
         $response = array();
 
-        error_log( print_R("before frameweight created: datetime $datetime hiveID $hiveID, frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
+        error_log( print_R("before frameweight created: datetime $datetime hiveID $thehive, frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
         
         //Updates Task
         $weight_id = $db->createFrameWeight($datetime, $thehive, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
@@ -923,7 +968,7 @@ function uploadPopulation($dataJsonDecode, $thehive) {
         error_log( print_R("before population created: datetime $datetime count $count  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $light_id = $db->createPopulation($thehive, $datetime, $count);
+        $population_id = $db->createPopulation($thehive, $datetime, $count);
         error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
         if ($population_id > 0) {
             $population_cnt += 0;

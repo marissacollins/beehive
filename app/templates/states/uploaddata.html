@@ -7,7 +7,7 @@
 		<div class="panel panel-blue col-md-12">
 			<div class="col-md-offset-1 col-md-3 col-md-offset-2">
 				<h2>
-				<label for="hiveselect" class="control-label">Hive Name</label>
+				<label for="hiveselect" class="control-label">Hive ID</label>
 				</h2>
 			</div>
 			<div class="col-md-6 ">
@@ -21,7 +21,7 @@
 						<option 
 							ng-repeat="h in vm.HiveIdList" 
 							ng-selected="{{h.hiveid == vm.selectedHiveId}}" 
-							value="{{h.hiveid}}">{{h.name}}
+							value="{{h.hiveid}}">{{h.hiveid}}
 						</option>
 				</select>
 				</h2>

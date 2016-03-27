@@ -378,7 +378,7 @@ class BeeDbHandler {
 		
 		$response = array();
 		
-		$sql = "INSERT INTO frameweight ((datetime, hiveID, frameweight1, frameweight2, frameweight3, frameweight4, frameweight5, frameweight6, frameweight7, frameweight8)VALUES ";
+		$sql = "INSERT INTO frameweight (datetime, hiveID, frameweight1, frameweight2, frameweight3, frameweight4, frameweight5, frameweight6, frameweight7, frameweight8) VALUES ";
 		$sql .= "(?,?, ";
 		$sql .= " ?,?,?,?, ";
 		$sql .= " ?,?,?,?)";
