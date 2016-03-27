@@ -110,6 +110,8 @@
 		vmbee.setGridAudioOptions = setGridAudioOptions;
 		vmbee.setGridFrameWeightOptions = setGridFrameWeightOptions;
 		
+		vmbee.genData = genData;
+		
         vmbee.highlightFilteredHeader = highlightFilteredHeader;
         vmbee.limit = 0;
         vmbee.limits = [10,20,50,100,200,500,5000];
@@ -143,7 +145,54 @@
 		function populationMinAlert(populationtest){
 			return populationtest < vmbee.populationAlertAmtMin;
 		}*/
-		//Functions to actually retrieve the latest values
+		//Functions to actually retrieve the lat est values
+		
+		function getRandomInt(min, max) {
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+
+		function getRandomArbitrary(min, max) {
+		  return Math.random() * (max - min) + min;
+		}		
+		function randomDate(start, end, startHour, endHour) {
+		  var date = new Date(+start + Math.random() * (end - start));
+		  var hour = startHour + Math.random() * (endHour - startHour) | 0;
+		  date.setHours(hour);
+		  return date;
+		}
+		function genData() {
+			//get sample data from db
+			getLatestLight().then(
+				function () {
+					$log.debug('getLight returned');
+					var genjson = {"lighthistory": vmbee.light};
+					$log.debug('the json',genjson);
+					//random lumens within plus/minus 300/400 lumen
+					genjson.lighthistory[0].lumen = Number(genjson.lighthistory[0].lumen) + getRandomInt(-300,400);
+					//random between now and 10 days ago, start and end in morning or evening
+					var tendaysago = moment().subtract(10, 'days').calendar();
+					$log.debug('tendaysago',tendaysago);
+					genjson.lighthistory[0].datetime = moment((randomDate(new Date(), new Date(tendaysago) , getRandomInt(0,12), getRandomInt(0,23)))).format('YYYY-MM-DD hh:mm:ss');
+					//because we query db, get rid of id and hiveid from output json
+					delete genjson.lighthistory[0].id;
+					delete genjson.lighthistory[0].hiveid;
+
+					BeeServices.genData(genjson,'../v1/genData?filename=lighthistorygen.json' ).then(
+					function () {
+						Notification.success({message: "Successful creation", delay: 3000});
+					},
+					function(error) {					
+						$log.debug('Caught an error saving light, going to notify:', error); 
+						Notification.error({message: error, delay: 5000});
+						return;
+					})
+				}, 
+				function(error) {					
+					$log.debug('Caught an error getting light, going to notify:', error); 
+					Notification.error({message: error, delay: 5000});
+					return;
+			});
+		}
         function activate() {
             $log.debug('about activate bee ');
             setGridHiveOptions();

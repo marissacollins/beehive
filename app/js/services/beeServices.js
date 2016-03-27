@@ -25,6 +25,7 @@
 			getPopulation: getPopulation,
 			getBeeFrequency: getBeeFrequency,
 			uploadData: uploadData,
+			genData: genData,
 			updateFrameWeight: updateFrameWeight,
 			updateHive: updateHive,
 			updateLightHistory: updateLightHistory,
@@ -150,6 +151,16 @@
 			});
 			return( request.then( handleSuccess, handleError ) );
 		}
+		function genData(data, path){
+			$log.debug('genData data before post :' , data, path);
+			var request = $http({
+				method: "POST",
+				url: path,
+				data: data
+			});
+			return( request.then( handleSuccess, handleError ) );
+		}
+
  		function updateFrameWeight(path, frame){
 			$log.debug('updateFrameWeight data before post :' , frame);
 			var request = $http({

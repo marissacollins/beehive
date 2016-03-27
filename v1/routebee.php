@@ -533,6 +533,98 @@ $app->post('/uploadData', function() use($app){
     }
     
 });
+$app->post('/genData', function() use($app){
+    //accumulate success/failures starting with 0 meaning good
+    $thesuccess = 0;
+	$response = array();
+	
+	$allGetVars = $app->request->get();
+    error_log( print_R("genData entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+
+    $thefile = '';
+    if(array_key_exists('filename', $allGetVars)){
+        $thefile = $allGetVars['filename'];
+    } else {
+        error_log( print_R("filename missing\n", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to create audio. Please try again";
+        echoRespnse(400, $response);
+    }
+    
+
+	//Reads the key values and extracts them from the passed in uploaded file
+    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $thefile ;
+    error_log( print_R("uploaded file: $uploadPath\n ", TRUE), 3, LOG);
+	
+	$data = file_get_contents("php://input");
+
+    error_log( print_R("uploaded data:\n ", TRUE), 3, LOG);
+    error_log( print_R($data, TRUE), 3, LOG);
+
+	$dataJsonDecode = json_decode($data);
+
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+			error_log( print_R("No errors:\n ", TRUE), 3, LOG);
+        break;
+        case JSON_ERROR_DEPTH:
+			error_log( print_R("- Maximum stack depth exceeded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+			error_log( print_R("- Underflow or the modes mismatch:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_CTRL_CHAR:
+			error_log( print_R("- Unexpected control character found:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_SYNTAX:
+			error_log( print_R("- Syntax error, malformed JSON:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_UTF8:
+			error_log( print_R("- Malformed UTF-8 characters, possibly incorrectly encoded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        default:
+			error_log( print_R("- Unknown error:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+    }
+
+	$fp = fopen($uploadPath, 'w');
+	$thesuccess = fwrite($fp, $data);
+	fclose($fp);
+	
+    if ($thesuccess > 0) {
+        $response["error"] = false;
+        $response["message"] = "data gen created successfully";
+        error_log( print_R("datagen success\n", TRUE ), 3, LOG);
+        echoRespnse(201, $response);
+    } else {
+        error_log( print_R("after upload result bad\n", TRUE), 3, LOG);
+        error_log( print_R( $thesuccess, TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+    }
+    
+});
+
 $app->post('/updateFrameWeight', function() use($app){
 	$response = array();
 	//Reads the key values and extracts them
