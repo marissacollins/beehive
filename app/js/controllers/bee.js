@@ -122,6 +122,7 @@
 
 		//load the data for the initial display
         activate();
+		
 
 		//hive temp alert function
 		function hiveTempMaxAlert(hiveTemptest){
@@ -1670,7 +1671,6 @@
                     vminst.frequencyrange = data.BeeFreqStatusList;
                     return;
             });
-        }
-				
+        }		
   }
 })();
