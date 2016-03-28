@@ -158,26 +158,27 @@
 				<!--Light-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="light">Hive Light:</h2></div>
-					<div class="col-md-6"><div class="lightVar">
+					<div class="col-md-6"><div class="lightVar" ng-style="{ 'border' : vm.lightAlert(vm.light[0].lumen) ?  '4px solid red' : ''}">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('light')">
 								{{vm.light[0].lumen}}</a>
 								</br>
 								<div class="dta">as of: {{vm.light[0].datetime}}
+								<div ng-show="vm.lightAlert(vm.light[0].lumen)">Alert: Lumen > {{vm.lightAmt}}</div>
 								</div></h2></div></div>
 				</div>
 				<!--Population Count-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="population">Bee Population:</h2></div>
-					<div class="col-md-6"><div class="popVar" <!--ng-style="{ 'border' : vm.populationMaxAlert(vm.population[0].count || vm.populationMinAlert(vm.population[0].count) ?  '4px solid red' : ''}"-->>
+					<div class="col-md-6"><div class="popVar" ng-style="{ 'border' : vm.populationMaxAlert(vm.populations[0].count) || vm.populationMinAlert(vm.populations[0].count) ?  '4px solid red' : ''}">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('population')">
 								{{vm.populations[0].count}} </a>
 								</br>
 								<div class="dta">as of: {{vm.populations[0].datetime}}
-								<!--<div ng-show="vm.populationMaxAlert(vm.population[0].count)">Alert: Population > {{vm.populationAlertAmtMax}}</div>
-								<div ng-show="vm.populationMinAlert(vm.population[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
-								--></div></h2></div></div>
+								<div ng-show="vm.populationMaxAlert(vm.populations[0].count)">Alert: Population > {{vm.populationAlertAmtMax}}</div>
+								<div ng-show="vm.populationMinAlert(vm.populations[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
+								</div></h2></div></div>
 				</div>
 				<!--Frequency Status-->
 				<div class="row">

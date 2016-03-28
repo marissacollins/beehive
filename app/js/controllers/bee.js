@@ -97,11 +97,14 @@
 			//Weight Alert
 			vmbee.weightAlert = weightAlert;
 			vmbee.weightAlertAmt = 60;
+			//Light Alert
+			vmbee.lightAlert = lightAlert;
+			vmbee.lightAlertAmt = 10000;
 			//Population Alert
-			/*vmbee.populationMaxAlert = populationMaxAlert;
+			vmbee.populationMaxAlert = populationMaxAlert;
 			vmbee.populationAlertAmtMax = 80000;
 			vmbee.populationMinAlert = populationMinAlert;
-			vmbee.populationAlertAmtMin = 20000;*/
+			vmbee.populationAlertAmtMin = 20000;
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
@@ -138,13 +141,17 @@
 		function weightAlert(weighttest) {
 			return weighttest > vmbee.weightAlertAmt;
 		}
+		//light alert function
+		function lightAlert(lighttest) {
+			return lighttest > vmbee.lightAlertAmt;
+		}
 		//population alert function
-		/*function populationMaxAlert(populationtest){
+		function populationMaxAlert(populationtest){
 			return populationtest > vmbee.populationAlertAmtMax;
 		}
 		function populationMinAlert(populationtest){
 			return populationtest < vmbee.populationAlertAmtMin;
-		}*/
+		}
 		//Functions to actually retrieve the lat est values
 		
 		function getRandomInt(min, max) {
