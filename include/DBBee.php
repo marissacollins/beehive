@@ -78,6 +78,24 @@ class BeeDbHandler {
         $stmt->close();
         return $outsidetemp;
     }
+	public function getOutsideHum($thelimit = NULL) {
+			error_log( print_R("getOutsideHum entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			//error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
+			
+			//get just one record - the most recent			
+			$sql = "SELECT * FROM outsidetemp  order by datetime desc ";
+
+			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
+				$sql .= " LIMIT " . $thelimit ;
+			} 
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $outsidehum = $stmt->get_result();
+        $stmt->close();
+        return $outsidehum;
+    }
 	public function getHiveTemp($thelimit = NULL,$thehive = NULL) {
 			error_log( print_R("getHiveTemp entered\n", TRUE), 3, LOG);
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
@@ -338,7 +356,6 @@ class BeeDbHandler {
 	
 	}
 	
-	
 	//INSERT STATEMENT FUNCTIONS
 	public function createAudio($datetime, $hiveID, $frequencyStatus){
 		
@@ -473,19 +490,19 @@ class BeeDbHandler {
 		
 		return $response;
 	}	
-	public function createOutsideTemp($datetime, $temp){
+	public function createOutsideTemp($datetime, $temp, $humidity){
 		
 		error_log( print_R("createOutsideTemp entered\n", TRUE ),3, LOG);
 		
 		$response = array();
 		
-		$sql = "INSERT INTO outsidetemp (datetime, temp)VALUES ";
-		$sql .= "(?,?)";
+		$sql = "INSERT INTO outsidetemp (datetime, temp, humidity)VALUES ";
+		$sql .= "(?,?,?)";
 		
 		//Check if hiveID already exists in database
-		if (!$this->doesOTempExist($datetime)){
+		if (!$this->doesOTemp=Exist($datetime)){
 			if ($stmt = $this->conn->prepare($sql)) {
-                $stmt->bind_param("ss", $datetime, $temp);
+                $stmt->bind_param("sss", $datetime, $temp, $humidity);
 				//Check if it inserted correctly
 				$stmt->execute();
                 $num_affected_rows = $stmt->affected_rows;

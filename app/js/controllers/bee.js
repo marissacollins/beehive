@@ -43,6 +43,9 @@
 			//Latest outside temperature
 			vmbee.getLatestOutsideTemp = getLatestOutsideTemp;
 			vmbee.outsidetemp = [];
+			//Latest outside Humidity
+			vmbee.getLatestOutsideHum = getLatestOutsideHum;
+			vmbee.outsidehum = [];
 			//Latest Hive Temperature
 			vmbee.getLatestHiveTemp = getLatestHiveTemp;
 			vmbee.hivetemp = [];
@@ -106,6 +109,7 @@
 			vmbee.populationMinAlert = populationMinAlert;
 			vmbee.populationAlertAmtMin = 20000;
 			
+			
         vmbee.setGridHiveOptions = setGridHiveOptions;
 		vmbee.setGridLightHistoryOptions = setGridLightHistoryOptions;
 		vmbee.setGridPopulationOptions = setGridPopulationOptions;
@@ -153,12 +157,11 @@
 		function populationMinAlert(populationtest){
 			return populationtest < vmbee.populationAlertAmtMin;
 		}
-		//Functions to actually retrieve the lat est values
 		
+		//Functions to create random data
 		function getRandomInt(min, max) {
 		  return Math.floor(Math.random() * (max - min)) + min;
 		}
-
 		function getRandomArbitrary(min, max) {
 		  return Math.random() * (max - min) + min;
 		}		
@@ -283,7 +286,14 @@
 					vmbee.outsidetemp=[];
 						 return ($q.reject(error));
 				}),	
-				 getLatestHiveTemp().then(function () {
+				 getLatestOutsideHum().then(function () {
+					$log.debug('got latestoutsidehum');
+
+				}, function(error) {
+					vmbee.outsidehum=[];
+						 return ($q.reject(error));
+				}),	
+				getLatestHiveTemp().then(function () {
 					$log.debug('got latesthivetemp');
 
 				}, function(error) {
@@ -351,6 +361,7 @@
 			Notification.info({message: themsg, delay: 5000});
 			activate();
 		}
+		
 		//Get Latest functions
         function getHiveList() {
             var thepath = '../v1/hivelist';
@@ -538,7 +549,17 @@
                     return;
             });
         }
-   
+		function getLatestOutsideHum() {
+            var thepath = '../v1/outsidehum';
+            var thepath = encodeURI('../v1/outsidehum?thelimit=1' );
+                
+            return BeeServices.getOutsideHum(thepath).then(function (data) {
+                $log.debug('getLatestOutsideHum returned data');
+                $log.debug(data);
+                    vmbee.outsidehum = data.OutsideHumList;
+                    return;
+            });
+        }
 
 	   function highlightFilteredHeader(row, rowRenderIndex, col, colRenderIndex) {
 				if (col.filters[0].term) {
@@ -770,6 +791,20 @@
 							  ]
 					}, {
 						field: 'temp',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than'
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than'
+								}
+							  ]
+					}, {
+						field: 'humidity',
 						enableCellEdit: false,
 						enableFiltering: true,
 						filters:  [
@@ -1101,6 +1136,9 @@
 			//Outside Temp range
 			vminst.getOutsideTempRange = getOutsideTempRange;
 			vminst.otemprange = [];
+			//Outside Hum range
+			vminst.getOutsideHumRange = getOutsideHumRange;
+			vminst.ohumrange = [];
 			//Hive Temp range
 			vminst.getHiveTempRange = getHiveTempRange;
 			vminst.htemprange = [];
@@ -1162,6 +1200,37 @@
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
 				});
 				break;
+			case 'outsidehum':
+				getOutsideHumRange().then(function () {
+					$log.debug('got OutsideHumRange');
+				  //Outside Humidity Range
+					$log.debug('before graph',vminst.ohumrange);
+						var dataarr = [];
+						vminst.graphid = 'OutsideHumSpline';
+						vminst.legendcontainer = 'OutsideHumLegend';
+					var ohumarray = [];
+					for (var i=0,len=vminst.ohumrange.length; i<len; i++) {
+						var d2 = [];
+						var tt = mysqlGmtStrToJSLocal(vminst.ohumrange[i].datetime);
+						$log.debug('date conversion',vminst.ohumrange[i].datetime, tt);
+						d2[0] = tt;
+						d2[1] = vminst.ohumrange[i].humidity;
+						ohumarray.push(d2);
+					}	
+
+					$log.debug('outsidehum array',ohumarray);
+					
+					
+						vminst.graphlabel = 'Outside Humidity';
+						vminst.grapharray = ohumarray;
+
+						dataarr.push( { data: ohumarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
+						vminst.grapharray = dataarr;
+						
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+				});
+				break;
+			
 			case 'hivetemp':
 					getHiveTempRange().then(function () {
                         $log.debug('got HiveTempRange');
@@ -1602,6 +1671,17 @@
                 $log.debug('getOutsideTempRange returned data');
                 $log.debug(data);
                     vminst.otemprange = data.OutsideTempList;
+                    return;
+            });
+        }
+		function getOutsideHumRange ()	{
+            var thepath = '../v1/outsidehum';
+            var thepath = encodeURI('../v1/outsidehum?thelimit=10' );
+                
+            return BeeServices.getOutsideHum(thepath).then(function (data) {
+                $log.debug('getOutsideHumRange returned data');
+                $log.debug(data);
+                    vminst.ohumrange = data.OutsideHumList;
                     return;
             });
         }

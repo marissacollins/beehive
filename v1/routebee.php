@@ -143,6 +143,7 @@ $app->get('/outsidetemp',   function() use($app) {
         $tmp = array();
         if (count($slist) > 0) {
             $tmp["temp"] = (empty($slist["temp"]) ? "NULL" : $slist["temp"]);
+			$tmp["humidity"] = (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
 
@@ -408,6 +409,53 @@ $app->get('/beeFreqStatus',   function() use($app) {
         echoRespnse(200, $response);
     }
 	else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+$app->get('/outsidehum',   function() use($app) {
+	
+
+ $allGetVars = $app->request->get();
+    error_log( print_R("outsidehum entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("outsidehum params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getOutsideHum($thelimit);
+
+    $response["error"] = false;
+    $response["OutsideHumList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+			$tmp["humidity"] = (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
+            $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["OutsideHumList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
         $response["error"] = true;
         $response["message"] = "The requested resource doesn't exists";
         echoRespnse(404, $response);
@@ -765,12 +813,13 @@ $app->post('/updateOutsideTemp', function() use($app){
 	
 	$datetime  = (isset($dataJsonDecode->otemp->datetime) ? $dataJsonDecode->otemp->datetime : "");
     $temp      = (isset($dataJsonDecode->otemp->temp)      ? $dataJsonDecode->otemp->temp : "");
+	$humidity      = (isset($dataJsonDecode->otemp->humidity)      ? $dataJsonDecode->otemp->humidity : "");
 	
 	$db = new BeeDbHandler();
 	$response = array();
 	
 	//Updates Task
-	$otemp_id = $db->updateOutsideTemp($datetime, $temp);
+	$otemp_id = $db->updateOutsideTemp($datetime, $temp, $humidity);
 	
 	    if ($otemp_id > 1) {
         $response["error"] = false;
@@ -988,12 +1037,14 @@ function uploadOutsideTemp($dataJsonDecode, $thehive) {
         
         $datetime  = (isset($loop["datetime"]) ? 
                             $loop["datetime"] : "");
-        $count = (isset($loop["count"]) ?
-                                  $loop["count"] : "");
+        $temp = (isset($loop["temp"]) ?
+                             $loop["temp"] : "");
+		$humidity = (isset($loop["humidity"]) ?
+                             $loop["humidity"] : "");
         
         $response = array();
 
-        error_log( print_R("before otemp created: datetime $datetime count $count \n", TRUE ), 3, LOG);
+        error_log( print_R("before otemp created: datetime $datetime temp $temp humidity $humidity \n", TRUE ), 3, LOG);
         
         //Updates Task
         $otemp_id = $db->createOutsideTemp($datetime, $count);

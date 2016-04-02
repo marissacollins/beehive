@@ -20,7 +20,15 @@
 								  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
 								  <div class="col-md-3" id="OutsideTempLegend"></div>
 							   </div>
-							  </div>					  
+							  </div>		
+							<!--Outside Humidity graph-->
+							 <div ng-show="vminst.graphid == 'OutsideHumSpline'" ng-hide="vminst.graphid != 'OutsideHumSpline'" class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Humidity Trend </h4>
+								  <div class="col-md-9" id="OutsideHumSpline" style="height:200px"></div>
+								  <div class="col-md-3" id="OutsideHumLegend"></div>
+							   </div>
+							  </div>		 
 							<!--Hive Temp Graph-->
 							  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
 								<div class="panel-body">
@@ -117,6 +125,17 @@
 								<div class="dta">  as of: {{vm.outsidetemp[0].datetime}} 
 								</div></h2></div></div>
 				</div>	
+				<!--Outide Humidity-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="outside">Outside Humidity:</h2></div>
+					<div class="col-md-6"><div class="outVar">
+						<h2>
+							<a href="" ng-click="vmmodal.openmodal('outsidehum')">
+								{{vm.outsidehum[0].humidity}}   </a>
+								</br>
+								<div class="dta">  as of: {{vm.outsidehum[0].datetime}} 
+								</div></h2></div></div>
+				</div>
 				<!--Hive Temp-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="inside">Hive Temperature:</h2></div>

@@ -28,17 +28,5 @@ class UtilDbHandler {
         $stmt->close();
         return $zips;
     }
-
-    /**
-     * Fetching rank lists for students
-     */
-    public function getRankList() {
-        $stmt = $this->conn->prepare("SELECT t.* FROM ranklist t where ymcaUse = 0 and rankgroup in ('beginner','intermediate','advanced','black') order by t.sortkey");
-        $stmt->execute();
-        $ranklst = $stmt->get_result();
-        $stmt->close();
-        return $ranklst;
-    }
-
 }
 ?>

@@ -3,7 +3,7 @@
 
 	<button class="btn btn-primary" type="button" ng-click="vm.genData()">Generate Data</button>
 
-	<!--Hive table-->
+		<!--Hive table-->
 		<div class="row">
             <div class="col-lg-12">
                 <div class="">
@@ -61,7 +61,7 @@
 		<div class="row">
             <div class="col-lg-12">
                 <div class="">
-                    <div class="panel-heading">Outside Temperature</div>
+                    <div class="panel-heading">Outside Variables</div>
                     <div class="panel-body pan">
 
                         <div ui-grid="vm.gridOutsideTempOptions" 
@@ -127,7 +127,15 @@
 						  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
 						  <div class="col-md-3" id="OutsideTempLegend"></div>
 					   </div>
-					  </div>				  
+					  </div>			
+					<!--Outside Humidity graph-->
+					 <div ng-show="vminst.graphid == 'OutsideHumSpline'" ng-hide="vminst.graphid != 'OutsideHumSpline'" class="panel">
+						<div class="panel-body">
+						  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Humidity Trend</h4>
+						  <div class="col-md-9" id="OutsideHumSpline" style="height:200px"></div>
+						  <div class="col-md-3" id="OutsideHumLegend"></div>
+					   </div>
+					  </div>		
 					<!--Hive Temp Graph-->
 					  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
 						<div class="panel-body">
