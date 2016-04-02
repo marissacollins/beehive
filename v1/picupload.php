@@ -8,11 +8,15 @@ $picsrc = 'c:/beehive/beehive/samplepic/2014.04.23.16.40.jpg';
 $picroot = "population";
 $error = "";
 $output = "";
+$hiveid = 1;
+$datetime = "2016-02-04 22:40:45";
+$count = 16;
 
         //set POST variables
-        $url = "http://localhost/v1/uploadPic";
+        $url = "http://localhost/v1/uploadPic?hiveid=" . $hiveid . "&datetime=" . $datetime . "&count" . $count; 
 
         $picname = $picroot . "_" . date('YmdGisu') . "_" . $picnm . ".jpg";
+		
         
         // Create a CURLFile object
         $cfile = curl_file_create($picsrc,'image/jpeg',$picname);

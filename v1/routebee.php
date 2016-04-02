@@ -993,6 +993,28 @@ $app->post('/uploadPic', function() use($app){
     error_log( print_R("upload pic \n", TRUE ), 3, LOG);
     error_log( print_R($input, TRUE ), 3, LOG);
 
+	$allGetVars = $app->request->get();
+    error_log( print_R("uploadpic entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $count = '';
+	$thehive = '';
+    $datetime = '';
+	
+    if(array_key_exists('count', $allGetVars)){
+        $count = $allGetVars['count'];
+    }
+    error_log( print_R("uploadpic params:  count: $count \n ", TRUE), 3, LOG);
+	
+	if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("uploadpic params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	
+	if(array_key_exists('datetime', $allGetVars)){
+        $datetime = $allGetVars['datetime'];
+    }
+    error_log( print_R("uploadpic params:  datetime: $datetime \n ", TRUE), 3, LOG);
+	
 	$response = array();
 
     if ( !empty( $_FILES ) ) {
