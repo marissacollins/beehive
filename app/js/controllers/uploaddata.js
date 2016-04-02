@@ -2,7 +2,7 @@
 (function () { 
     'use strict'; //checking for syntax issues
     angular
-    .module('ng-admin') //Binds all of the angular modules into one
+    .module('ng-bee') //Binds all of the angular modules into one
     .controller('UploadController', UploadController);
 	
 	 //injecting external functions into the controller

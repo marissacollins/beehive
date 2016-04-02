@@ -830,6 +830,114 @@ $app->post('/updatePopulation', function() use($app){
         echoRespnse(400, $response);
     }
 });
+$app->post('/uploadStream', function() use($app){
+    //accumulate success/failures starting with 0 meaning good
+    $thesuccess = 0;
+	$response = array();
+	
+	$allGetVars = $app->request->get();
+    error_log( print_R("uploadData entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+
+    $thefile = '';
+	$thehive = '';
+    
+    //hive is optional eq. outside temperature
+	if(array_key_exists('hiveid', $allGetVars)){
+		$thehive = $allGetVars['hiveid'];
+        error_log( print_R("uploaddata params:  thehive: $thehive \n ", TRUE), 3, LOG);
+    }
+
+
+	$data = file_get_contents("php://input");
+
+    error_log( print_R("uploaded data:\n ", TRUE), 3, LOG);
+    error_log( print_R($data, TRUE), 3, LOG);
+	
+	$dataJsonDecode = json_decode($data);
+
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+			error_log( print_R("No errors:\n ", TRUE), 3, LOG);
+        break;
+        case JSON_ERROR_DEPTH:
+			error_log( print_R("- Maximum stack depth exceeded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+			error_log( print_R("- Underflow or the modes mismatch:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_CTRL_CHAR:
+			error_log( print_R("- Unexpected control character found:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_SYNTAX:
+			error_log( print_R("- Syntax error, malformed JSON:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        case JSON_ERROR_UTF8:
+			error_log( print_R("- Malformed UTF-8 characters, possibly incorrectly encoded:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+        default:
+			error_log( print_R("- Unknown error:\n ", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+        break;
+    }
+
+	
+    $isAudio  = (isset($dataJsonDecode->audio) ? $dataJsonDecode->audio : "");
+    if ($isAudio != "") {
+        //we could have multiple records.  If end up with 0, all was good 
+        $thesuccess += uploadAudio(json_decode($data,true) , $thehive);
+    }
+    $isHive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
+    if ($isHive != "") {
+       $thesuccess += uploadHive(json_decode($data,true) , $thehive);
+	}
+    $isPopulation  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
+    if ($isPopulation != "") {
+		$thesuccess += uploadPopulation(json_decode($data,true) , $thehive);
+    }
+    $isFrameWeight  = (isset($dataJsonDecode->frameweight) ? $dataJsonDecode->frameweight : "");
+    if ($isFrameWeight != "") {
+		$thesuccess += uploadFrameWeight(json_decode($data,true) , $thehive);
+    }
+    $isLightHistory  = (isset($dataJsonDecode->lighthistory) ? $dataJsonDecode->lighthistory : "");
+    if ($isLightHistory != "") {
+		$thesuccess += uploadLightHistory(json_decode($data,true) , $thehive);
+    }
+    $isOutsideTemp  = (isset($dataJsonDecode->outsidetemp) ? $dataJsonDecode->outsidetemp : "");
+    if ($isOutsideTemp != "") {
+		$thesuccess += uploadOutsideTemp(json_decode($data,true) , $thehive);
+    }
+    if ($thesuccess == 0) {
+        $response["error"] = false;
+        $response["message"] = "data upload created successfully";
+        error_log( print_R("upload success\n", TRUE ), 3, LOG);
+        echoRespnse(201, $response);
+    } else {
+        error_log( print_R("after upload result bad\n", TRUE), 3, LOG);
+        error_log( print_R( $thesuccess, TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+    }
+    
+});
 
 function uploadAudio($dataJsonDecode, $thehive) {
     $app = \Slim\Slim::getInstance();

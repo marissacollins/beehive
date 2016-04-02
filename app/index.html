@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ng-admin">
+<html lang="en" ng-app="ng-bee">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -7,12 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/beehive/">
 
-	 <!--Fonts
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,300,700"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300"/>
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css"/>
-	-->
-    
 	
 	<!--CSS FOR PLUGIN-->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"/>
@@ -22,15 +16,11 @@
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.css"/>
      <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />
      <link rel="stylesheet" href="vendors/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css"/>
+<!--
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.css"/>
      <link rel="stylesheet" href="vendors/bootstrap-clockface/css/clockface.css"/>
      <link rel="stylesheet" href="vendors/calendar/zabuto_calendar.min.css"/>
-
-    <!--CORE CSS 
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-custom.css"/>
-    <link type="text/css" rel="stylesheet" href="css/themes/default.css"/>
-    <link type="text/css" rel="stylesheet" href="css/themes/blue.css" id="color-style"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css"/> -->
+-->
 	
     <!--CORE JS -->
     <link type="text/css" rel="stylesheet" href="css/beehive/yourHiveStyle.css"/>
@@ -42,11 +32,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-	<script src="vendors/slimScroll/jquery.slimscroll.js"></script>
+	<!--<script src="vendors/slimScroll/jquery.slimscroll.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<!--
 	<script src="http://jvectormap.com/js/jquery-jvectormap-2.0.3.min.js"></script>
 	<script src="http://jvectormap.com/js/jquery-jvectormap-world-mill-en.js"></script>
 	<script src="http://jvectormap.com/js/gdp-data.js"></script>
+	-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.12/jquery.knob.min.js"></script>
 	<script src="vendors/jquery-animateNumber/jquery.animateNumber.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
@@ -58,8 +50,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.js"></script>
 	<script src="vendors/flot-chart/jquery.flot.tooltip.js"></script>
 	<script src="vendors/flot-chart/jquery.flot.spline.js"></script>
+<!--
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.js"></script>
 	<script src="vendors/calendar/zabuto_calendar.min.js"></script>
+-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.10/js/jquery.dataTables.js"></script>
@@ -103,19 +97,21 @@
     <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.css"/>
-    
+
+<!--    
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.js"></script>
     <script src="vendors/angular-isotope/dist/angular-isotope.js"></script>
+	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.js"></script>    
-
+-->
    <link data-require="chosen@1.0.0" data-semver="1.0.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.min.css" />
     <script data-require="chosen@1.0.0" data-semver="1.0.0" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js"></script>
     <script data-require="chosen@1.0.0" data-semver="1.0.0" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.proto.min.js"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/1.1.6/angular-file-upload.js"></script>
-
+<!--
 <style>
             .my-drop-zone { border: dotted 3px lightgray; }
             .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
@@ -131,10 +127,10 @@
                 margin: 6px 0 0 6px;
             }
         </style>
-
+-->
   <link rel="stylesheet" href="vendors/angular-ui-notification/dist/angular-ui-notification.css">
   <script src="vendors/angular-ui-notification/dist/angular-ui-notification.js"></script>
-  <script src="vendors/lvlDragDrop/script/lvl-drag-drop.js"></script>
+<!--  <script src="vendors/lvlDragDrop/script/lvl-drag-drop.js"></script>
   <script src="vendors/lvlDragDrop/script/lvl-uuid.js"></script>
   <style>
       .lvl-over {
@@ -149,19 +145,7 @@
             cursor: move;
         }
   </style>
-  <style>
-      .attendance {
-        font-size: x-large;
-        height: 70px;
-      }
-      .tournamentlarge {
-        height: 50px;
-        font-size: x-large;
-      }
-      .tournamenttxtlarge {
-        font-size: x-large;
-      }
-  </style>
+ -->
      <style type="text/css">
         .red{
             color:red
@@ -184,12 +168,6 @@
   <!-- compiled JavaScript -->
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/controllers/app.js"></script>
-  <script type="text/javascript" src="js/directives/ngDropzone.js"></script>
-  <script type="text/javascript" src="js/directives/ngMenu.js"></script>
-  <script type="text/javascript" src="js/directives/ngTab.js"></script>
-  <script type="text/javascript" src="js/directives/scrollSpy.js"></script>
-  <script type="text/javascript" src="js/directives/ngThumbupload.js"></script>
-
 
   <script type="text/javascript" src="js/services/beeServices.js"></script>
   <script type="text/javascript" src="js/controllers/bee.js"></script>
@@ -230,53 +208,39 @@
 
   </head>
 
-    <!--V JS-->
-    <body  ng-class="[header.header_topbar, header.boxed]" class="topbar-fixed sidebar-fixed"    >
+    <body    >
 
-    <div ng-controller="AppController as vm" class="default-page">
-      <!--BEGIN TEMPLATE SETTING-->
-  <!--    <div id="temp-setting" ng-include="'templates/states/_includes/template-setting.html'" onload="loadtempsetting()"></div>
-   -->   <!--END TEMPLATE SETTING-->
-      <!--BEGIN TO TOP--><a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
-      <!--END BACK TO TOP-->
-      <div id="wrapper" ng-class="header.layout_menu">
-        <!--BEGIN TOPBAR-->
-        <div id="topbar" role="navigation" ng-include="'templates/states/_includes/topbar.html'" style="margin-bottom: 0;" onload="vm.loadTopbar()" class="navbar navbar-default navbar-static-top"></div>
-        <!--END TOPBAR-->
-        <!--BEGIN SIDEBAR MENU-->
-<!--        <div id="sidebar-wrapper" ng-include="'templates/states/_includes/sidebar.html'" ng-menu="" onload="vm.loadSidebar()"></div>
- -->       <!--END SIDEBAR MENU-->
-        <!--BEGIN PAGE WRAPPER-->
-        <div id="page-wrapper" ng-class="header.animation" class="animated">
-          <!--BEGIN PAGE HEADER & BREADCRUMB-->
-<!--          <div ng-include="'templates/states/_includes/header-breadcrumb.html'" onload="vm.loadPageHeader()" class="page-header-breadcrumb"></div>
- -->         <!--END PAGE HEADER & BREADCRUMB-->
-          <!--BEGIN CONTENT-->
-    <div class="jumbotron" ng-if="flash">
-        <div class="container">
-            <div class="col-sm-8 col-sm-offset-2">
-                <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"  ng-bind="flash.message"></div>
-<!--<div ng-view> -->
-          
-            </div>
-        </div>
-    </div>
-          <div ng-view class="page-content"></div>
+    <div ng-controller="AppController as vm">
 
-          <!--END CONTENT-->
-          
-          <!--BEGIN FOOTER-->
-          <div class="page-footer">
-          </div>
-          <!--END FOOTER-->
-        </div>
-        <!--END PAGE WRAPPER-->
+      <div id="wrapper">
+			
+			<div id="topbar" class="topbar-main" class="col-md-12">
+					<div>
+						<h1>Beehive Monitoring System</h1>
+					</div>
+
+			  <ul class="nav navbar-top-links navbar-left">
+			   <li><a href="#/" class="btn btn-default btn-sm pull-right">Home</a></li>
+			   <li><a href="#/hive" class="btn btn-default btn-sm pull-right">Your Hive</a></li>
+			   <li><a href="#/uploaddata" class="btn btn-default btn-sm pull-right">Upload Data</a></li>
+				  <li><a href="#/bees" class="btn btn-default btn-sm pull-right">Data Listing</a></li>
+				<li><a href="#/about" class="btn btn-default btn-sm pull-right">About</a></li>
+			   <li><a href="#/help" class="btn btn-default btn-sm pull-right">Help</a></li>
+
+			  </ul>
+			</div>
+
+			<div class="jumbotron" ng-if="flash">
+				<div class="container">
+					<div class="col-sm-8 col-sm-offset-2">
+						<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"  
+							ng-bind="flash.message"></div>				  
+					</div>
+				</div>
+			</div>
+          <div ng-view class="col-md-12" ></div>
       </div>
     </div>
-
-    <div hide="hide" class="extra-page"></div>
-
-
 
     </body>
 </html>

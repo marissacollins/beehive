@@ -1,18 +1,17 @@
 (function () {
     'use strict';
     angular
-        .module('ng-admin', [
+        .module('ng-bee', [
         'ui.grid',
         'ui.utils',
-        'ui.mask',
+   //     'ui.mask',
         'ngRoute',
         'ui.bootstrap',
         'ui-notification',
-        'lvl.directives.dragdrop',
+  //      'lvl.directives.dragdrop',
         'toggle-switch',
-     //   'ngTouch', 
         'ngMessages',
-        'ngCookies',
+  //      'ngCookies',
         'ui.grid.pagination',
         'ui.grid.cellNav',
         'ui.grid.edit',
@@ -26,11 +25,10 @@
 'ui.grid.grouping' ,       
 'ui.grid.saveState' ,
         'ui.select',
-                'iso.directives',
+   //             'iso.directives',
                 'ngSanitize',
     'angularFileUpload',
-    'akoenig.deckgrid'
-        //        'dynamicLayout'
+  //  'akoenig.deckgrid'
         ])
 
     // allow DI for use in controllers, unit tests for lodash
@@ -92,8 +90,7 @@
         //marissa this is the part that connects the menu to a page 
         $routeProvider
             .when('/', {
-                templateUrl: 'templates/states/main.html',
-                controller: 'MainController'
+                templateUrl: 'templates/states/main.html'
             })
            .when('/hive', {
                 templateUrl: 'templates/states/youHive.html'

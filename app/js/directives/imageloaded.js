@@ -11,7 +11,7 @@
  *
  */
 
-angular.module('ng-admin').directive('imageloaded', [
+angular.module('ng-bee').directive('imageloaded', [
 
     function () {
 

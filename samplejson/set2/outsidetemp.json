@@ -1,12 +1,16 @@
 {
   "outsidetemp": [
 	{
+	  "hiveid": "1",
       "datetime": "2018-02-14 22:40:43",
-      "temp": "72.0"
+      "temp": "72.0",
+	  "humidity": "65.04"
 	},
 	{
+	  "hiveid": "1",
       "datetime": "2018-02-12 01:00:00",
-      "temp": "69.2"
+      "temp": "69.2",
+	  "humidity": "65.06"
 	}
   ]
 }

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('ng-admin')
+    .module('ng-bee')
     .controller('ModalUploadController', ModalUploadController)
     .controller('ModalUploadInstanceController', ModalUploadInstanceController)
     .controller('FileUploadController', FileUploadController);

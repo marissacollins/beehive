@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular
-    .module('ng-admin')
+    .module('ng-bee')
     .factory('BeeServices', BeeServices);
     BeeServices.$inject = ['$http', '$q', '$log'];
 	
