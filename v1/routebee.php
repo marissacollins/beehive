@@ -987,6 +987,41 @@ $app->post('/uploadStream', function() use($app){
     }
     
 });
+$app->post('/uploadPic', function() use($app){
+
+    $input = var_dump($_FILES);
+    error_log( print_R("upload pic \n", TRUE ), 3, LOG);
+    error_log( print_R($input, TRUE ), 3, LOG);
+
+	$response = array();
+
+    if ( !empty( $_FILES ) ) {
+        error_log( print_R("upload pic has files\n", TRUE ), 3, LOG);
+        error_log( print_R($_FILES[ 'test_file' ][ 'name' ] . "\n", TRUE ), 3, LOG);
+
+        $tempPath = $_FILES[ 'test_file' ][ 'tmp_name' ];
+        $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR  . $_FILES[ 'test_file' ][ 'name' ] ;
+        if (!is_writeable($uploadPath)) {
+            $response["error"] = true;
+            $response["message"] = "Failed to upload. Cannot write to destination file";
+            echoRespnse(400, $response);
+        }        
+        error_log( print_R("about to move $tempPath to $uploadPath\n", TRUE ), 3, LOG);
+        move_uploaded_file( $tempPath, $uploadPath );
+        $response["error"] = false;
+        $response["message"] = "data upload created successfully";
+        error_log( print_R("upload success\n", TRUE ), 3, LOG);
+        echoRespnse(201, $response);
+        
+    } else {
+       error_log( print_R("after upload result bad\n", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to upload. Please try again";
+        echoRespnse(400, $response);
+    }
+    
+});
+
 
 function uploadAudio($dataJsonDecode, $thehive) {
     $app = \Slim\Slim::getInstance();
