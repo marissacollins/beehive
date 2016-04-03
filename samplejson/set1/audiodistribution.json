@@ -1,0 +1,14 @@
+{
+  "audiodistribution": [
+	{
+      "datetime": "2017-03-24 11:00:00",
+      "frequency": "350",
+	  "amplitude": "20"
+	},
+	{
+      "datetime": "2017-03-24 11:00:00",
+      "frequency": "475",
+	  "amplitude": "45"
+	}
+  ]
+}
