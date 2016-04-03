@@ -120,9 +120,9 @@
 					<div class="col-md-6"><div class="outVar">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('outsidetemp')">
-								{{vm.outsidetemp[0].temp}}   </a>
+								{{vm.outsidetemp[0].temp}}&deg;F </a>
 								</br>
-								<div class="dta">  as of: {{vm.outsidetemp[0].datetime}} 
+								<div class="dta">  Last Update: {{vm.outsidetemp[0].datetime}} 
 								</div></h2></div></div>
 				</div>	
 				<!--Outide Humidity-->
@@ -131,20 +131,20 @@
 					<div class="col-md-6"><div class="outVar">
 						<h2>
 							<a href="" ng-click="vmmodal.openmodal('outsidehum')">
-								{{vm.outsidehum[0].humidity}}   </a>
+								{{vm.outsidehum[0].humidity}}%</a>
 								</br>
-								<div class="dta">  as of: {{vm.outsidehum[0].datetime}} 
+								<div class="dta">  Last Update: {{vm.outsidehum[0].datetime}} 
 								</div></h2></div></div>
 				</div>
 				<!--Hive Temp-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="inside">Hive Temperature:</h2></div>
-					<div class="col-md-6"><div class="inVar" ng-style="{ 'border' : vm.hiveTempMaxAlert(vm.hivetemp[0].temp) || vm.hiveTempMinAlert(vm.hivetemp[0].temp) ? '4px solid red' : ''}">
+					<div class="col-md-6"><div class="inVar">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('hivetemp')">
-								{{vm.hivetemp[0].temp}} </a>
+							<a href="" ng-click="vmmodal.openmodal('hivetemp')" ng-style="{ 'border' : vm.hiveTempMaxAlert(vm.hivetemp[0].temp) || vm.hiveTempMinAlert(vm.hivetemp[0].temp) ? '4px solid red' : ''}">
+								{{vm.hivetemp[0].temp}}&deg;F</a>
 								</br>
-								<div class="dta"> as of: {{vm.hivetemp[0].datetime}}
+								<div class="dta"> Last Update: {{vm.hivetemp[0].datetime}}
 								<div ng-show="vm.hiveTempMaxAlert(vm.hivetemp[0].temp)">Alert: Temperature > {{vm.hiveTempAlertAmtMax}}</div>
 								<div ng-show="vm.hiveTempMinAlert(vm.hivetemp[0].temp)">Alert: Temperature &lt; {{vm.hiveTempAlertAmtMin}}</div>
 								</div></h2></div></div>
@@ -152,12 +152,12 @@
 				<!--Hive Humidity-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="humidity">Hive Humidity:</h2></div>
-					<div class="col-md-6"><div class="humidVar" ng-style="{ 'border' : vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity) || vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity) ? '4px solid red' : ''}">
+					<div class="col-md-6"><div class="humidVar">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('hivehumidity')">
-								{{vm.hivehumidity[0].humidity}} </a>
+							<a href="" ng-click="vmmodal.openmodal('hivehumidity')" ng-style="{ 'border' : vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity) || vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity) ? '4px solid red' : ''}">
+								{{vm.hivehumidity[0].humidity}}% </a>
 								</br>
-								<div class="dta">as of: {{vm.hivehumidity[0].datetime}}
+								<div class="dta"> Last Update: {{vm.hivehumidity[0].datetime}}
 								<div ng-show="vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity)">Alert: Humidity > {{vm.hiveHumidityAlertAmtMax}}</div>
 								<div ng-show="vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity)">Alert: Humidity &lt; {{vm.hiveHumidityAlertAmtMin}}</div>
 								</div></h2></div></div>
@@ -165,36 +165,36 @@
 <!--Weight Status-->
 	<div class="row">
 		<div class="col-md-offset-1 col-md-5"><h2 id="weight">Total Hive Weight:</h2></div>
-			<div class="col-md-6"><div class="weightVar" ng-style="{ 'border' : vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum) ?  '4px solid red' : ''}">
+			<div class="col-md-6"><div class="weightVar">
 				<h2>
-					<a href=""  ng-click="vmmodal.openmodal('weightstatus')">
-						{{vm.HiveWeightStatus[0].frameweightsum}} </a>
+					<a href=""  ng-click="vmmodal.openmodal('weightstatus')"  ng-style="{ 'border' : vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum) ?  '4px solid red' : ''}">
+						{{vm.HiveWeightStatus[0].frameweightsum}} lbs.</a>
 						</br>
-						<div class="dta">as of: {{vm.HiveWeightStatus[0].datetime}}
+						<div class="dta">Last Update: {{vm.HiveWeightStatus[0].datetime}}
 						<div ng-show="vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum)">Alert: Weight > {{vm.weightAlertAmt}}</div>
 						</div></h2></div></div>
 	</div>
 				<!--Light-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="light">Hive Light:</h2></div>
-					<div class="col-md-6"><div class="lightVar" ng-style="{ 'border' : vm.lightAlert(vm.light[0].lumen) ?  '4px solid red' : ''}">
+					<div class="col-md-6"><div class="lightVar">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('light')">
-								{{vm.light[0].lumen}}</a>
+							<a href="" ng-click="vmmodal.openmodal('light')" ng-style="{ 'border' : vm.lightAlert(vm.light[0].lumen) ?  '4px solid red' : ''}">
+								{{vm.light[0].lumen}} lumens</a>
 								</br>
-								<div class="dta">as of: {{vm.light[0].datetime}}
+								<div class="dta">Last Update: {{vm.light[0].datetime}}
 								<div ng-show="vm.lightAlert(vm.light[0].lumen)">Alert: Lumen > {{vm.lightAmt}}</div>
 								</div></h2></div></div>
 				</div>
 				<!--Population Count-->
 				<div class="row">
 					<div class="col-md-offset-1 col-md-5"><h2 id="population">Bee Population:</h2></div>
-					<div class="col-md-6"><div class="popVar" ng-style="{ 'border' : vm.populationMaxAlert(vm.populations[0].count) || vm.populationMinAlert(vm.populations[0].count) ?  '4px solid red' : ''}">
+					<div class="col-md-6"><div class="popVar">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('population')">
-								{{vm.populations[0].count}} </a>
+							<a href="" ng-click="vmmodal.openmodal('population')" ng-style="{ 'border' : vm.populationMaxAlert(vm.populations[0].count) || vm.populationMinAlert(vm.populations[0].count) ?  '4px solid red' : ''}">
+								{{vm.populations[0].count}} bees </a>
 								</br>
-								<div class="dta">as of: {{vm.populations[0].datetime}}
+								<div class="dta">Last Update: {{vm.populations[0].datetime}}
 								<div ng-show="vm.populationMaxAlert(vm.populations[0].count)">Alert: Population > {{vm.populationAlertAmtMax}}</div>
 								<div ng-show="vm.populationMinAlert(vm.populations[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
 								</div></h2></div></div>
@@ -207,7 +207,7 @@
 							<a href="/beehive/web/frequency.html">
 								{{vm.beeFreqStatus[0].frequencyStatus}}</a>
 								</br>
-								<div class="dta">as of: {{vm.beeFreqStatus[0].datetime}}
+								<div class="dta">Last Update: {{vm.beeFreqStatus[0].datetime}}
 								</div></h2></div></div>
 				</div>
 				</div>
