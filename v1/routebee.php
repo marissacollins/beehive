@@ -1005,8 +1005,8 @@ $app->post('/uploadPic', function() use($app){
     }
     error_log( print_R("uploadpic params:  count: $count \n ", TRUE), 3, LOG);
 	
-	if(array_key_exists('thehive', $allGetVars)){
-        $thehive = $allGetVars['thehive'];
+	if(array_key_exists('hiveid', $allGetVars)){
+        $thehive = $allGetVars['hiveid'];
     }
     error_log( print_R("uploadpic params:  thehive: $thehive \n ", TRUE), 3, LOG);
 	
@@ -1014,7 +1014,8 @@ $app->post('/uploadPic', function() use($app){
         $datetime = $allGetVars['datetime'];
     }
     error_log( print_R("uploadpic params:  datetime: $datetime \n ", TRUE), 3, LOG);
-	
+
+    $db = new BeeDbHandler();	
 	$response = array();
 
     if ( !empty( $_FILES ) ) {
@@ -1030,11 +1031,27 @@ $app->post('/uploadPic', function() use($app){
         }        
         error_log( print_R("about to move $tempPath to $uploadPath\n", TRUE ), 3, LOG);
         move_uploaded_file( $tempPath, $uploadPath );
-        $response["error"] = false;
-        $response["message"] = "data upload created successfully";
-        error_log( print_R("upload success\n", TRUE ), 3, LOG);
-        echoRespnse(201, $response);
-        
+		$picname = $_FILES[ 'test_file' ][ 'name' ];
+		error_log( print_R("picname = $picname \n", TRUE ), 3, LOG);
+
+		$population_id = $db->createPopulation($thehive, $datetime, $count,$picname);
+		
+        error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
+
+	    if ($population_id == 1) {
+			$response["error"] = false;
+			$response["message"] = "population created successfully";
+			$response["population_id"] = $population_id;
+			error_log( print_R("population created: $population_id\n", TRUE ), 3, LOG);
+			echoRespnse(201, $response);
+		} else {
+			error_log( print_R("after population result bad\n", TRUE), 3, LOG);
+			error_log( print_R( $population_id, TRUE), 3, LOG);
+			$response["error"] = true;
+			$response["message"] = "Failed to create population. Please try again";
+			echoRespnse(400, $response);
+		}
+		        
     } else {
        error_log( print_R("after upload result bad\n", TRUE), 3, LOG);
         $response["error"] = true;
@@ -1270,13 +1287,15 @@ function uploadPopulation($dataJsonDecode, $thehive) {
                             $loop["datetime"] : "");
         $count = (isset($loop["count"]) ?
                              $loop["count"] : "");
-        
+         $picurl = (isset($loop["picurl"]) ?
+                             $loop["picurl"] : "");
+		
         $response = array();
 
         error_log( print_R("before population created: datetime $datetime count $count  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $population_id = $db->createPopulation($thehive, $datetime, $count);
+        $population_id = $db->createPopulation($thehive, $datetime, $count, $picurl);
         error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
         if ($population_id > 0) {
             $population_cnt += 0;

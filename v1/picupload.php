@@ -9,11 +9,12 @@ $picroot = "population";
 $error = "";
 $output = "";
 $hiveid = 1;
-$datetime = "2016-02-04 22:40:45";
-$count = 16;
+$datetime = "2016-03-04 22:43:57";
+$count = 15;
 
         //set POST variables
-        $url = "http://localhost/v1/uploadPic?hiveid=" . $hiveid . "&datetime=" . $datetime . "&count" . $count; 
+        $url = "http://localhost/v1/uploadPic?hiveid=" . $hiveid . "&datetime=" . urlencode($datetime) . "&count=" . $count; 
+        var_dump($url);
 
         $picname = $picroot . "_" . date('YmdGisu') . "_" . $picnm . ".jpg";
 		

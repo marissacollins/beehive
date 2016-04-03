@@ -521,19 +521,19 @@ class BeeDbHandler {
 		
 		return $response;
 	}
-	public function createPopulation($hiveID, $datetime, $count){
+	public function createPopulation($hiveID, $datetime, $count, $picurl){
 		
 		error_log( print_R("createPopulation entered\n", TRUE ),3, LOG);
 		
 		$response = array();
 		
-		$sql = "INSERT INTO population (hiveID, datetime, count)VALUES ";
-		$sql .= "(?,?,?)";
+		$sql = "INSERT INTO population (hiveID, datetime, count, picurl)VALUES ";
+		$sql .= "(?,?,?,?)";
 		
 		//Check if hiveID already exists in database
 		if (!$this->doesPopIDExist($hiveID, $datetime)){
 			if ($stmt = $this->conn->prepare($sql)) {
-                $stmt->bind_param("sss", $hiveID, $datetime, $count);
+                $stmt->bind_param("ssss", $hiveID, $datetime, $count, $picurl);
 				//Check if it inserted correctly
 				$stmt->execute();
                 $num_affected_rows = $stmt->affected_rows;
