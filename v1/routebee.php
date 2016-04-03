@@ -395,10 +395,13 @@ $app->get('/beeFreqStatus',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
-            $tmp["frequencyStatus"] = (empty($slist["frequencyStatus"]) ? "NULL" : $slist["frequencyStatus"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
 			$tmp["hiveID"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
+			$tmp["amplitude"] =  (empty($slist["amplitude"]) ? "0" : $slist["amplitude"]);
+			$tmp["frequency"] =  (empty($slist["frequency"]) ? "0" : $slist["frequency"]);
+
+			
 		}
 		else {
 			$tmp["id"] = "NULL";
@@ -987,7 +990,7 @@ $app->post('/uploadStream', function() use($app){
         $response["message"] = "Failed to upload. Please try again";
         echoRespnse(400, $response);
     }
-    
+
 });
 $app->post('/uploadPic', function() use($app){
 
@@ -1069,39 +1072,58 @@ function uploadAudio($dataJsonDecode, $thehive) {
 
     $db = new BeeDbHandler();
     $audio_cnt = 0;
-    
+	$maxfreq = 750;
+	
     foreach ($dataJsonDecode["audio"] as $loop) {
-        
-        $hiveID = $thehive;
-        $datetime  = (isset($loop["datetime"]) ? 
-                            $loop["datetime"] : "");
-        $frequencyStatus = (isset($loop["frequencyStatus"]) ?
-                                  $loop["frequencyStatus"] : "");
-        
-        $response = array();
 
-        error_log( print_R("before audio created: datetime $datetime hive $hiveID Freq $frequencyStatus\n", TRUE ), 3, LOG);
+		//reset the frequency
+		$frequency = 0;
+		
+        error_log( print_R($loop["amplitude"], TRUE ), 3, LOG);
+
+		$freqcount = count($loop["amplitude"]);
+		error_log( print_R($freqcount . "\n", TRUE ), 3, LOG);
+
+		$freqincrement = $maxfreq / $freqcount;
+		error_log( print_R($freqincrement . "\n", TRUE ), 3, LOG);
+		
+		for($amploop = 0; $amploop < $freqcount; $amploop++) {
+			
+			$hiveID = $thehive;
+			$datetime  = (isset($loop["datetime"]) ? 
+								$loop["datetime"] : "");
+			$amplitude = (isset($loop["amplitude"][$amploop]["vlu"]) ?
+								$loop["amplitude"][$amploop]["vlu"]: "0");
+			$frequency += $freqincrement;  
+			
+			$response = array();
+
+			error_log( print_R("before audio created: datetime $datetime hive $hiveID Freq $frequency amplitude $amplitude\n", TRUE ), 3, LOG);
+			
+			//Updates Task
+			$audio_id = $db->createAudio($datetime, $hiveID, $frequency, $amplitude);
+			error_log( print_R("audio return: $audio_id\n", TRUE ), 3, LOG);
+			if ($audio_id > 0) {
+				//use audio cnt as an accumulator to see how many errors we have in processing the whole file
+				$audio_cnt += 0;
+			} else {
+				$audio_cnt += 1;
+			}
+			error_log( print_R("audio cnt: $audio_cnt\n", TRUE ), 3, LOG);
         
-        //Updates Task
-        $audio_id = $db->createAudio($datetime, $hiveID, $frequencyStatus);
-        error_log( print_R("audio return: $audio_id\n", TRUE ), 3, LOG);
-        if ($audio_id > 0) {
-            $audio_cnt += 0;
-        } else {
-            $audio_cnt += 1;
-        }
-        error_log( print_R("audio cnt: $audio_cnt\n", TRUE ), 3, LOG);
-        
-    }
+		}
+	}
     error_log( print_R("audio final cnt: $audio_cnt\n", TRUE ), 3, LOG);
         
     if ($audio_cnt == 0) {
         error_log( print_R("audio created\n", TRUE ), 3, LOG);
         return 0;
     } else {
+		//we accumulated errors.  Some records were saved, but not all
         error_log( print_R("after audio result bad\n", TRUE), 3, LOG);
         return 1;
     }
+	
 }
 function uploadOutsideTemp($dataJsonDecode, $thehive) {
     $app = \Slim\Slim::getInstance();

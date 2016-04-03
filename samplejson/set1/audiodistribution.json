@@ -1,14 +1,31 @@
 {
-  "audiodistribution": [
+  "audio": [
 	{
-      "datetime": "2017-03-24 11:00:00",
-      "frequency": "350",
-	  "amplitude": "20"
+	  "datetime": "2017-03-25 11:30:00",
+	  "amplitude": [
+		{"vlu":45.2},
+		{"vlu":51.5},
+		{"vlu":65.8},
+		{"vlu":70.5},
+		{"vlu":72.7},
+		{"vlu":80.6},
+		{"vlu":85.7},
+		{"vlu":87.5},
+		{"vlu":75.2},
+		{"vlu":65.7},
+		{"vlu":55.7},
+		{"vlu":45.7}
+		]
 	},
 	{
-      "datetime": "2017-03-24 11:00:00",
-      "frequency": "475",
-	  "amplitude": "45"
+      "datetime": "2017-03-24 12:00:00",
+	  "amplitude": [
+	  {"vlu":20.2},
+	  {"vlu":10.3},
+	  {"vlu":5.7},
+	  {"vlu":50.6},
+	  {"vlu":20.6},
+	  {"vlu":55.4}]
 	}
   ]
 }

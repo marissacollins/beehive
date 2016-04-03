@@ -221,14 +221,16 @@ class BeeDbHandler {
     }
 
 	//Check for duplicate records in each table in the database
-	private function doesAudioIDExist($hiveID, $datetime){
+	private function doesAudioIDExist($datetime, $hiveID, $frequency, $amplitude){
 		
 		error_log( print_R("before doesAudioIDExist\n", TRUE ), 3, LOG);
 		error_log( print_R("hiveID: $hiveID\n", TRUE ), 3, LOG);
 		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
+		error_log( print_R("frequency: $frequency\n", TRUE ), 3, LOG);
+		error_log( print_R("amplitude: $amplitude\n", TRUE ), 3, LOG);
 	
-	    $stmt = $this->conn->prepare("SELECT hiveID from audio WHERE hiveID = ? and datetime = ?");
-        $stmt->bind_param("ss", $hiveID, $datetime);
+	    $stmt = $this->conn->prepare("SELECT hiveID from audio WHERE datetime = ? and hiveID = ? and frequency = ? and amplitude = ?");
+        $stmt->bind_param("ssss", $datetime, $hiveID, $frequency, $amplitude);
         $stmt->execute();
         $stmt->store_result();
         $num_rows = $stmt->num_rows;
@@ -357,19 +359,19 @@ class BeeDbHandler {
 	}
 	
 	//INSERT STATEMENT FUNCTIONS
-	public function createAudio($datetime, $hiveID, $frequencyStatus){
+	public function createAudio($datetime, $hiveID, $frequency, $amplitude){
 		
-		error_log( print_R("createAudio entered: date: $datetime freq: $frequencyStatus\n", TRUE ),3, LOG);
+		error_log( print_R("createAudio entered: date: $datetime hiveid: $hiveID frequency: $frequency amplitude: $amplitude\n", TRUE ),3, LOG);
 		
 		$response = array();
 		
-		$sql = "INSERT INTO audio (datetime, hiveID, frequencyStatus)VALUES ";
-		$sql .= "(?,?,?)";
+		$sql = "INSERT INTO audio (datetime, hiveID, frequency, amplitude)VALUES ";
+		$sql .= "(?,?,?,?)";
 		
 		//Check if hiveID already exists in database
-		if (!$this->doesAudioIDExist($hiveID, $datetime)){
+		if (!$this->doesAudioIDExist($datetime, $hiveID, $frequency, $amplitude)){
 			if ($stmt = $this->conn->prepare($sql)) {
-                $stmt->bind_param("sss", $datetime, $hiveID, $frequencyStatus);
+                $stmt->bind_param("ssss", $datetime, $hiveID, $frequency, $amplitude);
 				//Check if it inserted correctly
 				$stmt->execute();
                 $num_affected_rows = $stmt->affected_rows;

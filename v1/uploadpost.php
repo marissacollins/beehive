@@ -2,8 +2,13 @@
 //with xampp php installed, open a cmdshell and run php uploadpost.php to send a test json to the beehive backend
 // make sure windows path has php eq. c:\xampp\php
 
-$string = file_get_contents("c:/beehive/beehive/samplejson/set1/lighthistory.json");
+$string = file_get_contents("c:/beehive/beehive/samplejson/set1/audiodistribution.json");
+echo "showing string\n";
+var_dump($string);
+
 $json_a = json_decode($string, true);
+echo "showing json\n";
+var_dump($json_a);
 
 $url = "http://localhost/v1/uploadStream?hiveid=1";
 $content = json_encode($json_a);
