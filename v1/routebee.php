@@ -97,7 +97,9 @@ $app->get('/populations',   function() use($app) {
             $tmp["count"] = (empty($slist["count"]) ? "NULL" : $slist["count"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
-			   $tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
+			$tmp["hiveid"] =  (empty($slist["hiveID"]) ? "NULL" : $slist["hiveID"]);
+			$tmp["picurl"] =  (empty($slist["picurl"]) ? "missingpic.png" : $slist["picurl"]);
+
 
         } else {
             $tmp["id"] = "NULL";

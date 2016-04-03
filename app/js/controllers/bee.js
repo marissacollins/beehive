@@ -711,6 +711,7 @@
 					enableFiltering: true,
 					paginationPageSizes: vmbee.limits,
 					paginationPageSize: 10,
+					rowHeight: 300,
 				columnDefs: [
 					{
 						field: 'hiveid',
@@ -747,7 +748,14 @@
 								  placeholder: '< than'
 								}
 							  ]
+					}, {
+						field: 'picurl', 
+						cellTemplate:"<img  ng-src=\"/beehive/uploads/{{grid.getCellValue(row, col)}}\" lazy-src>",
+						enableCellEdit: false,
+						enableFiltering: true
+						
 					}
+					
 					],
 
 					//rowHeight: 15,
