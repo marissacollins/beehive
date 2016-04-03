@@ -210,8 +210,55 @@
 								<div class="dta">Last Update: {{vm.beeFreqStatus[0].datetime}}
 								</div></h2></div></div>
 				</div>
+				
+    		<div ng-controller="PicModalController as vmpicmodal">
+				<!--Last Picture-->
+				<div class="row">
+					<div class="col-md-offset-1 col-md-5"><h2 id="frequencies">Most Recent Picture:</h2></div>
+					<div class="col-md-6"><div class="popVar">
+						<h2>
+							<a href="" ng-click="vmpicmodal.openmodal()" >
+								<img ng-src="/beehive/uploads/{{vm.populations[0].picurl}}" height="100">
+								</a>
+								</br>
+								<div class="dta">Last Update: {{vm.populations[0].datetime}}
+								</div></h2></div></div>
+				</div>
+
+				<script id="picmodal.html" type="text/ng-template">
+					<div class="modal-header">
+					  <h3 class="modal-title">Hive - {{vmpicinst.selectedHiveId}}</h3>
+					  </div>
+						<div class="modal-body">
+							<div class="col-md-4" ng-repeat="pic in vmpicinst.piclist">
+									<img ng-src="/beehive/uploads/{{pic.picurl}}" width="267"> 
+									<div class="dta">Uploaded: {{pic.datetime}}
+								</div>
+								<div class="dta">Count: {{pic.count}}
+								</div>
+							</div>
+						</div>					
+					<div class="modal-footer">
+					  <div id="tooltip" style=" 
+								border: 1px solid rgb(255, 221, 221); 
+								padding: 2px; opacity: 0.8; 							 
+								display: block; background-color: rgb(255, 238, 238);"></div>
+					<button class="btn btn-warning" type="button" ng-click="vmpicinst.close()">Close</button>
+					</div>		
+				</script>
+			</div>
+				
 				</div>
 			</div>
 			</div>
 		</div>                    
-    </div>
+	
+	
+	
+	
+	
+	
+	
+	</div>
+	
+

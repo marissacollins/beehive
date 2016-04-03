@@ -5,7 +5,9 @@
     .module('ng-bee') //Binds all of the angular modules into one
     .controller('BeeController', BeeController) //definition of controller
     .controller('ModalController', ModalController)
-    .controller('ModalInstController', ModalInstController);
+    .controller('ModalInstController', ModalInstController)
+	.controller('PicModalController', PicModalController)
+    .controller('PicModalInstController', PicModalInstController);
 
 
     //injecting external functions into the controller
@@ -32,11 +34,25 @@
       'Notification',
       'BeeServices'
     ];
+	PicModalController.$inject = [
+      '$log',
+      '$uibModal',
+	  '$location',
+	  'BeeServices'
+    ];
+	PicModalInstController.$inject = [
+      '$log',
+      '$uibModalInstance',
+      '$window',
+      'Notification',
+      'BeeServices'
+    ];
+	
 
 	
 	//Controllers connect the html and the webapp 
 		//Controller pulls the latest values from the database, for "Your Hive" page
-			function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q, Notification, uiGridConstants) {
+		function BeeController(BeeServices, $scope, $rootScope, $routeParams, $log, $location, $q, Notification, uiGridConstants) {
 			/* jshint validthis: true */
 			var vmbee = this;
 			vmbee.getBeeHives = getBeeHives;
@@ -1095,7 +1111,74 @@
  
  
 	}
-			function ModalController( $log, $uibModal, $location, BeeServices) {
+		function PicModalController( $log, $uibModal, $location, BeeServices) {
+			/* jshint validthis: true */
+			var vmotemp = this;
+			
+			vmotemp.animationsEnabled = true;
+			vmotemp.openmodal = openmodal;
+			vmotemp.modalInstance = undefined;
+			$log.debug('PicModalController entered ');
+
+
+			function openmodal() {
+				$log.debug('pic openmodal entered');
+			  
+			  vmotemp.modalInstance = $uibModal.open({
+				animation: vmotemp.animationsEnabled,
+				templateUrl: 'picmodal.html',
+				controller: 'PicModalInstController as vmpicinst',
+				size: 'lg',
+				resolve: {
+				  classname: function () {
+					  $log.debug('return from open');
+					return ;
+				  }
+				}
+			  });
+			  vmotemp.modalInstance.result.then(function (dta) {
+				  console.log('search modalInstance result :', dta);
+			  }, function () {
+				  $log.info('Modal dismissed at: ' + new Date());
+			  });
+
+			}
+    
+		}
+		function PicModalInstController( $log, $uibModalInstance, $window, Notification, BeeServices) {
+		/* jshint validthis: true */
+			var vminst = this;
+			console.log('pic modal inst entered');
+			console.log(vminst);
+
+			vminst.close = close;
+			vminst.themodal = '';
+			vminst.selectedHiveId = BeeServices.getHiveId();
+
+			vminst.piclist={};
+
+			getPopPicRange().then(function () {
+				$log.debug('got poppicrange');
+			});
+
+			function getPopPicRange(){
+				var thepath = '../v1/populations';
+				var thepath = encodeURI('../v1/populations?thelimit=21&thehive=' + vminst.selectedHiveId  );
+					
+				return BeeServices.getPopulation(thepath).then(function (data) {
+					$log.debug('getPopPicRange returned data');
+					$log.debug(data);
+						vminst.piclist = data.PopulationList;
+						return;
+				});
+			}
+			
+			function close() {
+				$uibModalInstance.dismiss('cancel');
+			}
+
+	}
+		function ModalController( $log, $uibModal, $location, BeeServices) {
     /* jshint validthis: true */
     var vmotemp = this;
     
@@ -1128,9 +1211,10 @@
       });
 
     }
+
     
   }
-			function ModalInstController( $log, $uibModalInstance, $window, Notification, BeeServices) {
+		function ModalInstController( $log, $uibModalInstance, $window, Notification, BeeServices) {
    
    /* jshint validthis: true */
     var vminst = this;
@@ -1761,4 +1845,6 @@
             });
         }		
   }
+  
+  
 })();
