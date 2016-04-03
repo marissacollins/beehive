@@ -8,7 +8,7 @@
 
 			<script id="modal.html" type="text/ng-template">
 				<div class="modal-header">
-				  <h3 class="modal-title">Hive - {{vminst.selectedHiveName}}</h3>
+				  <h3 class="modal-title">Hive - {{vminst.selectedHiveId}}</h3>
 				  </div>
 					<div class="modal-body">
 						<div class="row">
@@ -32,7 +32,7 @@
 							<!--Hive Temp Graph-->
 							  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Hive Temperature Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Hive Temperature Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="HiveTempSpline" style="height:200px"></div>
 								  <div class="col-md-3" id="HiveTempLegend"></div>
 							   </div>
@@ -40,7 +40,7 @@
 							<!--Humidity Graph-->
 							  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Humidity Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Humidity Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="HumiditySpline" style="height:200px"></div>
 								  <div class="col-md-3" id="HumidityLegend"></div>
 							   </div>
@@ -48,7 +48,7 @@
 							<!--Light Graph-->
 							  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Light Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Light Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="LightSpline" style="height:200px"></div>
 								  <div class="col-md-3" id="LightLegend"></div>
 							   </div>
@@ -56,7 +56,7 @@
 							<!--Population Graph-->
 							  <div ng-show="vminst.graphid == 'PopulationSpline'" ng-hide="vminst.graphid != 'PopulationSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Population Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Population Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="PopulationSpline" style="height:200px"></div>
 								  <div class="col-md-3" id="PopulationLegend"></div>
 							   </div>
@@ -64,17 +64,25 @@
 							<!--WeightSummary Graph-->
 							  <div ng-show="vminst.graphidsum == 'weightSplineSum'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Sum Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Sum Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="weightSplineSum" style="height:200px"></div>
 								  <div class="col-md-3" id="weightLegendsum"></div>
 							   </div>
 							  </div>
 							<!--Frame Weight Graph-->
-							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveName != 'All'"  class="panel">
+							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveName}}</h4>
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveId}}</h4>
 								  <div class="col-md-9" id="weightSplineFrame1" style="height:400px"></div>
 								  <div class="col-md-3" id="weightLegend1"></div>
+							   </div>
+							  </div> 
+							  <!--Frequency/Amplitude Graph-->
+							  <div ng-show="vminst.graphid == 'AudioSpline'" ng-hide="vminst.graphid != 'AudioSpline'"  class="panel">
+								<div class="panel-body">
+								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Frequency Spectrum for Hive: {{vminst.selectedHiveId}}</h4>
+								  <div class="col-md-9" id="AudioSpline" style="height:400px"></div>
+								  <div class="col-md-3" id="AudioLegend"></div>
 							   </div>
 							  </div> 
 						  </div>
@@ -199,13 +207,13 @@
 								<div ng-show="vm.populationMinAlert(vm.populations[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
 								</div></h2></div></div>
 				</div>
-				<!--Frequency Status-->
+				<!--Frequency Spectrum-->
 				<div class="row">
-					<div class="col-md-offset-1 col-md-5"><h2 id="frequencies">Bee Frequencies:</h2></div>
+					<div class="col-md-offset-1 col-md-5"><h2 id="frequencies">Frequency Spectrum:</h2></div>
 					<div class="col-md-6"><div class="freqVar">
 						<h2>
-							<a href="/beehive/web/frequency.html">
-								{{vm.beeFreqStatus[0].frequencyStatus}}</a>
+							<a href="" ng-click="vmmodal.openmodal('frequencyStatus')">
+								{{vm.beeFreqStatus[0].amplitude}}</a>
 								</br>
 								<div class="dta">Last Update: {{vm.beeFreqStatus[0].datetime}}
 								</div></h2></div></div>

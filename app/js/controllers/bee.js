@@ -1289,7 +1289,7 @@
 						dataarr.push( { data: otemparray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
 						vminst.grapharray = dataarr;
 						
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 				});
 				break;
 			case 'outsidehum':
@@ -1319,7 +1319,7 @@
 						dataarr.push( { data: ohumarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
 						vminst.grapharray = dataarr;
 						
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 				});
 				break;
 			
@@ -1361,7 +1361,7 @@
 						}
 						$log.debug('hivetemp array',dataarr);
 						vminst.grapharray = dataarr;
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 
                     });
 				break;
@@ -1406,7 +1406,7 @@
 						}
 						$log.debug('humidity array',dataarr);
 						vminst.grapharray = dataarr;
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 
                     });
 				break;
@@ -1531,8 +1531,8 @@
 						$log.debug('weight arraysum',dataarrsum);
 						vminst.grapharray1 = dataarr1;
 						vminst.grapharraysum = dataarrsum;
-						getGraph(vminst.graphid1, vminst.graphlabel1, vminst.grapharray1, vminst.legendcontainer1);
-						getGraph(vminst.graphidsum, vminst.graphlabelsum, vminst.grapharraysum, vminst.legendcontainersum);
+						getGraph(vminst.graphid1, vminst.graphlabel1, vminst.grapharray1, vminst.legendcontainer1, "Date");
+						getGraph(vminst.graphidsum, vminst.graphlabelsum, vminst.grapharraysum, vminst.legendcontainersum, "Date");
 
                     });
 				break;
@@ -1574,7 +1574,7 @@
 						}	
 						$log.debug('light array',dataarr);
 						vminst.grapharray = dataarr;
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 							
                     });
 				break;
@@ -1617,7 +1617,7 @@
 						}
 						$log.debug('population array',dataarr);
 						vminst.grapharray = dataarr;
-						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer);
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 
                     });
 				break;
@@ -1626,21 +1626,35 @@
                         $log.debug('got FreqStatusRange');
 						//Frequency Status Range
 						$log.debug('before graph', vminst.frequencyrange)
-						var freqarray = [];
-						for (var i=0, len=vminst.frequencyrange.length; i<len; i++) {
-							var d2 = [];
-							var tt = mysqlGmtStrToJSLocal(vminst.frequencyrange[i].datetime);
-							$log.debug('date conversion',vminst.frequencyrange[i].datetime, tt);
-							d2[0] = tt;
-							d2[1] = vminst.frequencyrange[i].frequencyStatus;
-							freqarray.push(d2);
+						var dataarr = [];
+						vminst.graphid = 'AudioSpline';
+						vminst.legendcontainer = 'AudioLegend';
+						
+						//get list of unique hives
+						var uniqhives = _.uniq(vminst.frequencyrange, false, function(p){return p.hiveID});
+						$log.debug('uniq hives',uniqhives);
+						
+						//loop through hives to match
+						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
+							var uhiveid = uniqhives[uniq].hiveID;
+							var freqarray = [];
+							vminst.graphlabel = 'Frequency Spectrum for hive:' + uhiveid;
+						
+						
+							for (var i=0, len=vminst.frequencyrange.length; i<len; i++) {
+								if (vminst.frequencyrange[i].hiveID == uhiveid) {
+								var d2 = [];
+								d2[0] = vminst.frequencyrange[i].frequency;
+								d2[1] = vminst.frequencyrange[i].amplitude;
+								freqarray.push(d2);
+							}
 						}
-						$log.debug('frequency array' ,freqarray);						
-						//graphid = 'x';
-						//graphlabel = 'y';
-						//grapharray = freqarray;
-						//legendcontainer = 'xx';
-						//getGraph(graphid, graphlabel, grapharray, legendcontainer);
+							dataarr.push( { data: freqarray, label: vminst.graphlabel} );
+							//$log.debug('darr',dataarr);
+						}
+						$log.debug('audio array',dataarr);
+						vminst.grapharray = dataarr;
+						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "notDate");
 
                     });
 				break;
@@ -1670,25 +1684,52 @@
         return new Date(g.getTime() - ( g.getTimezoneOffset() * 60000 ));
     }
 		
-	function getGraph(graphid, graphlabel, grapharray, legendcontainer) {
+	function getGraph(graphid, graphlabel, grapharray, legendcontainer, xAxisType) {
 
-		$log.debug('getGraph entered', graphid, graphlabel, grapharray, legendcontainer);
+		$log.debug('getGraph entered', graphid, graphlabel, grapharray, legendcontainer, xAxisType);
 
 		setTimeout(function(){
 			try {
 				//BEGIN LINE CHART SPLINE
-					/*How to put 3 lines on a graph
-						//var d2_1 = [["Jan", 181],["Feb", 184],["Mar", 189],["Apr", 180],["May", 190],["Jun", 183],["Jul", 185],["Aug", 188],["Sep", 202]];
-						//var d2_2 = [["Jan", 165],["Feb", 172],["Mar", 175],["Apr", 176],["May", 164],["Jun", 171],["Jul", 175],["Aug", 180],["Sep", 181]];
-						//var d2_3 = [["Jan", 128],["Feb", 131],["Mar", 140],["Apr", 150],["May", 140],["Jun", 144],["Jul", 146],["Aug", 155],["Sep", 158]];
-					*/
+
 				var data = grapharray;	
-							/*		series: {
+				var options ={};
+				//see here for details on options https://github.com/flot/flot/blob/master/API.md
+				if (xAxisType == "Date") {
+					options = {   
+						grid: {
+							borderColor: "green",
+							borderWidth: 0,
+							hoverable: true,
+							margin: 10,
+							minBorderMargin: 10
+						},
+						xaxis: {
+							mode: "time",
+							timeformat: "%m/%d %H:%M"
+						},
+						yaxis: {
+							tickColor: "#fafafa"
+						},
+						shadowSize: 0,
+						highlightColor: "green",
+						legend: {         
+							backgroundOpacity: 0.5,
+							noColumns: 1,
+							container: '#' + legendcontainer,
+							labelBoxBorderColor: "white",
+							position: "ne"
+						}
+					};
+					
+				} else {
+				options = {
+					series: {
 						lines: {
-							show: !1
+							show: false
 						},
 						splines: {
-							show: !0,
+							show: true,
 							tension: 0.4,
 							lineWidth: 2,
 							fill: 0
@@ -1697,9 +1738,7 @@
 							show: true,
 							radius: 4
 						}
-					},
-			*/
-				var options = {   
+					},					
 					grid: {
 						borderColor: "green",
 						borderWidth: 0,
@@ -1708,8 +1747,10 @@
 						minBorderMargin: 10
 					},
 					xaxis: {
-						mode: "time",
-						timeformat: "%m/%d %H:%M"
+						max: 800,
+						min: 0,
+						show: true
+						//ticks: [0,100,200,300,400,500,600,700,750]
 					},
 					yaxis: {
 						tickColor: "#fafafa"
@@ -1724,8 +1765,11 @@
 						position: "ne"
 					}
 				};
+					
+				}
 
 				var plot = $.plot('#' + graphid, data, options);
+				console.log("plot", plot, data, options);
 				
 					$('#' + graphid).bind("plothover", function (event, pos, item) {
 

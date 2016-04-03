@@ -10,7 +10,7 @@ $json_a = json_decode($string, true);
 echo "showing json\n";
 var_dump($json_a);
 
-$url = "http://localhost/v1/uploadStream?hiveid=1";
+$url = "http://localhost/v1/uploadStream?hiveid=2";
 $content = json_encode($json_a);
 
 //commandline way to call http services

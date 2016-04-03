@@ -4,14 +4,10 @@
         .module('ng-bee', [
         'ui.grid',
         'ui.utils',
-   //     'ui.mask',
         'ngRoute',
         'ui.bootstrap',
         'ui-notification',
-  //      'lvl.directives.dragdrop',
-        'toggle-switch',
         'ngMessages',
-  //      'ngCookies',
         'ui.grid.pagination',
         'ui.grid.cellNav',
         'ui.grid.edit',
@@ -25,10 +21,8 @@
 'ui.grid.grouping' ,       
 'ui.grid.saveState' ,
         'ui.select',
-   //             'iso.directives',
                 'ngSanitize',
-    'angularFileUpload',
-  //  'akoenig.deckgrid'
+    'angularFileUpload'
         ])
 
     // allow DI for use in controllers, unit tests for lodash

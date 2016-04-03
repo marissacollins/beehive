@@ -201,17 +201,14 @@ class BeeDbHandler {
 			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
 			error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
 
-			//get all hive temps up to the limit of records optionally for a hive			
-			$sql = "SELECT * FROM audio ";
+			//get all hive frequencies, amplitudes for the most recent date 			
+			$sql = " SELECT a.datetime datetime, a.hiveID hiveID, a.frequency frequency, a.amplitude amplitude FROM  ";
+			$sql .= " (select bee.hiveid, max(bee.datetime) as maxdate  FROM audio bee GROUP By bee.hiveID) as maxbee, ";
+			$sql .= " audio a  WHERE a.hiveid = maxbee.hiveid and a.datetime = maxbee.maxdate ";
+
 			if (strlen($thehive) > 0  && $thehive != 'NULL' && $thehive != 'All') {
-				$sql .= " where hiveid =  " . $thehive ;
+				$sql .= " and a.hiveid =  " . $thehive ;
 			} 
-
-			$sql .= " order by datetime desc ";
-
-			if (strlen($thelimit) > 0  && $thelimit != 'NULL' && $thelimit != 'All') {
-				$sql .= " LIMIT " . $thelimit ;
-			}
 			
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
