@@ -7,7 +7,7 @@ h1{
 	margin-left:10px;
 	color: #36658C;
 	font-family:Tahoma;
-	font-size:60px;
+	font-size:70px;
 }
 h2{
 	font-size:30px;
@@ -57,7 +57,7 @@ li {
 #topbar{
 	background-color:rgb(251, 251, 200);
 	height:0%;
-	background-image:url("wood.jpg");
+	background-image:url("banner.jpg");
 }
 
 .maintable{
@@ -71,5 +71,9 @@ li {
 }
 .side{
 	height:750px;
-	background-image:url("side.jpg");
+	background-image:url("side.png");
+}
+.side2{
+	height:750px;
+	background-image:url("side.png");
 }
