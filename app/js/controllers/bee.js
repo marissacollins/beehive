@@ -102,6 +102,9 @@
 			//Get FrameWeight
 			vmbee.getFrameWeight = getFrameWeight;
 			vmbee.HiveWeightStatusList = [];
+			//Get config for alert
+			vmbee.getConfig = getConfig;
+			vmbee.config = [];
 			
 			//Hive Temperature Alert
 			vmbee.hiveTempMaxAlert = hiveTempMaxAlert;
@@ -145,8 +148,22 @@
 		
 
 		//hive temp alert function
-		function hiveTempMaxAlert(hiveTemptest){
-			return hiveTemptest > vmbee.hiveTempAlertAmtMax;
+		function hiveTempMaxAlert(hiveTemptest, thehive){
+			var thekey = 'hivetempmax';
+			var cfgvalue = '100';
+/*			getConfig(thekey, thehive).then(
+			function (result) {
+				$log.debug('got data from getconfig',result);
+				cfgvalue = result.Alertlist.configvalue;
+				$log.debug('cfgvalue',cfgvalue);
+			}, 
+			function(error) {
+				$log.debug('Caught an error getting cfgvalue', error); 
+				return ;
+			});
+*/			
+			vmbee.hiveTempAlertAmtMax = cfgvalue;
+			return hiveTemptest > cfgvalue;
 		}
 		function hiveTempMinAlert(hiveTemptest){
 			return hiveTemptest < vmbee.hiveTempAlertAmtMin;
@@ -378,7 +395,7 @@
 			activate();
 		}
 		
-		//Get Latest functions
+		
         function getHiveList() {
             var thepath = '../v1/hivelist';
             return BeeServices.getHiveList(thepath).then(function (data) {
@@ -470,7 +487,23 @@
 					return ($q.reject(error));
 			});
 		}
+		function getConfig(thekey, thehive) {           
+		   var thepath = '../v1/alert?thekey=' + thekey + '&thehive' + thehive;
+            return BeeServices.getConfig(thepath).then(function (data) {
+                $log.debug('getConfig returned data');
+                $log.debug(data);
+                    vmbee.config = data.AlertList;
 
+                    return vmbee.config;
+			},
+			function (error) {
+                    $log.debug('Caught an error getting alert list going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+                    return ($q.reject(error));
+            });
+        }
+		
+		//Get Latest functions
 		function getBeeHives() {
             var thepath = '../v1/bees';
             return BeeServices.getAllBeehives(thepath).then(function (data) {

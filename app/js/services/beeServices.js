@@ -20,6 +20,7 @@
             getOutsideTemp: getOutsideTemp,
 			getOutsideHum: getOutsideHum,
 			getHiveTemp: getHiveTemp,
+			getConfig: getConfig,
 			getHiveHumidity: getHiveHumidity,
 			getHiveWeight: getHiveWeight,
 			getLight: getLight,
@@ -153,6 +154,14 @@
                     return( request.then( handleSuccess, handleError ) );
                 
         }
+		function getConfig(path){
+			$log.debug('getConfig service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+		}
 		function uploadData(path){
 			$log.debug('uploadData data before post :' , path);
 			var request = $http({
@@ -170,7 +179,7 @@
 			});
 			return( request.then( handleSuccess, handleError ) );
 		}
-
+		
  		function updateFrameWeight(path, frame){
 			$log.debug('updateFrameWeight data before post :' , frame);
 			var request = $http({

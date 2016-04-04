@@ -466,6 +466,48 @@ $app->get('/outsidehum',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
+$app->get('/alert',   function() use($app) {
+
+ $allGetVars = $app->request->get();
+    error_log( print_R("alert entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
+
+    $result = $db->getAlert($thekey, $thehive);
+
+    $response["error"] = false;
+    $response["AlertList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
+			$tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+			$tmp["configkey"] =  (empty($slist["configkey"]) ? "NULL" : $slist["configkey"]);
+			$tmp["configvalue"] =  (empty($slist["configvalue"]) ? "NULL" : $slist["configvalue"]);
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["AlertList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
+
 
 //Posts used for inserting into the database
 $app->post('/uploadData', function() use($app){
@@ -677,7 +719,6 @@ $app->post('/genData', function() use($app){
     }
     
 });
-
 $app->post('/updateFrameWeight', function() use($app){
 	$response = array();
 	//Reads the key values and extracts them
