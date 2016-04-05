@@ -3,9 +3,13 @@ h2 a{
 	color:steelblue;
 	font-family:Tahoma;
 	font-size:30px;
-	/*text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-	*/
 	margin-left:5%;
+}
+a:link{
+	text-decoration:none;
+}
+a:hover{
+	color:navy;
 }
 
 #yourtable{
