@@ -39,6 +39,12 @@ ul {
 li {
     float: left;
 }
+.btn-primary{
+	
+}
+.btn:hover{
+	background-color: navy;
+}
 
 /*Notes*/
 #notes{

@@ -6,15 +6,17 @@
     <title>Bees</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/beehive/">
-
 	
 	<!--CSS FOR PLUGIN-->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"/>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css"/>
-     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.css"/>
-     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.2.3/css/simple-line-icons.css"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.css"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />
+	
+	<!--WillyWeather Widget-->
+	<script src="http://www.willyweather.com/info/weatherwidget.html"></script>
 	
     <!--CORE JS -->
     <link type="text/css" rel="stylesheet" href="css/beehive/yourHiveStyle.css"/>
@@ -53,64 +55,63 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>	
 	
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
-            <script src="vendors/angular-route/angular-route.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.8/angular-messages.js"></script>
-            <script src="vendors/angular-resource/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+    <script src="vendors/angular-route/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.8/angular-messages.js"></script>
+    <script src="vendors/angular-resource/angular-resource.js"></script>
             
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui-ieshiv.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui-ieshiv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.css"/>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>            
-            <script src="vendors/angular-ui-utils/ui-utils-ieshiv.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js"></script>            
+    <script src="vendors/angular-ui-utils/ui-utils-ieshiv.js"></script>
 
     <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/3.0.7/ui-grid.css"/>
 
-   <link data-require="chosen@1.0.0" data-semver="1.0.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.min.css" />
+	<link data-require="chosen@1.0.0" data-semver="1.0.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.min.css" />
     <script data-require="chosen@1.0.0" data-semver="1.0.0" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js"></script>
     <script data-require="chosen@1.0.0" data-semver="1.0.0" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.proto.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/1.1.6/angular-file-upload.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/1.1.6/angular-file-upload.js"></script>
 
-  <link rel="stylesheet" href="vendors/angular-ui-notification/dist/angular-ui-notification.css">
-  <script src="vendors/angular-ui-notification/dist/angular-ui-notification.js"></script>
-     <style type="text/css">
+	<link rel="stylesheet" href="vendors/angular-ui-notification/dist/angular-ui-notification.css">
+	<script src="vendors/angular-ui-notification/dist/angular-ui-notification.js"></script>
+    <style type="text/css">
         .red{
             color:red
         }
           .green{
             color:green
         }
-    </style>
+	</style>
   
-  <link href="https://cdn.jsdelivr.net/hint.css/1.3.6/hint.css" rel="stylesheet" type="text/css">
+	<link href="https://cdn.jsdelivr.net/hint.css/1.3.6/hint.css" rel="stylesheet" type="text/css">
   
 
-  <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript" src="js/controllers/app.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/controllers/app.js"></script>
 
-  <script type="text/javascript" src="js/services/beeServices.js"></script>
-  <script type="text/javascript" src="js/controllers/bee.js"></script>
-  <script type="text/javascript" src="js/controllers/uploaddata.js"></script>
-  <script type="text/javascript" src="js/controllers/modaluploaddata.js"></script>
+	<script type="text/javascript" src="js/services/beeServices.js"></script>
+	<script type="text/javascript" src="js/controllers/bee.js"></script>
+	<script type="text/javascript" src="js/controllers/uploaddata.js"></script>
+	<script type="text/javascript" src="js/controllers/modaluploaddata.js"></script>
  
 
-     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
 
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.13.2/select.css"/>
-   <script type="text/javascript" src="js/controllers/select.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.13.2/select.css"/>
+	<script type="text/javascript" src="js/controllers/select.js"></script>
 
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
-      <style>
+    <style>
     body {
       padding: 15px;
     }
@@ -121,81 +122,72 @@
     .selectize-control > .selectize-dropdown {
       top: 36px;
     }
-  </style>
+	</style>
 
 	<style>
 		.chosen-choices, .chosen-container {
 			width: 500px !important;
 		}
 	</style>
-   <style>
+	<style>
 	.picitem 
 	{
-/*	  border: 1px solid silver;*/
-	  overflow: hidden;
-	  -moz-box-sizing: border-box;
-	  -webkit-box-sizing: border-box;
-	  box-sizing: border-box;
-	  padding: 0;
-/*	  width:250px;
-	  height:220px;
-	  */
+		/*border: 1px solid silver;*/
+		overflow: hidden;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 0;
+		/*width:250px;
+		height:220px;
+		*/
 	}
 	.picitem img 
 	{
-	  max-width: 100%;
-	  -moz-transition: all 0.3s;
-	  -webkit-transition: all 0.3s;
-	  transition: all 0.3s;
-/*	  width:250px;
-	  height:220px;
-	  */
+		max-width: 100%;
+		-moz-transition: all 0.3s;
+		-webkit-transition: all 0.3s;
+		transition: all 0.3s;
+		/*width:250px;
+		height:220px;
+		*/
 	}
 	.picitem:hover img 
 	{
-	  -moz-transform: scale(1.3);
-	  -webkit-transform: scale(1.3);
-	  transform: scale(1.3);
+		-moz-transform: scale(1.3);
+		-webkit-transform: scale(1.3);
+		transform: scale(1.3);
 	}
 </style>
 
 
 
   </head>
-
-    <body    >
-
+    <body>
     <div ng-controller="AppController as vm">
-
-      <div id="wrapper">
-			
+		<div id="wrapper">
 			<div id="topbar" class="topbar-main" class="col-md-12">
-					<div>
-						<h1>Beehive Monitoring System</h1>
-					</div>
+				<div><h1>Beehive Monitoring System</h1></div>
 
-			  <ul class="nav navbar-top-links navbar-left">
-			   <li><a href="#/" class="btn btn-primary btn-lg pull-right">Home</a></li>
-			   <li><a href="#/hive" class="btn btn-primary btn-lg pull-right">Your Hive</a></li>
-			   <li><a href="#/uploaddata" class="btn btn-primary btn-lg pull-right">Upload Data</a></li>
-				  <li><a href="#/bees" class="btn btn-primary btn-lg pull-right">Data Listing</a></li>
-				<li><a href="#/about" class="btn btn-primary btn-lg pull-right">About</a></li>
-			   <li><a href="#/help" class="btn btn-primary btn-lg pull-right">Help</a></li>
-
-			  </ul>
+				<ul class="nav navbar-top-links navbar-left">
+					<li><a href="#/" class="btn btn-primary btn-lg pull-right">Home</a></li>
+					<li><a href="#/hive" class="btn btn-primary btn-lg pull-right">Your Hive</a></li>
+					<li><a href="#/uploaddata" class="btn btn-primary btn-lg pull-right">Upload Data</a></li>
+					<li><a href="#/bees" class="btn btn-primary btn-lg pull-right">Data Listing</a></li>
+					<li><a href="#/about" class="btn btn-primary btn-lg pull-right">About</a></li>
+					<li><a href="#/help" class="btn btn-primary btn-lg pull-right">Help</a></li>
+				</ul>
 			</div>
 
 			<div class="jumbotron" ng-if="flash">
 				<div class="container">
 					<div class="col-sm-8 col-sm-offset-2">
-						<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }"  
-							ng-bind="flash.message"></div>				  
+						<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-bind="flash.message"></div>				  
 					</div>
 				</div>
 			</div>
-          <div ng-view class="col-md-12" ></div>
-      </div>
+			<div ng-view class="col-md-12" ></div>
+		</div>
     </div>
-
     </body>
 </html>
