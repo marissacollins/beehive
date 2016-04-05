@@ -83,3 +83,12 @@ li {
 	height:750px;
 	background-image:url("side.png");
 }
+.upload{
+	margin-left:17px;
+	font-size:30px;
+	color:#36658C;
+	font-weight:700;
+}
+.uploadButton{
+	font-size:90px;
+}

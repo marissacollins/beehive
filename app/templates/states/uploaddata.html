@@ -3,9 +3,9 @@
 		
 
 		<div class="panel panel-blue col-md-12">
-			<div class="col-md-offset-1 col-md-3 col-md-offset-2">
+			<div class="col-md-offset-0 col-md-4 col-md-offset-2">
 				<h2>
-				<label for="hiveselect" class="control-label">Hive ID</label>
+				<label for="hiveselect" class="control-label">Choose which hive to upload files for:</label>
 				</h2>
 			</div>
 			<div class="col-md-6 ">
@@ -28,8 +28,7 @@
 		
 		<div class="row row-icons">
 		  <div ng-controller="ModalUploadController as vmmodal">
-			<!--                            <pre>{{ vmmodal }}</pre>
--->
+			<!--<pre>{{ vmmodal }}</pre>-->
 			<script id="myPickupload.html" type="text/ng-template">
 				<div class="modal-header">
 				  <h3 class="modal-title">Select Bee File</h3>
@@ -123,13 +122,14 @@
 				</div>
 			</script> 
 
-
 			<div class="col-md-12">
-			Pick files
-			  <a href ng-click="vmmodal.openpick()"><i class=
-			  "glyphicon glyphicon-upload"></i></a> 
+			<div class="upload col-md-5">
+			Use the arrow to choose the JSON files that you are uploading. If you want to upload multiple files, hold down the CRTL key when selecting.
 			</div>
-		  </div>
+			<div class="uploadButton col-md-5">
+				<a href ng-click="vmmodal.openpick()"><i class="glyphicon glyphicon-upload"></i></a>
+			</div>
+		  </div></div>
 		</div>
 	  </div>		
 
