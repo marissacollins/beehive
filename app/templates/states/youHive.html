@@ -174,7 +174,7 @@
 					<div class="col-md-4"><div class="weightVar">
 						<h2>
 							<a href=""  ng-click="vmmodal.openmodal('weightstatus')"  ng-style="{ 'border' : vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum) ?  '4px solid red' : ''}">
-							{{vm.HiveWeightStatus[0].frameweightsum}} lbs.</a>
+							{{vm.HiveWeightStatus[0].frameweightsum}} oz.</a>
 							</br>
 							<div class="dta">Last Update: {{vm.HiveWeightStatus[0].datetime}}
 							<div ng-show="vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum)">Alert: Weight > {{vm.weightAlertAmt}}</div>
