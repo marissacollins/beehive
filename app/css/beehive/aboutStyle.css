@@ -1,11 +1,26 @@
 
 #table{
 	width:75%;
-	height:600px;
+	/*height:600px;*/
 	margin-left:12.5%;
+	margin-top:15px;
 }
 #table tr td{
 	border:1px solid black;
 	padding:5px;
+	vertical-align:top;
+}
+
+#tableHelp{
+	width:75%;
+	/*height:600px;*/
+	margin-left:12.5%;
+	margin-top:15px;
+}
+#tableHelp tr td{
+	border:1px solid black;
+	padding:5px;
+	vertical-align:top;
+	width:50%;
 }
 
