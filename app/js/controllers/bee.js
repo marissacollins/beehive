@@ -149,7 +149,7 @@
         activate();
 
         function getAlert(thekey, thehive) {
-			getConfig(thekey, thehive).then(
+			var result = getConfig(thekey, thehive).then(
                 function (result) {
                     $log.debug('got data from getconfig',result);
                     var cfgvalue = result[0].configvalue;
@@ -158,41 +158,31 @@
                 }, 
                 function(error) {
                     $log.debug('Caught an error getting cfgvalue', error); 
+                    cfgvalue = 0;
                     return -1;
 			});
-            
+            return result;
         }
 		//hive temp alert function
 		function hiveTempMaxAlert(hiveTemptest, thehive){
             $log.debug('hiveTempMaxAlert',hiveTemptest,thehive);
 			var thekey = 'hivetempmax';
-            //default value for testing
-			var cfgvalue = 100;
-            cfgvalue = getAlert(thekey,thehive);
-            if (cfgvalue > 0) {
-                vmbee.hiveTempAlertAmtMax = cfgvalue;
-                vmbee.hiveTempMaxAlerting = hiveTemptest >= cfgvalue ? true : false;
-                return;            
-            } else  {
-                //return error
-                return;
-            }
+
+            getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from hivetempmaxalert',dta);
+                vmbee.hiveTempAlertAmtMax = dta;
+                vmbee.hiveTempMaxAlerting = (Number(hiveTemptest) >= Number(dta) ? true : false);
+            });
 		}
 		function hiveTempMinAlert(hiveTemptest,thehive){
             $log.debug('hiveTempMinAlert',hiveTemptest,thehive);
 			var thekey = 'hivetempmin';
-			var cfgvalue = 94;
-            cfgvalue = getAlert(thekey,thehive);
-            if (cfgvalue > 0) {
-                vmbee.hiveTempAlertAmtMin = cfgvalue;
-                vmbee.hiveTempMinAlerting = hiveTemptest <= cfgvalue ? true : false;
-                return;            
-            } else  {
-                //return error
-                return;
-            }
-
-
+            
+            getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from getAlert for hiveTempMinAlert',dta,hiveTemptest);
+                vmbee.hiveTempAlertAmtMin = dta;
+                vmbee.hiveTempMinAlerting =  (Number(hiveTemptest) <= Number(dta) ? true : false);
+            });
         }
 		//hive humidity alert function
 		function hiveHumidityMaxAlert(hiveHumiditytest){
