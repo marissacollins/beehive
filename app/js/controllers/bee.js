@@ -108,8 +108,10 @@
 			
 			//Hive Temperature Alert
 			vmbee.hiveTempMaxAlert = hiveTempMaxAlert;
+            vmbee.hiveTempMaxAlerting = false;
 			vmbee.hiveTempAlertAmtMax = 95;
 			vmbee.hiveTempMinAlert = hiveTempMinAlert;
+            vmbee.hiveTempMinAlerting = false;
 			vmbee.hiveTempAlertAmtMin = 90;
 			//Hive Humidity Alert
 			vmbee.hiveHumidityMaxAlert = hiveHumidityMaxAlert;
@@ -145,29 +147,53 @@
 
 		//load the data for the initial display
         activate();
-		
 
+        function getAlert(thekey, thehive) {
+			getConfig(thekey, thehive).then(
+                function (result) {
+                    $log.debug('got data from getconfig',result);
+                    var cfgvalue = result[0].configvalue;
+                    $log.debug('cfgvalue',cfgvalue);
+                    return cfgvalue;
+                }, 
+                function(error) {
+                    $log.debug('Caught an error getting cfgvalue', error); 
+                    return -1;
+			});
+            
+        }
 		//hive temp alert function
 		function hiveTempMaxAlert(hiveTemptest, thehive){
+            $log.debug('hiveTempMaxAlert',hiveTemptest,thehive);
 			var thekey = 'hivetempmax';
-			var cfgvalue = '100';
-/*			getConfig(thekey, thehive).then(
-			function (result) {
-				$log.debug('got data from getconfig',result);
-				cfgvalue = result.Alertlist.configvalue;
-				$log.debug('cfgvalue',cfgvalue);
-			}, 
-			function(error) {
-				$log.debug('Caught an error getting cfgvalue', error); 
-				return ;
-			});
-*/			
-			vmbee.hiveTempAlertAmtMax = cfgvalue;
-			return hiveTemptest > cfgvalue;
+            //default value for testing
+			var cfgvalue = 100;
+            cfgvalue = getAlert(thekey,thehive);
+            if (cfgvalue > 0) {
+                vmbee.hiveTempAlertAmtMax = cfgvalue;
+                vmbee.hiveTempMaxAlerting = hiveTemptest >= cfgvalue ? true : false;
+                return;            
+            } else  {
+                //return error
+                return;
+            }
 		}
-		function hiveTempMinAlert(hiveTemptest){
-			return hiveTemptest < vmbee.hiveTempAlertAmtMin;
-		}
+		function hiveTempMinAlert(hiveTemptest,thehive){
+            $log.debug('hiveTempMinAlert',hiveTemptest,thehive);
+			var thekey = 'hivetempmin';
+			var cfgvalue = 94;
+            cfgvalue = getAlert(thekey,thehive);
+            if (cfgvalue > 0) {
+                vmbee.hiveTempAlertAmtMin = cfgvalue;
+                vmbee.hiveTempMinAlerting = hiveTemptest <= cfgvalue ? true : false;
+                return;            
+            } else  {
+                //return error
+                return;
+            }
+
+
+        }
 		//hive humidity alert function
 		function hiveHumidityMaxAlert(hiveHumiditytest){
 			return hiveHumiditytest > vmbee.hiveHumidityAlertAmtMax;
@@ -328,7 +354,7 @@
 				}),	
 				getLatestHiveTemp().then(function () {
 					$log.debug('got latesthivetemp');
-
+                    hiveTempMaxAlert
 				}, function(error) {
 					vmbee.hivetemp=[];
 						 return ($q.reject(error));
@@ -488,7 +514,7 @@
 			});
 		}
 		function getConfig(thekey, thehive) {           
-		   var thepath = '../v1/alert?thekey=' + thekey + '&thehive' + thehive;
+		   var thepath = '../v1/alert?thekey=' + thekey + '&thehive=' + thehive;
             return BeeServices.getConfig(thepath).then(function (data) {
                 $log.debug('getConfig returned data');
                 $log.debug(data);
@@ -539,7 +565,8 @@
                 $log.debug('getLatestHiveTemp returned data');
                 $log.debug(data);
                     vmbee.hivetemp = data.HiveTempList;
-
+                    hiveTempMaxAlert(vmbee.hivetemp[0].temp, vmbee.selectedHiveId);
+                    hiveTempMinAlert(vmbee.hivetemp[0].temp, vmbee.selectedHiveId);
                     return;
             });
         }

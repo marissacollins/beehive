@@ -8,9 +8,9 @@ $picsrc = 'c:/beehive/beehive/samplepic/2014.04.23.16.40.jpg';
 $picroot = "population";
 $error = "";
 $output = "";
-$hiveid = 1;
-$datetime = "2018-04-05 22:43:57";
-$count = 15;
+$hiveid = 2;
+$datetime = "2016-04-05 14:02:51";
+$count = 12;
 
         //set POST variables
         $url = "http://localhost/v1/uploadPic?hiveid=" . $hiveid . "&datetime=" . urlencode($datetime) . "&count=" . $count; 

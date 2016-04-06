@@ -471,7 +471,22 @@ $app->get('/alert',   function() use($app) {
  $allGetVars = $app->request->get();
     error_log( print_R("alert entered:\n ", TRUE), 3, LOG);
     error_log( print_R($allGetVars, TRUE), 3, LOG);
-	
+
+    $thekey='';
+    $thehive='';
+    
+    if(array_key_exists('thekey', $allGetVars)){
+        $thekey = $allGetVars['thekey'];
+    } else {
+        error_log( print_R("thekey missing\n", TRUE), 3, LOG);
+        $response["error"] = true;
+        $response["message"] = "Failed to get alert. Please try again";
+        echoRespnse(400, $response);
+    }
+    if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+
     $response = array();
     $db = new BeeDbHandler();
 
@@ -484,12 +499,15 @@ $app->get('/alert',   function() use($app) {
     while ($slist = $result->fetch_assoc()) {
         $tmp = array();
         if (count($slist) > 0) {
+            error_log( print_R("thekey $thekey has values returned\n", TRUE), 3, LOG);
+            error_log( print_R($slist, TRUE), 3, LOG);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
 			$tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
 			$tmp["configkey"] =  (empty($slist["configkey"]) ? "NULL" : $slist["configkey"]);
 			$tmp["configvalue"] =  (empty($slist["configvalue"]) ? "NULL" : $slist["configvalue"]);
 
         } else {
+            error_log( print_R("thekey $thekey - nothing returned\n", TRUE), 3, LOG);
             $tmp["id"] = "NULL";
 
 }
@@ -499,6 +517,8 @@ $app->get('/alert',   function() use($app) {
     $row_cnt = $result->num_rows;
 
     if ($result != NULL) {
+        error_log( print_R(" alert config returned\n", TRUE), 3, LOG);
+        error_log( print_R($response, TRUE), 3, LOG);
         $response["error"] = false;
         echoRespnse(200, $response);
     } else {

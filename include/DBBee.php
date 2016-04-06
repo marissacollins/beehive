@@ -216,53 +216,30 @@ class BeeDbHandler {
         $stmt->close();
         return $beeFreqStatus;
     }
-	public function getAlert($thekey, $thehive){
+	public function getAlert($thekey, $thehive = NULL){
 		error_log( print_R("getAlert entered\n", TRUE), 3, LOG);
 		error_log( print_R("with  thekey: $thekey \n", TRUE), 3, LOG);
 		error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
 
+        if ($thehive == 'NULL' ) {
+            $thehive = 'All';
+        }
+        
 		//Get all alert thresholds			
 		$sql = "SELECT * FROM alertconfig WHERE hiveid = ? and configkey = ?";
-		$sqlcnt = "SELECT count(*) FROM alertconfig WHERE hiveid = ? and configkey = ?";
-		$sqldef = "SELECT * FROM alertconfig WHERE hiveid = 'All' and configkey = ?";
 
-		if ($stmt = $this->conn->prepare($sqlcnt)) {
-			$stmt->bind_param("ss", $thehive, $thekey);
-			$stmt->execute();
-			$stmt->store_result();
-			$num_rows = $stmt->num_rows;
-			$stmt->close();
-			error_log( print_R("cfg result: $num_rows\n", TRUE ), 3, LOG);
-		} else {
-			printf("Errormessage: %s\n", $this->conn->error);
-			return NULL;
-		}
-
-		if ($num_rows == 1) {
-			if ($stmt = $this->conn->prepare($sql)) {
-				$stmt->bind_param("ss", $thehive, $thekey);
-				$stmt->execute();
-				$configoutput = $stmt->get_result();
-				$stmt->close();
-				return $configoutput;
-			} else {
-				printf("Errormessage: %s\n", $this->conn->error);
-				return NULL;
-			}
-			
-		} else {
-			if ($stmt = $this->conn->prepare($sqldef)) {
-				$stmt->bind_param("s", $thekey);
-				$stmt->execute();
-				$configoutput = $stmt->get_result();
-				$stmt->close();
-				return $configoutput;
-			} else {
-				printf("Errormessage: %s\n", $this->conn->error);
-				return NULL;
-			}
-			
-		}
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("ss", $thehive, $thekey);
+            $stmt->execute();
+            $configoutput = $stmt->get_result();
+        error_log( print_R("cfgoutput result\n", TRUE ), 3, LOG);
+        error_log( print_R($configoutput, TRUE ), 3, LOG);
+            $stmt->close();
+            return $configoutput;
+        } else {
+            printf("Errormessage: %s\n", $this->conn->error);
+            return NULL;
+        }
 	}
 	
 	//Check for duplicate records in each table in the database
