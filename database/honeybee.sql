@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2016 at 04:35 AM
--- Server version: 10.1.8-MariaDB
--- PHP Version: 5.6.14
+-- Generation Time: Apr 07, 2016 at 06:16 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,7 +39,7 @@ CREATE TABLE `alertconfig` (
 --
 
 INSERT INTO `alertconfig` (`id`, `hiveid`, `configkey`, `configvalue`) VALUES
-(1, 'All', 'hivetempmax', '100'),
+(1, 'All', 'hivetempmax', '95'),
 (2, 'All', 'hivetempmin', '90'),
 (3, 'All', 'hivehummax', '60'),
 (4, 'All', 'hivehummin', '50'),
