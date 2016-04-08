@@ -105,55 +105,7 @@ li {
 	padding:5px;
 }
 
-#outside{
-	color: #36658C;
-}
-#inside{
-	color: #36658C;
-}
-#humidity{
-	color: #36658C;
-}
-#weight{
-	color: #36658C;
-}
-#light{
-	color: #36658C;
-}
-#population{
-	color: #36658C;
-}
-#frequencies{
-	color: #36658C;
-}
-
-/*Formats the yourHive values with the green boxes around them*/
-.outVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.inVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.humidVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.weightVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.lightVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.popVar h2 a{
-	margin-top:-15px;
-	margin-left:10%;
-}
-.freqVar h2 a{
-	margin-top:-15px;
+.lastUpdate h2 a{
 	margin-left:10%;
 }
 
@@ -209,18 +161,50 @@ li {
 }
 #tableHelp tr td{
 	border:1px solid #d2d2d2;
-	padding:5px;
+	padding-left:2%;
 	vertical-align:top;
 	width:50%;
 }
 #tableHelp tr th{
 	border:1px solid #eee;
-	padding:5px;
+	padding-left:2%;
 	vertical-align:top;
 	background:#428BCA;
 	width:50%;
 }
+.list{
+	padding-left:5%;
+}
+/*About Table*/
+#yourHiveTable{
+	width:75%;
+	margin-left:12.5%;
+	margin-top:15px;
+	margin-bottom:25px;
+	border-collapse: collapse;
+	border: 1px solid #eee;
+	border-bottom: 4px solid #428BCA;
+	box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+				0px 10px 20px rgba(0,0,0,0.05),
+				0px 20px 20px rgba(0,0,0,0.05),
+				0px 30px 20px rgba(0,0,0,0.05);
+}
+#yourHiveTable tr td{
+	border:1px solid #d2d2d2;
+	padding-left:2%;
+	vertical-align:top;
+}
+#yourHiveTable tr th{
+	border: 1px solid #eee;
+	padding-left:2%;
+	vertical-align:top;
+	background:#428BCA;
+}
+#yourHiveTable tr:hover{
+	background:#ffffdd;
+}
 
+/*Notes buttons*/
 #notesButton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
