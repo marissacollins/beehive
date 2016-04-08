@@ -47,6 +47,12 @@ ul {
 li {
     float: left;
 }
+.btn{
+	color:white;
+	background-color: #428BCA;
+	font-weight:700;
+	border:1px solid #36658C;
+}
 
 /*Title and banner*/
 #topbar{
@@ -73,10 +79,6 @@ li {
 .maintable{
 	width:90%;
 	margin-left:5%;
-}
-.panel-heading{
-	font-size:28px;
-	color: #36658C;
 }
 .side{
 	height:750px;
@@ -153,6 +155,13 @@ li {
 .freqVar h2 a{
 	margin-top:-15px;
 	margin-left:10%;
+}
+
+/*Data Listing Page*/
+.panel-heading{
+	font-size:28px;
+	color: #36658C;
+	font-weight:700;
 }
 
 /*Tables*/
