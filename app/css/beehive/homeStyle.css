@@ -165,10 +165,12 @@ li {
 }
 
 /*Tables*/
+/*About Table*/
 #table{
 	width:75%;
 	margin-left:12.5%;
 	margin-top:15px;
+	margin-bottom:25px;
 	border-collapse: collapse;
 	border: 1px solid #eee;
 	border-bottom: 4px solid #428BCA;
@@ -189,14 +191,14 @@ li {
 	background:#428BCA;
 }
 #table tr:hover{
-	/*background:#fffdcd;*/
 	background:#ffffdd;
 }
-
+/*Help Table*/
 #tableHelp{
 	width:75%;
 	margin-left:12.5%;
 	margin-top:15px;
+	margin-bottom:15px;
 	border-collapse: collapse;
 	border: 1px solid #eee;
 	border-bottom: 4px solid #428BCA;
