@@ -2,15 +2,39 @@
   "frameweight": [
 	{
 	  "hiveid": "1",
-      "datetime": "2018-03-10 03:18:17",
-      "frameweight1": "5.88",
-      "frameweight2": "7.50",
-      "frameweight3": "15.62",
-      "frameweight4": "25.80",
-      "frameweight5": "26.53",
-      "frameweight6": "14.55",
-      "frameweight7": "8.18",
-      "frameweight8": "4.86"
+      "datetime": "2016-02-116 09:10:12",
+      "frameweight1": "0.00",
+      "frameweight2": "0.00",
+      "frameweight3": "1.02",
+      "frameweight4": "2.54",
+      "frameweight5": "7.43",
+      "frameweight6": "2.54",
+      "frameweight7": "1.02",
+      "frameweight8": "0.00"
+	},
+	{
+	  "hiveid": "1",
+      "datetime": "2016-03-10 03:18:17",
+      "frameweight1": "20.76",
+      "frameweight2": "50.67",
+      "frameweight3": "100.54",
+      "frameweight4": "120.76",
+      "frameweight5": "144.75",
+      "frameweight6": "120.09",
+      "frameweight7": "100.02",
+      "frameweight8": "50.01"
+	},
+	{
+	  "hiveid": "1",
+      "datetime": "2016-03-22 12:45:34",
+      "frameweight1": "144.87",
+      "frameweight2": "143.67",
+      "frameweight3": "142.65",
+      "frameweight4": "142.56",
+      "frameweight5": "144.78",
+      "frameweight6": "144.73",
+      "frameweight7": "142.67",
+      "frameweight8": "143.53"
 	}
   ]
 }
