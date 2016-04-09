@@ -14,7 +14,6 @@ $app->get('/bees',   function() use($app) {
         if (count($slist) > 0) {
             $tmp["name"] = (empty($slist["name"]) ? "NULL" : $slist["name"]);
             $tmp["temp"] = (empty($slist["temp"]) ? "NULL" : $slist["temp"]);
-            $tmp["weight"] = (empty($slist["weight"]) ? "NULL" : $slist["weight"]);
             $tmp["humidity"] =  (empty($slist["humidity"]) ? "NULL" : $slist["humidity"]);
             $tmp["datetime"] =  (empty($slist["datetime"]) ? "NULL" : $slist["datetime"]);
             $tmp["id"] =  (empty($slist["id"]) ? "NULL" : $slist["id"]);
@@ -799,7 +798,6 @@ $app->post('/updateHive', function() use($app){
     $name = (isset($dataJsonDecode->hive->name) ? $dataJsonDecode->hive->name : "");
 	$datetime  = (isset($dataJsonDecode->hive->datetime)? $dataJsonDecode->hive->datetime : "");
 	$temp = (isset($dataJsonDecode->hive->temp) ? $dataJsonDecode->hive->temp : "");
-	$weight = (isset($dataJsonDecode->hive->weight) ? $dataJsonDecode->hive->weight : "");
 	$humidity = (isset($dataJsonDecode->hive->humidity) ? $dataJsonDecode->hive->humidity : "");	
 	
 	
@@ -807,7 +805,7 @@ $app->post('/updateHive', function() use($app){
 	$response = array();
 	
 	//Updates Task
-	$hive_id = $db->updateHive($datetime, $hiveID, $name, $weight, $humidity, $temp);
+	$hive_id = $db->updateHive($datetime, $hiveID, $name, $humidity, $temp);
 	
 	    if ($hive_id > 1) {
         $response["error"] = false;

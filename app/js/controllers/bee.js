@@ -115,20 +115,23 @@
 			vmbee.hiveTempAlertAmtMin = 90;
 			//Hive Humidity Alert
 			vmbee.hiveHumidityMaxAlert = hiveHumidityMaxAlert;
+			vmbee.hiveHumMaxAlerting = false;
 			vmbee.hiveHumidityAlertAmtMax = 60;
 			vmbee.hiveHumidityMinAlert = hiveHumidityMinAlert;
+			vmbee.hiveHumMinAlerting = false;
 			vmbee.hiveHumidityAlertAmtMin = 50;
-			//Weight Alert
+			//Weight Alert if all frames are withitn 10 oz of each other
 			vmbee.weightAlert = weightAlert;
 			vmbee.weightAlertAmt = 60;
-			//Light Alert
-			vmbee.lightAlert = lightAlert;
-			vmbee.lightAlertAmt = 10000;
 			//Population Alert
 			vmbee.populationMaxAlert = populationMaxAlert;
 			vmbee.populationAlertAmtMax = 80000;
 			vmbee.populationMinAlert = populationMinAlert;
 			vmbee.populationAlertAmtMin = 20000;
+			//Audio alert if amplitude is 0
+			vmbee.hiveAmplitudeAlert = hiveAmplitudeAlert;
+			vmbee.hiveAmpAlerting = false;
+			vmbee.hiveAmplitudeAlert = 0.00;
 			
 			
         vmbee.setGridHiveOptions = setGridHiveOptions;
@@ -185,19 +188,29 @@
             });
         }
 		//hive humidity alert function
-		function hiveHumidityMaxAlert(hiveHumiditytest){
-			return hiveHumiditytest > vmbee.hiveHumidityAlertAmtMax;
+		function hiveHumidityMaxAlert(hiveHumiditytest, thehive){
+			 $log.debug('hiveHumMaxAlert',hiveHumiditytest,thehive);
+			var thekey = 'hivehummax';
+
+            getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from hivehummaxalert',dta);
+                vmbee.hiveHumidityAlertAmtMax = dta;
+                vmbee.hiveHumidityMaxAlerting = (Number(hiveHumiditytest) >= Number(dta) ? true : false);
+            });
 		}
-		function hiveHumidityMinAlert(hiveHumiditytest){
-			return hiveHumiditytest < vmbee.hiveHumidityAlertAmtMin;
+		function hiveHumidityMinAlert(hiveHumiditytest, thehive){
+			 $log.debug('hiveHumMinAlert',hiveHumiditytest,thehive);
+			var thekey = 'hivehummin';
+            
+            getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from getAlert for hiveHumidityMinAlert',dta,hiveHumiditytest);
+                vmbee.hiveHumidityAlertAmtMin = dta;
+                vmbee.hiveHumidityMinAlerting =  (Number(hiveHumiditytest) <= Number(dta) ? true : false);
+            });
 		}
 		//weight alert function
 		function weightAlert(weighttest) {
 			return weighttest > vmbee.weightAlertAmt;
-		}
-		//light alert function
-		function lightAlert(lighttest) {
-			return lighttest > vmbee.lightAlertAmt;
 		}
 		//population alert function
 		function populationMaxAlert(populationtest){
@@ -205,6 +218,17 @@
 		}
 		function populationMinAlert(populationtest){
 			return populationtest < vmbee.populationAlertAmtMin;
+		}
+		//audio alert - amplitude = 0
+		function hiveAmplitudeAlert(hiveAmptest, thehive){
+			$log.debug('hiveAmpAlert',hiveAmptest,thehive);
+			var thekey = 'amplitudemin';
+            
+            getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from getAlert for hiveAmplitudeAlert',dta,hiveAmptest);
+                vmbee.hiveAmpAlertAmt = dta;
+                vmbee.hiveAmpAlerting =  (Number(hiveAmptest) == Number(dta) ? true : false);
+            });
 		}
 		
 		//Functions to create random data
@@ -406,7 +430,7 @@
 			//set it in services so we can get it in another controller
 			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
 			
-			var themsg = "You have selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName;
+			var themsg = "You have selected to see the latest data from Hive " + vmbee.selectedHiveId;
 			Notification.info({message: themsg, delay: 5000});
 			activate();
 		}
@@ -568,6 +592,8 @@
                 $log.debug('getLatestHiveHumidity returned data');
                 $log.debug(data);
                     vmbee.hivehumidity = data.HiveHumidityList;
+					hiveHumidityMaxAlert(vmbee.hivehumidity[0].humidity, vmbee.selectedHiveId);
+                    hiveHumidityMinAlert(vmbee.hivehumidity[0].humidity, vmbee.selectedHiveId);
                     return;
             });
         }
@@ -612,6 +638,7 @@
                 $log.debug('getLatestBeeFreq returned data');
                 $log.debug(data);
                     vmbee.beeFreqStatus = data.BeeFreqStatusList;
+					hiveAmplitudeAlert(vmbee.beeFreqStatus[0].amplitude, vmbee.selectedHiveId);
                     return;
             });
         }
@@ -675,10 +702,6 @@
 								  placeholder: '< than'
 								}
 							  ]
-					}, {
-						field: 'weight',
-						enableCellEdit: false,
-						enableFiltering: true
 					}, {
 						field: 'humidity',
 						enableCellEdit: false,
@@ -938,9 +961,37 @@
 								}
 							  ]
 					}, {
-						field: 'frequencyStatus',
+						field: 'frequency',
 						enableCellEdit: false,
 						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
+					}, {
+						field: 'amplitude',
+						enableCellEdit: false,
+						enableFiltering: true,
+						filters:  [
+								{
+								  condition: uiGridConstants.filter.GREATER_THAN,
+								  placeholder: '> than',
+								  flags: { date: true }							  
+								},
+								{
+								  condition: uiGridConstants.filter.LESS_THAN,
+								  placeholder: '< than',
+								  flags: { date: true }							  
+								}
+							  ]
 					}
 					],
 
@@ -1333,7 +1384,7 @@
 					$log.debug('outsidetemp array',otemparray);
 					
 					
-						vminst.graphlabel = 'Outside Temperature';
+						vminst.graphlabel = 'Outside Temperature in ' + '\u00B0' + 'F ';
 						vminst.grapharray = otemparray;
 
 						dataarr.push( { data: otemparray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
@@ -1363,7 +1414,7 @@
 					$log.debug('outsidehum array',ohumarray);
 					
 					
-						vminst.graphlabel = 'Outside Humidity';
+						vminst.graphlabel = 'Outside Humidity Percentage';
 						vminst.grapharray = ohumarray;
 
 						dataarr.push( { data: ohumarray, label: vminst.graphlabel,  lines:{show:true}, points:{show:true}} );
@@ -1389,8 +1440,9 @@
 						//loop through hives to match
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
+							var udatetime = uniqhives[uniq].datetime;
 							var htemparray = [];
-							vminst.graphlabel = 'Hive Temperature for hive:' + uhiveid;
+							vminst.graphlabel = 'Temperature for Hive ' + uhiveid + ' in ' + '\u00B0' + 'F ';
 
 							//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1431,8 +1483,9 @@
 						//loop through hives to match
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
+							var udatetime = uniqhives[uniq].datetime;
 							var humidityarray = [];
-							vminst.graphlabel = 'Humidity range for hive:' + uhiveid;
+							vminst.graphlabel = 'Hive Humidity for Hive' + uhiveid;
 						
 						
 							//$log.debug('hiv',hiveid);
@@ -1480,7 +1533,7 @@
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
 							var weightarraysum = [];
-							vminst.graphlabelsum = 'frameweight sum range for hive:' + uhiveid;
+							vminst.graphlabelsum = 'Weight Sum of all Frames for Hive:' + uhiveid;
 						
 						
 							//$log.debug('hiv',hiveid);
@@ -1512,14 +1565,14 @@
 							var weightarray6 = [];
 							var weightarray7 = [];
 							var weightarray8 = [];
-							vminst.graphlabel1 = 'frameweight1 range for hive:' + uhiveid;
-							vminst.graphlabel2 = 'frameweight2 range for hive:' + uhiveid;
-							vminst.graphlabel3 = 'frameweight3 range for hive:' + uhiveid;
-							vminst.graphlabel4 = 'frameweight4 range for hive:' + uhiveid;
-							vminst.graphlabel5 = 'frameweight5 range for hive:' + uhiveid;
-							vminst.graphlabel6 = 'frameweight6 range for hive:' + uhiveid;
-							vminst.graphlabel7 = 'frameweight7 range for hive:' + uhiveid;
-							vminst.graphlabel8 = 'frameweight8 range for hive:' + uhiveid;
+							vminst.graphlabel1 = 'Weight of Frame 1 for Hive: ' + uhiveid;
+							vminst.graphlabel2 = 'Weight of Frame 2 for Hive: ' + uhiveid;
+							vminst.graphlabel3 = 'Weight of Frame 3 for Hive: ' + uhiveid;
+							vminst.graphlabel4 = 'Weight of Frame 4 for Hive: ' + uhiveid;
+							vminst.graphlabel5 = 'Weight of Frame 5 for Hive: ' + uhiveid;
+							vminst.graphlabel6 = 'Weight of Frame 6 for Hive: ' + uhiveid;
+							vminst.graphlabel7 = 'Weight of Frame 7 for Hive: ' + uhiveid;
+							vminst.graphlabel8 = 'Weight of Frame 8 for Hive: ' + uhiveid;
 						
 							//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1603,7 +1656,7 @@
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
 							var lightarray = [];
-							vminst.graphlabel = 'Light Range for hive:' + uhiveid;
+							vminst.graphlabel = 'Light Level in Lumens for Hive: ' + uhiveid;
 						
 						//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1645,7 +1698,7 @@
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
 							var populationarray = [];
-							vminst.graphlabel = 'Hive Population for hive:' + uhiveid;
+							vminst.graphlabel = 'Population Count for Hive: ' + uhiveid;
 						
 						//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1756,10 +1809,28 @@
 						},
 						xaxis: {
 							mode: "time",
-							timeformat: "%m/%d %H:%M"
+							timeformat: "%m/%d \n %H:%M",
+							font: {
+								size: 10,
+								lineHeight: 40,
+								style: "italic",
+								weight: "bold",
+								family: "sans-serif",
+								variant: "small-caps",
+								color: "#545454"
+							}						
 						},
 						yaxis: {
-							tickColor: "#fafafa"
+							tickColor: "#fafafa",
+							font: {
+								size: 20,
+								lineHeight: 23,
+								style: "italic",
+								weight: "bold",
+								family: "sans-serif",
+								variant: "small-caps",
+								color: "#545454"
+							}						
 						},
 						shadowSize: 0,
 						highlightColor: "green",

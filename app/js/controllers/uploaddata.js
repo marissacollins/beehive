@@ -51,7 +51,7 @@
 			//set it in services so we can get it in another controller
 			BeeServices.setHiveId(vmbee.selectedHiveId, vmbee.selectedHiveName);
 			
-			var themsg = "you selected: " + vmbee.selectedHiveId + ' - ' + vmbee.selectedHiveName + ', now do something with it';
+			var themsg = "You selected Hive " + vmbee.selectedHiveId + ' for upload.';
 			Notification.info({message: themsg, delay: 5000});
 			//activate();
 			

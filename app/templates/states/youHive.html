@@ -8,16 +8,16 @@
 				<div class="modal-header">
 				  <h3 class="modal-title">Hive - {{vminst.selectedHiveId}}</h3>
 				  </div>
-					<div class="modal-body">
+					<div class="modal-body" style="height:800px; max-height:700px; width:1000px; max-width:1000px;">
 						<div class="row">
 							<div class="col-md-offset-1 col-md-10 col-md-offset-1">		
 							<!--Outside Temp graph-->
 							 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading"><i class="icon-cursor mrs"></i>Outside Temperature Trend </h4>
-								  <div class="col-md-9" id="OutsideTempSpline" style="height:200px"></div>
-								  <div class="col-md-3" id="OutsideTempLegend"></div>
-							   </div>
+								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Outside Temperature Trend </h4>
+								  <div class="col-md-9" id="OutsideTempSpline" style="height:600px;"></div>
+								  <div class="col-md-3" id="OutsideTempLegend" style="font-size:20px"></div>
+								  </div>
 							  </div>		
 							<!--Outside Humidity graph-->
 							 <div ng-show="vminst.graphid == 'OutsideHumSpline'" ng-hide="vminst.graphid != 'OutsideHumSpline'" class="panel">
@@ -182,12 +182,12 @@
 				<td>
 					<div class="lastUpdate">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('hivehumidity')" ng-style="{ 'border' : vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity) || vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity) ? '4px solid red' : ''}">
+							<a href="" ng-click="vmmodal.openmodal('hivehumidity')" ng-style="{ 'border' : vm.hiveHumidityMaxAlerting || vm.hiveHumidityMinAlerting ? '4px solid red' : ''}">
 								{{vm.hivehumidity[0].humidity}}% </a>
 								</br>
 								<div class="dta"> Last Update: {{vm.hivehumidity[0].datetime}}
-								<div ng-show="vm.hiveHumidityMaxAlert(vm.hivehumidity[0].humidity)">Alert: Humidity > {{vm.hiveHumidityAlertAmtMax}}</div>
-								<div ng-show="vm.hiveHumidityMinAlert(vm.hivehumidity[0].humidity)">Alert: Humidity &lt; {{vm.hiveHumidityAlertAmtMin}}</div>
+								<div ng-show="vm.hiveHumidityMaxAlerting">Alert: Humidity &gt; {{vm.hiveHumidityAlertAmtMax}}</div>
+								<div ng-show="vm.hiveHumidityMinAlerting">Alert: Humidity &lt; {{vm.hiveHumidityAlertAmtMin}}</div>
 								</div></h2></div></div>
 				</td>
 			</tr>
@@ -244,10 +244,11 @@
 				<td>
 					<div class="lastUpdate">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('frequencyStatus')">
+							<a href="" ng-click="vmmodal.openmodal('frequencyStatus')"ng-style="{ 'border' : vm.hiveAmpAlerting ? '4px solid red' : ''}">
 								{{vm.beeFreqStatus[0].amplitude}}</a>
 								</br>
 								<div class="dta">Last Update: {{vm.beeFreqStatus[0].datetime}}
+								<div ng-show="vm.hiveAmpAlerting">Alert: Amplitude = {{vm.hiveAmpAlertAmt}}</div>
 								</div></h2></div></div>
 				</td>
 			</tr>
