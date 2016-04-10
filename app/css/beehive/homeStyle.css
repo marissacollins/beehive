@@ -116,10 +116,18 @@ li {
 	font-weight:700;
 }
 
+/*Your Hive Graphs*/
 .block-heading{
 	color: #004475;
 }
 .bottomLabel{
+	font-size:22px;
+	color: #004475;
+	padding-left:100px;
+}
+#verticalText{ /*y axis style*/
+	transform: rotate(270deg);
+	margin-top:250px;
 	font-size:22px;
 	color: #004475;
 }

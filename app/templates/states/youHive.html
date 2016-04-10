@@ -10,85 +10,94 @@
 				  </div>
 					<div class="modal-body" style="height:800px; max-height:700px; width:1000px; max-width:1000px;">
 						<div class="row">
-							<div class="col-md-offset-1 col-md-10 col-md-offset-1">		
+							<div class="col-md-offset-2 col-md-10 col-md-offset-0">		
 							<!--Outside Temp graph-->
 							 <div ng-show="vminst.graphid == 'OutsideTempSpline'" ng-hide="vminst.graphid != 'OutsideTempSpline'" class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Outside Temperature Trend </h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Outside Temperature Trend</b></h4>
+								  <div class="col-md-1" id="verticalText">Temperature</div>
 								  <div class="col-md-9" id="OutsideTempSpline" style="height:500px;"></div>
-								  <div class="col-md-3" id="OutsideTempLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="OutsideTempLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 								  </div>
 							  </div>		
 							<!--Outside Humidity graph-->
 							 <div ng-show="vminst.graphid == 'OutsideHumSpline'" ng-hide="vminst.graphid != 'OutsideHumSpline'" class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Outside Humidity Trend </h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Outside Humidity Trend</b></h4>
+								  <div class="col-md-1" id="verticalText">Humidity</div>
 								  <div class="col-md-9" id="OutsideHumSpline" style="height:500px"></div>
-								  <div class="col-md-3" id="OutsideHumLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="OutsideHumLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>		 
 							<!--Hive Temp Graph-->
 							  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Hive Temperature Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-1 col-md-11 block-heading" style="font-size:30px"><b>Hive Temperature Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Temperature</div>
 								  <div class="col-md-9" id="HiveTempSpline" style="height:500px"></div>
-								  <div class="col-md-3" id="HiveTempLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="HiveTempLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>						  
 							<!--Humidity Graph-->
 							  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Humidity Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Humidity Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Humidity</div>
 								  <div class="col-md-9" id="HumiditySpline" style="height:500px"></div>
-								  <div class="col-md-3" id="HumidityLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="HumidityLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>					  
 							<!--Light Graph-->
 							  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Light Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Light Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Lumens</div>
 								  <div class="col-md-9" id="LightSpline" style="height:500px"></div>
-								  <div class="col-md-3" id="LightLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="LightLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>						  
 							<!--Population Graph-->
 							  <div ng-show="vminst.graphid == 'PopulationSpline'" ng-hide="vminst.graphid != 'PopulationSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Population Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Population Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Bees</div>
 								  <div class="col-md-9" id="PopulationSpline" style="height:500px"></div>
-								  <div class="col-md-3" id="PopulationLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="PopulationLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>
 							<!--WeightSummary Graph-->
 							  <div ng-show="vminst.graphidsum == 'weightSplineSum'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Weight Sum Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Weight Sum Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Ounces</div>
 								  <div class="col-md-9" id="weightSplineSum" style="height:500px"></div>
-								  <div class="col-md-3" id="weightLegendsum" style="font-size:20px"></div>
+								  <div class="col-md-2" id="weightLegendsum" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div>
 							<!--Frame Weight Graph-->
 							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Weight Trend for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Weight Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Ounces</div>
 								  <div class="col-md-9" id="weightSplineFrame1" style="height:500px"></div>
-								  <div class="col-md-3" id="weightLegend1" style="font-size:20px"></div>
+								  <div class="col-md-2" id="weightLegend1" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Date/Time</div>
 							   </div>
 							  </div> 
 							  <!--Frequency/Amplitude Graph-->
 							  <div ng-show="vminst.graphid == 'AudioSpline'" ng-hide="vminst.graphid != 'AudioSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-12 block-heading" style="font-size:30px"><i class="icon-cursor mrs"></i>Frequency Spectrum for Hive: {{vminst.selectedHiveId}}</h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Frequency Spectrum for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <div class="col-md-1" id="verticalText">Amplitude</div>
 								  <div class="col-md-9" id="AudioSpline" style="height:500px"></div>
-								  <div class="col-md-3" id="AudioLegend" style="font-size:20px"></div>
+								  <div class="col-md-2" id="AudioLegend" style="font-size:20px"></div>
 								  <div class="col-md-offset-3 col-md-9 bottomLabel">Frequency</div>
 							   </div>
 							  </div> 
