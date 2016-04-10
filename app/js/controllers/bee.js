@@ -120,9 +120,12 @@
 			vmbee.hiveHumidityMinAlert = hiveHumidityMinAlert;
 			vmbee.hiveHumMinAlerting = false;
 			vmbee.hiveHumidityAlertAmtMin = 50;
-			//Weight Alert if all frames are withitn 10 oz of each other
+			//Weight Alert if min >0 and the mix and max are within 10 oz
 			vmbee.weightAlert = weightAlert;
-			vmbee.weightAlertAmt = 60;
+			vmbee.hiveWeightAlerting = false;
+			vmbee.weightAlertAmt = 10;
+			vmbee.LowestFrameWeight = 0;
+			vmbee.HighestFrameWeight = 0;
 			//Population Alert
 			vmbee.populationMaxAlert = populationMaxAlert;
 			vmbee.populationAlertAmtMax = 80000;
@@ -209,8 +212,18 @@
             });
 		}
 		//weight alert function
-		function weightAlert(weighttest) {
-			return weighttest > vmbee.weightAlertAmt;
+		function weightAlert(framemin, framemax, thehive) {
+		$log.debug('weightAlert',thehive, framemin, framemax);
+			var thekey = 'framethreshold';
+            if(framemin == 0){
+				vmbee.hiveWeightAlerting = false;
+			} else{
+				getAlert(thekey,thehive).then(function(dta) {
+                $log.debug('result from getAlert for weightAlert',dta,framemin, framemax);
+                vmbee.weightAlertAmt = dta;
+                vmbee.hiveWeightAlerting =  ((Number(framemax) - Number(framemin)) <= Number(dta) ? true : false);
+				});
+			}
 		}
 		//population alert function
 		function populationMaxAlert(populationtest){
@@ -605,6 +618,21 @@
                 $log.debug('getLatestHiveWeightStatus returned data');
                 $log.debug(data);
                     vmbee.HiveWeightStatus = data.HiveWeightStatusList;
+					 $log.debug('vmbee.hiveweightstatus returned data', vmbee.HiveWeightStatus);
+					var framearray=[];
+						framearray = [Number(vmbee.HiveWeightStatus[0].frameweight1), 
+						Number(vmbee.HiveWeightStatus[0].frameweight2), 
+						Number(vmbee.HiveWeightStatus[0].frameweight3), 
+						Number(vmbee.HiveWeightStatus[0].frameweight4), 
+						Number(vmbee.HiveWeightStatus[0].frameweight5), 
+						Number(vmbee.HiveWeightStatus[0].frameweight6), 
+						Number(vmbee.HiveWeightStatus[0].frameweight7), 
+						Number(vmbee.HiveWeightStatus[0].frameweight8)];
+					$log.debug('framearray returned data', framearray);
+					vmbee.LowestFrameWeight = _.min(framearray);
+					vmbee.HighestFrameWeight = _.max(framearray);
+					$log.debug('min and max returned data', vmbee.LowestFrameWeight, vmbee.HighestFrameWeight);
+					weightAlert(vmbee.LowestFrameWeight, vmbee.HighestFrameWeight, vmbee.selectedHiveId);
                     return;
             });
         }		

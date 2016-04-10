@@ -207,11 +207,11 @@
 				<td>
 					<div class="lastUpdate">
 						<h2>
-							<a href=""  ng-click="vmmodal.openmodal('weightstatus')"  ng-style="{ 'border' : vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum) ?  '4px solid red' : ''}">
+							<a href=""  ng-click="vmmodal.openmodal('weightstatus')"  ng-style="{ 'border' : vm.hiveWeightAlerting ?  '4px solid red' : ''}">
 							{{vm.HiveWeightStatus[0].frameweightsum}} oz.</a>
 							</br>
 							<div class="dta">Last Update: {{vm.HiveWeightStatus[0].datetime}}
-							<div ng-show="vm.weightAlert(vm.HiveWeightStatus[0].frameweightsum)">Alert: Weight > {{vm.weightAlertAmt}}</div>
+							<div ng-show="vm.hiveWeightAlerting">Alert: All frames are within {{vm.weightAlertAmt}} Oz, <br/> your hive may need to be emptied</div>
 							</div></h2></div></div>
 				</td>
 			</tr>
