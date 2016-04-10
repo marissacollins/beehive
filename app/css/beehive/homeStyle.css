@@ -116,6 +116,14 @@ li {
 	font-weight:700;
 }
 
+.block-heading{
+	color: #004475;
+}
+.bottomLabel{
+	font-size:22px;
+	color: #004475;
+}
+
 /*Tables*/
 /*About Table*/
 #table{
