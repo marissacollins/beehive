@@ -1,76 +1,37 @@
 <!DOCTYPE html>
-
-		<!--Slide Show
-		<SCRIPT LANGUAGE="JavaScript">
-		var num=1
-		img1 = new Image ()
-		img1.src = "http://nationswell.com/wp-content/uploads/2014/06/school-behive.jpg"
-		img2 = new Image ()
-		img2.src = "https://upload.wikimedia.org/wikipedia/commons/a/a7/Beehives_in_Mankato%2C_Minnesota.jpg"
-		img3 = new Image()
-		img3.src = "http://4.bp.blogspot.com/-yYpc-bB1INw/U07cujbNEUI/AAAAAAAAAJY/8u-uFxm3IFs/s1600/_MG_1923.jpg"
-		img4 = new Image()
-		img4.src = "https://nineappletrees.files.wordpress.com/2014/07/beehive-entrance.gif"
-
-		text1 = "Beehive Monitoring System Photos"
-		text2 = "Text for Picture Two"
-		text3 = "Text for Picture Three"
-		text4 = "Text for Picture Four"		
-
-		function slideshowUp()
-		{
-			num=num+1
-			if (num==5)
-				{num=1}
-			document.mypic.src=eval("img"+num+".src")
-			document.joe.burns.value=eval("text"+num)
-		}
-
-		function slideshowBack()
-		{
-			num=num-1
-			if (num==0)
-				{num=4}
-			document.mypic.src=eval("img"+num+".src")
-			document.joe.burns.value=eval("text"+num)
-		}
-
-		</SCRIPT>
-		-->
-		<div class = "main-body pan">
-			<div class = "main">
-				<div class= "row">
-					<!--<div class="side col-md-2"></div>
-					<!--Weather Widget-->
-					<div class="col-md-offset-1 col-md-5">
-						<div style="width: 100%;"><iframe style="display: block; padding-top: 30px;" src="http://cdnres.willyweather.com/widget/loadView.html?id=45203" width="100%" height="598px" frameborder="0"  scrolling="no"></iframe>
-						<a style="position: relative;z-index: 1;margin: -20px 0 0 0;height: 20px;display: block;text-indent: -9999em" href="http://www.willyweather.com/ma/bristol-county/north-dartmouth.html">Weather report North Dartmouth</a></div>
-					</div>
-					<!--Notes-->
-					<div class="col-md-6">
-						<table id="notes">
-							<tr><td colspan="4"><h2>Write and open notes:</h2></td></tr>
-							<tr><td colspan="4">
-								<textarea id="inputTextToSave" style="width:96%;height:550px"></textarea>
-							</td></tr>
-							<tr>
-								<td>Filename to Save As:</td>
-								<td><input id="inputFileNameToSaveAs"></input></td>
-								<td><button id="notesButton" onclick="saveTextAsFile()">Save Note to File</button></td>
-							</tr>
-							<tr>
-								<td>Select a File to Load:</td>
-								<td><input type="file" id="fileToLoad"></td>
-								<td><button id="notesButton" onclick="loadFileAsText()">Load Selected File</button><td>
-							</tr>
-						</table>
-					</div>
-					<!--<div class="side2 col-md-2"></div>-->
-				</div>
+<div class = "main-body pan">
+	<div class = "main">
+		<div class= "row">
+			<!--Weather Widget-->
+			<div class="col-md-offset-1 col-md-5">
+				<div style="width: 100%;"><iframe style="display: block; padding-top: 30px;" src="http://cdnres.willyweather.com/widget/loadView.html?id=45203" width="100%" height="598px" frameborder="0"  scrolling="no"></iframe>
+				<a style="position: relative;z-index: 1;margin: -20px 0 0 0;height: 20px;display: block;text-indent: -9999em" href="http://www.willyweather.com/ma/bristol-county/north-dartmouth.html">Weather report North Dartmouth</a></div>
 			</div>
+			<!--Notes-->
+			<div class="col-md-6">
+				<table id="notes">
+					<tr><td colspan="4"><h2>Write and open notes:</h2></td></tr>
+					<tr><td colspan="4">
+						<textarea id="inputTextToSave" style="width:96%;height:550px"></textarea>
+					</td></tr>
+					<tr>
+						<td>Filename to Save As:</td>
+						<td><input id="inputFileNameToSaveAs"></input></td>
+						<td><button id="notesButton" onclick="saveTextAsFile()">Save Note to File</button></td>
+					</tr>
+					<tr>
+						<td>Select a File to Load:</td>
+						<td><input type="file" id="fileToLoad"></td>
+						<td><button id="notesButton" onclick="loadFileAsText()">Load Selected File</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 		
-		<script type='text/javascript'>
-
+<script type='text/javascript'>
+/*Javascript for opening and saving notes*/
 function saveTextAsFile()
 {
 	var textToWrite = document.getElementById("inputTextToSave").value;

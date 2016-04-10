@@ -1,4 +1,4 @@
-
+/*---General Styling---*/
 h1{
 	margin-left:10px;
 	color: #36658C;
@@ -30,111 +30,38 @@ h2 a{
 	font-size:30px;
 	margin-left:5%;
 }
-a:link{
-	text-decoration:none;
-}
-a:hover{
-	color:navy;
-}
-
-/*Navigation Bar*/
-ul {
+ul {/*Navigation bar position and style*/
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: white;
 }
-li {
+li {/*Navigation bar position*/
     float: left;
 }
-.btn{
+.btn{/*Navigation bar button style*/
 	color:white;
 	background-color: #428BCA;
 	font-weight:700;
 	border:1px solid #36658C;
 }
-
-/*Title and banner*/
-#topbar{
+#topbar{/*Title and banner*/
 	background-color:rgb(251, 251, 200);
 	height:0%;
 	background-image:url("banner.jpg");
 }
 
-/*Notes*/
-#notes{
+/*---Home Page---*/
+#notes{/*Notes style and padding*/
 	padding: 10px;
 	color:black;
 	font-family:Tahoma;
 	font-size:16px;
 }
-#notes p{
-	margin-top: -50px;
-}
-#inputTextToSave{
-	margin-left:1.5%;
-}
 
-/*Classes*/
-.maintable{
-	width:90%;
-	margin-left:5%;
-}
-.side{
-	height:750px;
-	background-image:url("side.png");
-}
-.side2{
-	height:750px;
-	background-image:url("side.png");
-}
-.upload{
-	margin-left:17px;
-	font-size:30px;
-	color:#36658C;
-	font-family:Tahoma;
-}
-.uploadButton{
-	font-size:75px;
-}
-.dta{
-	text-decoration:none;
-	font-family:Tahoma;
-	font-size:15px;	
-	padding:5px;
-}
-
-.lastUpdate h2 a{
-	margin-left:10%;
-}
-
-/*Data Listing Page*/
-.panel-heading{
-	font-size:28px;
-	color: #36658C;
-	font-weight:700;
-}
-
-/*Your Hive Graphs*/
-.block-heading{
-	color: #004475;
-}
-.bottomLabel{
-	font-size:22px;
-	color: #004475;
-	padding-left:100px;
-}
-#verticalText{ /*y axis style*/
-	transform: rotate(270deg);
-	margin-top:250px;
-	font-size:22px;
-	color: #004475;
-}
-
-/*Tables*/
-/*About Table*/
-#table{
+/*---Your Hive Page---*/
+#yourHiveTable{/*table style and position*/
 	width:75%;
 	margin-left:12.5%;
 	margin-top:15px;
@@ -147,22 +74,99 @@ li {
 				0px 20px 20px rgba(0,0,0,0.05),
 				0px 30px 20px rgba(0,0,0,0.05);
 }
-#table tr td{
+#yourHiveTable tr td{/*body cell style*/
+	border:1px solid #d2d2d2;
+	padding-left:2%;
+	vertical-align:top;
+}
+#yourHiveTable tr th{/*heading cell style*/
+	border: 1px solid #eee;
+	padding-left:2%;
+	vertical-align:top;
+	background:#428BCA;
+}
+#yourHiveTable tr:hover{/*Highlight the row the mouse is over*/
+	background:#ffffdd;
+}
+a:link{/*removes underline when links are clicked*/
+	text-decoration:none;
+}
+a:hover{/*sets hover color of links to navy*/
+	color:navy;
+}
+.dta{/*Last update and alert text style*/
+	text-decoration:none;
+	font-family:Tahoma;
+	font-size:15px;	
+	padding:5px;
+}
+.lastUpdate h2 a{/*Margin for the variable's last update*/
+	margin-left:10%;
+}
+.block-heading{/*Graph Heading*/
+	color: #004475;
+}
+.bottomLabel{/*x axis style*/
+	font-size:22px;
+	color: #004475;
+	padding-left:100px;
+}
+#verticalText{/*y axis style*/
+	transform: rotate(270deg);
+	margin-top:250px;
+	font-size:22px;
+	color: #004475;
+}
+
+/*---Upload Data Page---*/
+.upload{/*Text style*/
+	margin-left:17px;
+	font-size:30px;
+	color:#36658C;
+	font-family:Tahoma;
+}
+.uploadButton{/*Arrow button*/
+	font-size:75px;
+}
+
+/*---Data Listing Page---*/
+.panel-heading{/*Heading style for each table*/
+	font-size:28px;
+	color: #36658C;
+	font-weight:700;
+}
+
+/*---About Page---*/
+#table{ /*table position and style*/
+	width:75%;
+	margin-left:12.5%;
+	margin-top:15px;
+	margin-bottom:25px;
+	border-collapse: collapse;
+	border: 1px solid #eee;
+	border-bottom: 4px solid #428BCA;
+	box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+				0px 10px 20px rgba(0,0,0,0.05),
+				0px 20px 20px rgba(0,0,0,0.05),
+				0px 30px 20px rgba(0,0,0,0.05);
+}
+#table tr td{/*body cell style*/
 	border:1px solid #d2d2d2;
 	padding:5px;
 	vertical-align:top;
 }
-#table tr th{
+#table tr th{/*heading cell style*/
 	border: 1px solid #eee;
 	padding:5px;
 	vertical-align:top;
 	background:#428BCA;
 }
-#table tr:hover{
+#table tr:hover{/*Highlight the row the mouse is over*/
 	background:#ffffdd;
 }
-/*Help Table*/
-#tableHelp{
+
+/*---Help Page---*/
+#tableHelp{/*table position and style*/
 	width:75%;
 	margin-left:12.5%;
 	margin-top:15px;
@@ -175,52 +179,24 @@ li {
 				0px 20px 20px rgba(0,0,0,0.05),
 				0px 30px 20px rgba(0,0,0,0.05);
 }
-#tableHelp tr td{
+#tableHelp tr td{/*body cell style*/
 	border:1px solid #d2d2d2;
 	padding-left:2%;
 	vertical-align:top;
 	width:50%;
 }
-#tableHelp tr th{
+#tableHelp tr th{ /*heading cell style*/
 	border:1px solid #eee;
 	padding-left:2%;
 	vertical-align:top;
 	background:#428BCA;
 	width:50%;
 }
-.list{
+.list{/*Extra padding for numbered lists*/
 	padding-left:5%;
 }
-/*About Table*/
-#yourHiveTable{
-	width:75%;
-	margin-left:12.5%;
-	margin-top:15px;
-	margin-bottom:25px;
-	border-collapse: collapse;
-	border: 1px solid #eee;
-	border-bottom: 4px solid #428BCA;
-	box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
-				0px 10px 20px rgba(0,0,0,0.05),
-				0px 20px 20px rgba(0,0,0,0.05),
-				0px 30px 20px rgba(0,0,0,0.05);
-}
-#yourHiveTable tr td{
-	border:1px solid #d2d2d2;
-	padding-left:2%;
-	vertical-align:top;
-}
-#yourHiveTable tr th{
-	border: 1px solid #eee;
-	padding-left:2%;
-	vertical-align:top;
-	background:#428BCA;
-}
-#yourHiveTable tr:hover{
-	background:#ffffdd;
-}
 
-/*Notes buttons*/
+/*---Notes buttons---*/
 #notesButton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
