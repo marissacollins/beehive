@@ -236,3 +236,10 @@ a:hover{/*sets hover color of links to navy*/
 	position:relative;
 	top:1px;
 }
+.ui-grid-top-panel {
+    color: blue;
+	background: green !important;
+}
+.ui-grid-cell-contents {
+	font-size: large;
+}
