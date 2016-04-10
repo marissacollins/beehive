@@ -237,12 +237,11 @@
 				<td>
 					<div class="lastUpdate">
 						<h2>
-							<a href="" ng-click="vmmodal.openmodal('population')" ng-style="{ 'border' : vm.populationMaxAlert(vm.populations[0].count) || vm.populationMinAlert(vm.populations[0].count) ?  '4px solid red' : ''}">
+							<a href="" ng-click="vmmodal.openmodal('population')" ng-style="{ 'border' : vm.populationAlerting ?  '4px solid red' : ''}">
 								{{vm.populations[0].count}} bees </a>
 								</br>
 								<div class="dta">Last Update: {{vm.populations[0].datetime}}
-								<div ng-show="vm.populationMaxAlert(vm.populations[0].count)">Alert: Population > {{vm.populationAlertAmtMax}}</div>
-								<div ng-show="vm.populationMinAlert(vm.populations[0].count)">Alert: Population &lt; {{vm.populationAlertAmtMin}}</div>
+								<div ng-show="vm.populationAlerting">Alert: Population > 2 standard deviations <br/> above the average for the last 3 days</div>
 								</div></h2></div></div>
 				</td>
 			</tr>

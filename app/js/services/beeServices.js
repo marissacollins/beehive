@@ -26,6 +26,7 @@
 			getLight: getLight,
 			getPopulation: getPopulation,
 			getBeeFrequency: getBeeFrequency,
+			getPopAlert: getPopAlert,
 			uploadData: uploadData,
 			genData: genData,
 			updateFrameWeight: updateFrameWeight,
@@ -74,13 +75,7 @@
                         url: path
                     });
                     return( request.then( handleSuccess, handleError ) );
-					
-					
-					
-					
-					
-					
-                
+	        
         }
         function getOutsideTemp(path) {
             $log.debug('getOutsideTemp service entered');
@@ -162,6 +157,16 @@
                     });
                     return( request.then( handleSuccess, handleError ) );
 		}
+		function getPopAlert(path){
+            $log.debug('getPopAlert service entered');
+                    var request = $http({
+                        method: "GET",
+                        url: path
+                    });
+                    return( request.then( handleSuccess, handleError ) );
+                
+        }
+		
 		function uploadData(path){
 			$log.debug('uploadData data before post :' , path);
 			var request = $http({

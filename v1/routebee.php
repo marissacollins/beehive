@@ -526,7 +526,60 @@ $app->get('/alert',   function() use($app) {
         echoRespnse(404, $response);
     }
 });
+$app->get('/popAlert',   function() use($app) {
+ $allGetVars = $app->request->get();
+    error_log( print_R("popAlert entered:\n ", TRUE), 3, LOG);
+    error_log( print_R($allGetVars, TRUE), 3, LOG);
+    $thelimit = '';
+	$thehive = '';
+    
+    if(array_key_exists('thelimit', $allGetVars)){
+        $thelimit = $allGetVars['thelimit'];
+    }
+    error_log( print_R("popAlert params:  thelimit: $thelimit \n ", TRUE), 3, LOG);
+	
+	 if(array_key_exists('thehive', $allGetVars)){
+        $thehive = $allGetVars['thehive'];
+    }
+    error_log( print_R("popAlert params:  thehive: $thehive \n ", TRUE), 3, LOG);
+	
+    $response = array();
+    $db = new BeeDbHandler();
 
+    $result = $db->getPopAlert($thelimit, $thehive);
+
+    $response["error"] = false;
+    $response["PopAlertList"] = array();
+
+    // looping through result and preparing  arrays
+    while ($slist = $result->fetch_assoc()) {
+        $tmp = array();
+        if (count($slist) > 0) {
+            $tmp["count"] = (empty($slist["count"]) ? "NULL" : $slist["count"]);
+			$tmp["hiveid"] =  (empty($slist["hiveid"]) ? "NULL" : $slist["hiveid"]);
+			$tmp["avgcount"] =  (empty($slist["avgcount"]) ? "NULL" : $slist["avgcount"]);
+			$tmp["stdcount"] =  (empty($slist["stdcount"]) ? "NULL" : $slist["stdcount"]);
+			$tmp["min"] =  (empty($slist["min"]) ? "NULL" : $slist["min"]);
+			$tmp["max"] =  (empty($slist["max"]) ? "NULL" : $slist["max"]);	
+
+        } else {
+            $tmp["id"] = "NULL";
+
+}
+        array_push($response["PopAlertList"], $tmp);
+    }
+    
+    $row_cnt = $result->num_rows;
+
+    if ($result != NULL) {
+        $response["error"] = false;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "The requested resource doesn't exists";
+        echoRespnse(404, $response);
+    }
+});
 
 //Posts used for inserting into the database
 $app->post('/uploadData', function() use($app){

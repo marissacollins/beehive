@@ -126,11 +126,10 @@
 			vmbee.weightAlertAmt = 10;
 			vmbee.LowestFrameWeight = 0;
 			vmbee.HighestFrameWeight = 0;
-			//Population Alert
-			vmbee.populationMaxAlert = populationMaxAlert;
-			vmbee.populationAlertAmtMax = 80000;
-			vmbee.populationMinAlert = populationMinAlert;
-			vmbee.populationAlertAmtMin = 20000;
+			//Population Alert if the latest is over 2 std away from avg of last 3 days
+			vmbee.populationAlert = populationAlert;
+			vmbee.populationAlerting = false;
+			vmbee.populationAlertAmt = 0;
 			//Audio alert if amplitude is 0
 			vmbee.hiveAmplitudeAlert = hiveAmplitudeAlert;
 			vmbee.hiveAmpAlerting = false;
@@ -226,12 +225,22 @@
 			}
 		}
 		//population alert function
-		function populationMaxAlert(populationtest){
-			return populationtest > vmbee.populationAlertAmtMax;
+		function populationAlert(count, thehive){
+			$log.debug('populationAlert', count, thehive);
+			var thelimit = 7;
+			if (thehive != "All") {
+				getPopAlert(thelimit,thehive).then(function(dta){
+					$log.debug('result from getPopAlert',dta, thelimit, thehive);
+					vmbee.populationAlertAmt = dta;
+					$log.debug('result from populationAlertAmt',count,vmbee.populationAlertAmt[0].avgcount, vmbee.populationAlertAmt[0].stdcount);
+					vmbee.populationAlerting = (Number(count) >= (Number(vmbee.populationAlertAmt[0].avgcount) + 2 * Number(vmbee.populationAlertAmt[0].stdcount)) ? true : false);
+				});
+				
+			} else {
+				//All doesn't alert
+			}
 		}
-		function populationMinAlert(populationtest){
-			return populationtest < vmbee.populationAlertAmtMin;
-		}
+
 		//audio alert - amplitude = 0
 		function hiveAmplitudeAlert(hiveAmptest, thehive){
 			$log.debug('hiveAmpAlert',hiveAmptest,thehive);
@@ -555,6 +564,21 @@
                     return ($q.reject(error));
             });
         }
+		function getPopAlert(thelimit, thehive) {           
+		   var thepath = '../v1/popAlert?thelimit=' + thelimit + '&thehive=' + thehive;
+            return BeeServices.getPopAlert(thepath).then(function (data) {
+                $log.debug('getPopAlert returned data');
+                $log.debug(data);
+                    vmbee.popAlert = data.PopAlertList;
+
+                    return vmbee.popAlert;
+			},
+			function (error) {
+                    $log.debug('Caught an error getting popalert list going to notify:', error); 
+                    Notification.error({message: error, delay: 5000});
+                    return ($q.reject(error));
+            });
+        }
 		
 		//Get Latest functions
 		function getBeeHives() {
@@ -655,6 +679,7 @@
                 $log.debug('getLatestPopulation returned data');
                 $log.debug(data);
                     vmbee.populations = data.PopulationList;
+					populationAlert(vmbee.populations[0].count, vmbee.selectedHiveId);
                     return;
             });
         }
@@ -1238,7 +1263,6 @@
 
         } 
  
- 
 	}
 		function PicModalController( $log, $uibModal, $location, BeeServices) {
 			/* jshint validthis: true */
@@ -1450,8 +1474,7 @@
 						
 						getGraph(vminst.graphid, vminst.graphlabel, vminst.grapharray, vminst.legendcontainer, "Date");
 				});
-				break;
-			
+				break;	
 			case 'hivetemp':
 					getHiveTempRange().then(function () {
                         $log.debug('got HiveTempRange');

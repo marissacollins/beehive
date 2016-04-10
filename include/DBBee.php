@@ -285,6 +285,33 @@ class BeeDbHandler {
 
  
 	}
+	public function getPopAlert($thelimit,$thehive = NULL){
+			error_log( print_R("getPopAlert entered\n", TRUE), 3, LOG);
+			error_log( print_R("with  thelimit: $thelimit \n", TRUE), 3, LOG);
+			error_log( print_R("with  thehive: $thehive \n", TRUE), 3, LOG);
+			
+			//get all hive pops up to the limit of records optionally for a hive		
+			$sql = " SELECT hiveid, COUNT(count) as count, AVG(count) as avgcount, "; 
+			$sql .= " STD(count) as stdcount, MIN(count) as min, MAX(count) as max FROM population ";
+			$sql .= " WHERE datetime >= DATE_ADD(CURDATE(), INTERVAL -"; 
+			$sql .=  $thelimit ;
+			$sql .= " DAY) ";
+
+			if (strlen($thehive) > 0  && $thehive != 'NULL' && $thehive != 'All') {
+				$sql .= " and hiveid =  " . $thehive ;
+			} 
+
+			$sql .= " GROUP BY hiveid ";
+			$sql .= " order by datetime desc ";
+			error_log( print_R("getPopAlert: $sql \n", TRUE), 3, LOG);
+
+			
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $popAlert = $stmt->get_result();
+        $stmt->close();
+        return $popAlert;
+	}
 	
 	//Check for duplicate records in each table in the database
 	private function doesAudioIDExist($datetime, $hiveID, $frequency, $amplitude){
