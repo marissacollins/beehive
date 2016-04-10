@@ -34,7 +34,7 @@
 							<!--Hive Temp Graph-->
 							  <div ng-show="vminst.graphid == 'HiveTempSpline'" ng-hide="vminst.graphid != 'HiveTempSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-1 col-md-11 block-heading" style="font-size:30px"><b>Hive Temperature Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-1 col-md-11 block-heading" style="font-size:30px"><b>Temperature Trend for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Temperature</div>
 								  <div class="col-md-9" id="HiveTempSpline" style="height:500px"></div>
 								  <div class="col-md-2" id="HiveTempLegend" style="font-size:20px"></div>
@@ -44,7 +44,7 @@
 							<!--Humidity Graph-->
 							  <div ng-show="vminst.graphid == 'HumiditySpline'" ng-hide="vminst.graphid != 'HumiditySpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Humidity Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Humidity Trend for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Humidity</div>
 								  <div class="col-md-9" id="HumiditySpline" style="height:500px"></div>
 								  <div class="col-md-2" id="HumidityLegend" style="font-size:20px"></div>
@@ -54,7 +54,7 @@
 							<!--Light Graph-->
 							  <div ng-show="vminst.graphid == 'LightSpline'" ng-hide="vminst.graphid != 'LightSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Light Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Light Trend for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Lumens</div>
 								  <div class="col-md-9" id="LightSpline" style="height:500px"></div>
 								  <div class="col-md-2" id="LightLegend" style="font-size:20px"></div>
@@ -74,7 +74,7 @@
 							<!--WeightSummary Graph-->
 							  <div ng-show="vminst.graphidsum == 'weightSplineSum'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Weight Sum Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Weight Sum Trend for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Ounces</div>
 								  <div class="col-md-9" id="weightSplineSum" style="height:500px"></div>
 								  <div class="col-md-2" id="weightLegendsum" style="font-size:20px"></div>
@@ -84,7 +84,7 @@
 							<!--Frame Weight Graph-->
 							  <div ng-show="vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Weight Trend for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Frame Weight Trend for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Ounces</div>
 								  <div class="col-md-9" id="weightSplineFrame1" style="height:500px"></div>
 								  <div class="col-md-2" id="weightLegend1" style="font-size:20px"></div>
@@ -94,7 +94,7 @@
 							  <!--Frequency/Amplitude Graph-->
 							  <div ng-show="vminst.graphid == 'AudioSpline'" ng-hide="vminst.graphid != 'AudioSpline'"  class="panel">
 								<div class="panel-body">
-								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Frequency Spectrum for Hive: {{vminst.selectedHiveId}}</b></h4>
+								  <h4 class="col-md-offset-2 col-md-10 block-heading" style="font-size:30px"><b>Frequency Spectrum for Super: {{vminst.selectedHiveId}}</b></h4>
 								  <div class="col-md-1" id="verticalText">Amplitude</div>
 								  <div class="col-md-9" id="AudioSpline" style="height:500px"></div>
 								  <div class="col-md-2" id="AudioLegend" style="font-size:20px"></div>
@@ -117,8 +117,8 @@
             <div class="panel panel-blue col-md-12">
 				<div class="col-md-offset-2 col-md-4">
 					<h2>
-					<label for="hiveselect" class="control-label">What hive information would you like to display?
-					<span style="font-size:16px">Choose 'All' to compare all your hives together.</span></label>
+					<label for="hiveselect" class="control-label">What super information would you like to display?
+					<span style="font-size:16px">Choose 'All' to compare all your supers together.</span></label>
 					</h2>
 				</div>
 				<div class="col-md-offset-1 col-md-2">
@@ -179,7 +179,7 @@
 			</tr>
 			<tr>
 				<td>
-					<h2>Hive Temperature:</h2>
+					<h2>Super Temperature:</h2>
 				</td>
 				<td>
 					<div class="lastUpdate">
@@ -195,7 +195,7 @@
 			</tr>
 			<tr>
 				<td>
-					<h2>Hive Humidity:</h2>
+					<h2>Super Humidity:</h2>
 				</td>
 				<td>
 					<div class="lastUpdate">
@@ -211,7 +211,7 @@
 			</tr>
 			<tr>
 				<td>
-					<h2 id="outside">Total Hive Weight:</h2>
+					<h2 id="outside">Total Super Weight:</h2>
 				</td>
 				<td>
 					<div class="lastUpdate">
