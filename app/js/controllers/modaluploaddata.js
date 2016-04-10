@@ -111,8 +111,7 @@
       vmbeefileupload.uploader.onSuccessItem = function (fileItem, response, status, headers) {
             console.info('onSuccessItem', fileItem, response, status, headers);
           vmbeefileupload.beefile = fileItem.file.name;
-		  var hiveid = BeeServices.getHiveId();
-		  BeeServices.uploadData("../v1/uploadData?filename=" + vmbeefileupload.beefile + "&hiveid=" + hiveid);
+		  BeeServices.uploadData("../v1/uploadData?filename=" + vmbeefileupload.beefile);
         };
         vmbeefileupload.uploader.onErrorItem = function (fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);

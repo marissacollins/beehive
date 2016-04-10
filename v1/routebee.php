@@ -601,12 +601,6 @@ $app->post('/uploadData', function() use($app){
         $response["message"] = "Failed to create audio. Please try again";
         echoRespnse(400, $response);
     }
-    
-    //hive is optional eq. outside temperature
-	if(array_key_exists('hiveid', $allGetVars)){
-		$thehive = $allGetVars['hiveid'];
-        error_log( print_R("uploaddata params:  thehive: $thehive \n ", TRUE), 3, LOG);
-    }
 
 	//Reads the key values and extracts them from the passed in uploaded file
     $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $thefile ;
@@ -664,27 +658,27 @@ $app->post('/uploadData', function() use($app){
     $isAudio  = (isset($dataJsonDecode->audio) ? $dataJsonDecode->audio : "");
     if ($isAudio != "") {
         //we could have multiple records.  If end up with 0, all was good 
-        $thesuccess += uploadAudio(json_decode($data,true) , $thehive);
+        $thesuccess += uploadAudio(json_decode($data,true));
     }
     $isHive  = (isset($dataJsonDecode->hive) ? $dataJsonDecode->hive : "");
     if ($isHive != "") {
-       $thesuccess += uploadHive(json_decode($data,true) , $thehive);
+       $thesuccess += uploadHive(json_decode($data,true));
 	}
     $isPopulation  = (isset($dataJsonDecode->population) ? $dataJsonDecode->population : "");
     if ($isPopulation != "") {
-		$thesuccess += uploadPopulation(json_decode($data,true) , $thehive);
+		$thesuccess += uploadPopulation(json_decode($data,true));
     }
     $isFrameWeight  = (isset($dataJsonDecode->frameweight) ? $dataJsonDecode->frameweight : "");
     if ($isFrameWeight != "") {
-		$thesuccess += uploadFrameWeight(json_decode($data,true) , $thehive);
+		$thesuccess += uploadFrameWeight(json_decode($data,true));
     }
     $isLightHistory  = (isset($dataJsonDecode->lighthistory) ? $dataJsonDecode->lighthistory : "");
     if ($isLightHistory != "") {
-		$thesuccess += uploadLightHistory(json_decode($data,true) , $thehive);
+		$thesuccess += uploadLightHistory(json_decode($data,true));
     }
     $isOutsideTemp  = (isset($dataJsonDecode->outsidetemp) ? $dataJsonDecode->outsidetemp : "");
     if ($isOutsideTemp != "") {
-		$thesuccess += uploadOutsideTemp(json_decode($data,true) , $thehive);
+		$thesuccess += uploadOutsideTemp(json_decode($data,true));
     }
     if ($thesuccess == 0) {
         $response["error"] = false;
@@ -1179,7 +1173,7 @@ $app->post('/uploadPic', function() use($app){
 });
 
 
-function uploadAudio($dataJsonDecode, $thehive) {
+function uploadAudio($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1201,7 +1195,8 @@ function uploadAudio($dataJsonDecode, $thehive) {
 		
 		for($amploop = 0; $amploop < $freqcount; $amploop++) {
 			
-			$hiveID = $thehive;
+			$hiveID = (isset($loop["hiveID"]) ? 
+								$loop["hiveID"] : "");
 			$datetime  = (isset($loop["datetime"]) ? 
 								$loop["datetime"] : "");
 			$amplitude = (isset($loop["amplitude"][$amploop]["vlu"]) ?
@@ -1237,7 +1232,7 @@ function uploadAudio($dataJsonDecode, $thehive) {
     }
 	
 }
-function uploadOutsideTemp($dataJsonDecode, $thehive) {
+function uploadOutsideTemp($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1257,7 +1252,7 @@ function uploadOutsideTemp($dataJsonDecode, $thehive) {
         error_log( print_R("before otemp created: datetime $datetime temp $temp humidity $humidity \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $otemp_id = $db->createOutsideTemp($datetime, $count);
+        $otemp_id = $db->createOutsideTemp($datetime, $temp, $humidity);
         error_log( print_R("outsidetemp return: $otemp_id\n", TRUE ), 3, LOG);
         if ($otemp_id > 0) {
             $otemp_cnt += 0;
@@ -1277,7 +1272,7 @@ function uploadOutsideTemp($dataJsonDecode, $thehive) {
         return 1;
     }
 }
-function uploadHive($dataJsonDecode, $thehive) {
+function uploadHive($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1285,7 +1280,9 @@ function uploadHive($dataJsonDecode, $thehive) {
     
     foreach ($dataJsonDecode["hive"] as $loop) {
         
-        $datetime  = (isset($loop["datetime"]) ? 
+        $hiveID = (isset($loop["hiveID"]) ? 
+                            $loop["hiveID"] : "");
+		$datetime  = (isset($loop["datetime"]) ? 
                             $loop["datetime"] : "");
         $name = (isset($loop["name"]) ?
                              $loop["name"] : "");
@@ -1299,7 +1296,7 @@ function uploadHive($dataJsonDecode, $thehive) {
         error_log( print_R("before hive created: datetime $datetime name $name temp $temp humidity $humidity \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $hive_id = $db->createHive($thehive, $name,$datetime,  $temp, $humidity);
+        $hive_id = $db->createHive($hiveID,$name,$datetime, $temp, $humidity);
         error_log( print_R("hive return: $hive_id\n", TRUE ), 3, LOG);
         if ($hive_id > 0) {
             $hive_cnt += 0;
@@ -1319,7 +1316,7 @@ function uploadHive($dataJsonDecode, $thehive) {
         return 1;
     }
 }
-function uploadLightHistory($dataJsonDecode, $thehive) {
+function uploadLightHistory($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1327,7 +1324,9 @@ function uploadLightHistory($dataJsonDecode, $thehive) {
     
     foreach ($dataJsonDecode["lighthistory"] as $loop) {
         
-        $datetime  = (isset($loop["datetime"]) ? 
+        $hiveID = (isset($loop["hiveID"]) ? 
+								$loop["hiveID"] : "");
+		$datetime  = (isset($loop["datetime"]) ? 
                             $loop["datetime"] : "");
         $lumen = (isset($loop["lumen"]) ?
                              $loop["lumen"] : "");
@@ -1337,7 +1336,7 @@ function uploadLightHistory($dataJsonDecode, $thehive) {
         error_log( print_R("before lighthistory created: datetime $datetime lumen $lumen \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $light_id = $db->createLightHistory($thehive, $datetime, $lumen);
+        $light_id = $db->createLightHistory($hiveID, $datetime, $lumen);
         error_log( print_R("light return: $light_id\n", TRUE ), 3, LOG);
         if ($light_id > 0) {
             $light_cnt += 0;
@@ -1357,7 +1356,7 @@ function uploadLightHistory($dataJsonDecode, $thehive) {
         return 1;
     }
 }
-function uploadFrameWeight($dataJsonDecode, $thehive) {
+function uploadFrameWeight($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1388,10 +1387,10 @@ function uploadFrameWeight($dataJsonDecode, $thehive) {
         
         $response = array();
 
-        error_log( print_R("before frameweight created: datetime $datetime hiveID $thehive, frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
+        error_log( print_R("before frameweight created: datetime $datetime hiveID $hiveID, frameweight1 $frameweight1 frameweight2 $frameweight2 frameweight3 $frameweight3 frameweight4 $frameweight4 frameweight5 $frameweight5 frameweight6 $frameweight6 frameweight7 $frameweight7 frameweight8 $frameweight8  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $weight_id = $db->createFrameWeight($datetime, $thehive, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
+        $weight_id = $db->createFrameWeight($datetime, $hiveID, $frameweight1, $frameweight2, $frameweight3, $frameweight4, $frameweight5, $frameweight6, $frameweight7, $frameweight8);
         error_log( print_R("weight return: $weight_id\n", TRUE ), 3, LOG);
         if ($weight_id > 0) {
             $weight_cnt += 0;
@@ -1411,7 +1410,7 @@ function uploadFrameWeight($dataJsonDecode, $thehive) {
         return 1;
     }
 }
-function uploadPopulation($dataJsonDecode, $thehive) {
+function uploadPopulation($dataJsonDecode) {
     $app = \Slim\Slim::getInstance();
 
     $db = new BeeDbHandler();
@@ -1419,7 +1418,9 @@ function uploadPopulation($dataJsonDecode, $thehive) {
     
     foreach ($dataJsonDecode["population"] as $loop) {
         
-        $datetime  = (isset($loop["datetime"]) ? 
+         $hiveID  = (isset($loop["hiveID"]) ? 
+                            $loop["hiveID"] : "");
+		$datetime  = (isset($loop["datetime"]) ? 
                             $loop["datetime"] : "");
         $count = (isset($loop["count"]) ?
                              $loop["count"] : "");
@@ -1431,7 +1432,7 @@ function uploadPopulation($dataJsonDecode, $thehive) {
         error_log( print_R("before population created: datetime $datetime count $count  \n", TRUE ), 3, LOG);
         
         //Updates Task
-        $population_id = $db->createPopulation($thehive, $datetime, $count, $picurl);
+        $population_id = $db->createPopulation($hiveID, $datetime, $count, $picurl);
         error_log( print_R("population return: $population_id\n", TRUE ), 3, LOG);
         if ($population_id > 0) {
             $population_cnt += 0;

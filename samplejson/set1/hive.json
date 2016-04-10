@@ -1,16 +1,16 @@
 {
   "hive": [
 	{
-      "name": "hive1",
-  	"datetime": "2018-02-19 22:34:36",
- 	 "temp": "93.5",
- 	 "humidity": "62.00"
+		"hiveID": "3",
+		"datetime": "2018-02-19 22:34:36",
+		"temp": "93.5",
+		"humidity": "62.00"
 	},
 	{
-      "name": "hive1",
-      "datetime": "2018-02-18 01:00:00",
-      "temp": "88.2",
-      "humidity": "89.50"
+		"hiveID": "3",
+		"datetime": "2018-02-18 01:00:00",
+		"temp": "88.2",
+		"humidity": "89.50"
 	}
   ]
 }

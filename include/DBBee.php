@@ -406,21 +406,6 @@ class BeeDbHandler {
         return $num_rows > 0;
 	
 	}
-	private function doesLightLumenExist($lumen, $datetime){
-		
-		error_log( print_R("before doesLightID2Exist\n", TRUE ), 3, LOG);
-		error_log( print_R("lumen: $lumen\n", TRUE ), 3, LOG);
-		error_log( print_R("datetime: $datetime\n", TRUE ), 3, LOG);
-	
-	    $stmt = $this->conn->prepare("SELECT datetime from lighthistory WHERE datetime = ? and lumen = ?");
-        $stmt->bind_param("ss", $datetime, $lumen);
-        $stmt->execute();
-        $stmt->store_result();
-        $num_rows = $stmt->num_rows;
-        $stmt->close();
-        return $num_rows > 0;
-	
-	}
 	private function doesOTempExist($datetime){
 		
 		error_log( print_R("before doesOTempExist\n", TRUE ), 3, LOG);
@@ -564,7 +549,7 @@ class BeeDbHandler {
 		$sql .= "(?,?,?)";
 		
 		//Check if hiveID already exists in database
-		if (!$this->doesLightIDExist($hiveID, $datetime) && !$this->doesLightLumenExist($lumen, $datetime)){
+		if (!$this->doesLightIDExist($hiveID, $datetime)){
 			if ($stmt = $this->conn->prepare($sql)) {
                 $stmt->bind_param("sss", $hiveID, $datetime, $lumen);
 				//Check if it inserted correctly
@@ -595,7 +580,7 @@ class BeeDbHandler {
 		$sql .= "(?,?,?)";
 		
 		//Check if hiveID already exists in database
-		if (!$this->doesOTemp=Exist($datetime)){
+		if (!$this->doesOTempExist($datetime)){
 			if ($stmt = $this->conn->prepare($sql)) {
                 $stmt->bind_param("sss", $datetime, $temp, $humidity);
 				//Check if it inserted correctly
