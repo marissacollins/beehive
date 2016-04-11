@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2016 at 05:14 AM
+-- Generation Time: Apr 11, 2016 at 04:17 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -105,7 +105,19 @@ INSERT INTO `audio` (`id`, `datetime`, `hiveID`, `frequency`, `amplitude`) VALUE
 (167, '2017-04-25 11:35:00', 2, '188', '12.20'),
 (168, '2017-04-25 11:35:00', 2, '375', '18.50'),
 (169, '2017-04-25 11:35:00', 2, '563', '35.80'),
-(170, '2017-04-25 11:35:00', 2, '750', '40.70');
+(170, '2017-04-25 11:35:00', 2, '750', '40.70'),
+(183, '2017-03-27 08:54:00', 3, '94', '25.20'),
+(184, '2017-03-27 08:54:00', 3, '188', '15.30'),
+(185, '2017-03-27 08:54:00', 3, '281', '54.70'),
+(186, '2017-03-27 08:54:00', 3, '375', '5.60'),
+(187, '2017-03-27 08:54:00', 3, '469', '24.60'),
+(188, '2017-03-27 08:54:00', 3, '563', '5.60'),
+(189, '2017-03-27 08:54:00', 3, '656', '2.60'),
+(190, '2017-03-27 08:54:00', 3, '750', '85.40'),
+(179, '2017-04-25 11:35:00', 3, '188', '12.20'),
+(180, '2017-04-25 11:35:00', 3, '375', '18.50'),
+(181, '2017-04-25 11:35:00', 3, '563', '35.80'),
+(182, '2017-04-25 11:35:00', 3, '750', '40.70');
 
 -- --------------------------------------------------------
 
@@ -139,7 +151,8 @@ INSERT INTO `frameweight` (`id`, `datetime`, `hiveID`, `frameweight1`, `framewei
 (4, '2016-03-02 04:17:17', 1, '2.00', '2.00', '2.50', '9.87', '10.11', '3.50', '2.00', '2.00'),
 (5, '2014-03-23 07:27:22', 2, '5.00', '8.00', '16.00', '25.00', '26.00', '15.00', '7.00', '6.00'),
 (6, '2014-02-10 03:18:17', 1, '5.88', '7.50', '15.62', '25.80', '26.53', '14.55', '8.18', '4.86'),
-(7, '2014-03-10 03:18:17', 1, '5.88', '7.50', '15.62', '25.80', '26.53', '14.55', '8.18', '4.86');
+(7, '2014-03-10 03:18:17', 1, '5.88', '7.50', '15.62', '25.80', '26.53', '14.55', '8.18', '4.86'),
+(8, '2018-03-10 03:18:17', 3, '5.88', '7.50', '15.62', '25.80', '26.53', '14.55', '8.18', '4.86');
 
 -- --------------------------------------------------------
 
@@ -231,7 +244,9 @@ INSERT INTO `hive` (`id`, `hiveID`, `name`, `datetime`, `temp`, `humidity`) VALU
 (70, 1, 'hive1', '2016-03-17 15:32:54', '83.2', '52.60'),
 (71, 1, 'hive1', '2015-10-19 05:08:09', '109.4', '50.50'),
 (72, 1, 'hive1', '2015-12-16 17:21:57', '90.7', '56.30'),
-(73, 1, 'hive1', '2016-02-07 10:21:32', '107.4', '57.30');
+(73, 1, 'hive1', '2016-02-07 10:21:32', '107.4', '57.30'),
+(74, 3, '', '2018-02-19 22:34:36', '93.5', '62.00'),
+(75, 3, '', '2018-02-18 01:00:00', '88.2', '89.50');
 
 -- --------------------------------------------------------
 
@@ -275,7 +290,9 @@ INSERT INTO `lighthistory` (`id`, `hiveID`, `datetime`, `lumen`) VALUES
 (21, 1, '2016-03-24 08:02:17', 7494),
 (22, 1, '2016-03-25 11:17:50', 7870),
 (23, 1, '2018-04-02 22:56:35', 3000),
-(24, 1, '2018-04-02 08:16:00', 4000);
+(24, 1, '2018-04-02 08:16:00', 4000),
+(25, 3, '2018-04-02 22:56:35', 3000),
+(26, 3, '2018-04-02 08:16:00', 4000);
 
 -- --------------------------------------------------------
 
@@ -304,7 +321,9 @@ INSERT INTO `outsidetemp` (`id`, `datetime`, `temp`, `humidity`) VALUES
 (77, '2016-02-22 10:32:57', '69.5', '61.50'),
 (78, '2016-02-24 10:33:07', '65.0', '65.00'),
 (79, '2016-02-28 10:33:17', '70.0', '70.00'),
-(80, '2016-03-05 10:33:25', '72.0', '71.20');
+(80, '2016-03-05 10:33:25', '72.0', '71.20'),
+(81, '2013-02-14 22:47:21', '72.0', '0.00'),
+(82, '2013-02-12 01:05:20', '69.2', '0.00');
 
 -- --------------------------------------------------------
 
@@ -389,7 +408,9 @@ INSERT INTO `population` (`id`, `hiveID`, `datetime`, `count`, `picurl`) VALUES
 (72, 2, '2016-04-05 17:02:51', 28, 'population_2016040631019000000_test.jpg'),
 (73, 2, '2016-04-05 16:02:51', 29, 'population_2016040631030000000_test.jpg'),
 (74, 2, '2016-04-05 15:02:51', 15, 'population_2016040631042000000_test.jpg'),
-(75, 2, '2016-04-05 14:02:51', 12, 'population_2016040631104000000_test.jpg');
+(75, 2, '2016-04-05 14:02:51', 12, 'population_2016040631104000000_test.jpg'),
+(76, 3, '2016-03-14 22:32:28', 22, ''),
+(77, 3, '2016-03-24 22:34:23', 27, '');
 
 --
 -- Indexes for dumped tables
@@ -430,7 +451,6 @@ ALTER TABLE `hive`
 --
 ALTER TABLE `lighthistory`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `datetime` (`datetime`,`lumen`),
   ADD UNIQUE KEY `hiveID` (`hiveID`,`datetime`);
 
 --
@@ -460,32 +480,32 @@ ALTER TABLE `alertconfig`
 -- AUTO_INCREMENT for table `audio`
 --
 ALTER TABLE `audio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=179;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 --
 -- AUTO_INCREMENT for table `frameweight`
 --
 ALTER TABLE `frameweight`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `hive`
 --
 ALTER TABLE `hive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `lighthistory`
 --
 ALTER TABLE `lighthistory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `outsidetemp`
 --
 ALTER TABLE `outsidetemp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `population`
 --
 ALTER TABLE `population`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1943,6 +1943,7 @@
 				var plot = $.plot('#' + graphid, data, options);
 				console.log("plot", plot, data, options);
 				
+				if (graphid != 'weightSplineSum') { 
 					$('#' + graphid).bind("plothover", function (event, pos, item) {
 
 
@@ -1957,7 +1958,23 @@
 								$("#tooltip").hide();
 							}
 					});				
-				
+				} else {
+					$('#' + graphid).bind("plothover", function (event, pos, item) {
+
+
+							if (item) {
+								var x = item.datapoint[0].toFixed(2),
+									y = item.datapoint[1].toFixed(2);
+
+								$("#tooltip1").html(item.series.label + " = " + y)
+									.css({top: item.pageY+5, left: item.pageX+5})
+									.fadeIn(200);
+							} else {
+								$("#tooltip1").hide();
+							}
+					});				
+					
+				}
 			 } catch(e) {
 			console.log(e.message, "from", e.stack);
 			// You can send data to your server
@@ -1973,7 +1990,7 @@
 		//Get range functions
 		function getOutsideTempRange ()	{
             var thepath = '../v1/outsidetemp';
-            var thepath = encodeURI('../v1/outsidetemp?thelimit=10' );
+            var thepath = encodeURI('../v1/outsidetemp?thelimit=100' );
                 
             return BeeServices.getOutsideTemp(thepath).then(function (data) {
                 $log.debug('getOutsideTempRange returned data');
@@ -1984,7 +2001,7 @@
         }
 		function getOutsideHumRange ()	{
             var thepath = '../v1/outsidehum';
-            var thepath = encodeURI('../v1/outsidehum?thelimit=10' );
+            var thepath = encodeURI('../v1/outsidehum?thelimit=100' );
                 
             return BeeServices.getOutsideHum(thepath).then(function (data) {
                 $log.debug('getOutsideHumRange returned data');
@@ -1995,7 +2012,7 @@
         }
 		function getHiveTempRange (){
             var thepath = '../v1/hivetemp';
-            var thepath = encodeURI('../v1/hivetemp?thelimit=10&thehive=' + vminst.selectedHiveId  );
+            var thepath = encodeURI('../v1/hivetemp?thelimit=100&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getHiveTemp(thepath).then(function (data) {
                 $log.debug('getHiveTempRange returned data');
@@ -2007,7 +2024,7 @@
         }
 		function getHiveHumidityRange (){
             var thepath = '../v1/hivehumidity';
-            var thepath = encodeURI('../v1/hivehumidity?thelimit=10&thehive=' + vminst.selectedHiveId  );
+            var thepath = encodeURI('../v1/hivehumidity?thelimit=100&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getHiveHumidity(thepath).then(function (data) {
                 $log.debug('getLatestHiveHumidity returned data');
@@ -2018,7 +2035,7 @@
         }
 		function getWeightStatusRange (){
             var thepath = '../v1/HiveWeightStatus';
-            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=10&thehive=' + vminst.selectedHiveId );
+            var thepath = encodeURI('../v1/HiveWeightStatus?thelimit=100&thehive=' + vminst.selectedHiveId );
                 
             return BeeServices.getHiveWeight(thepath).then(function (data) {
                 $log.debug('getHiveWeight returned data');
@@ -2029,7 +2046,7 @@
         }	
 		function getLightRange (){
             var thepath = '../v1/light';
-            var thepath = encodeURI('../v1/light?thelimit=10&thehive=' + vminst.selectedHiveId  );
+            var thepath = encodeURI('../v1/light?thelimit=100&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getLight(thepath).then(function (data) {
                 $log.debug('getLightRange returned data');
@@ -2040,7 +2057,7 @@
         }
 		function getPopCountRange (){
             var thepath = '../v1/populations';
-            var thepath = encodeURI('../v1/populations?thelimit=10&thehive=' + vminst.selectedHiveId  );
+            var thepath = encodeURI('../v1/populations?thelimit=100&thehive=' + vminst.selectedHiveId  );
                 
             return BeeServices.getPopulation(thepath).then(function (data) {
                 $log.debug('getPopCountRange returned data');
@@ -2051,7 +2068,7 @@
         }
 		function getFreqStatusRange (){
             var thepath = '../v1/beeFreqStatus';
-            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=10&thehive=' + vminst.selectedHiveId);
+            var thepath = encodeURI('../v1/beeFreqStatus?thelimit=100&thehive=' + vminst.selectedHiveId);
                 
             return BeeServices.getBeeFrequency(thepath).then(function (data) {
                 $log.debug('getFreqStatusRangereturned data');

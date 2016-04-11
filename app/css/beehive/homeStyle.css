@@ -243,3 +243,13 @@ a:hover{/*sets hover color of links to navy*/
 .ui-grid-cell-contents {
 	font-size: large;
 }
+.modal-lg {
+    width: 1600px;
+}
+.modalnone {
+	display: none;
+}
+.modalheight {
+	height:800px; 
+	max-height:700px;
+}
