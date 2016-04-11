@@ -1506,7 +1506,7 @@
 							var uhiveid = uniqhives[uniq].hiveid;
 							var udatetime = uniqhives[uniq].datetime;
 							var htemparray = [];
-							vminst.graphlabel = 'Temperature for Hive ' + uhiveid + ' in ' + '\u00B0' + 'F ';
+							vminst.graphlabel = 'Temperature for Super ' + uhiveid + ' in ' + '\u00B0' + 'F ';
 
 							//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1597,7 +1597,7 @@
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveid;
 							var weightarraysum = [];
-							vminst.graphlabelsum = 'Weight Sum of all Frames for Hive:' + uhiveid;
+							vminst.graphlabelsum = 'Weight Sum of all Frames for Super:' + uhiveid;
 						
 						
 							//$log.debug('hiv',hiveid);
@@ -1629,14 +1629,14 @@
 							var weightarray6 = [];
 							var weightarray7 = [];
 							var weightarray8 = [];
-							vminst.graphlabel1 = 'Weight of Frame 1 for Hive: ' + uhiveid;
-							vminst.graphlabel2 = 'Weight of Frame 2 for Hive: ' + uhiveid;
-							vminst.graphlabel3 = 'Weight of Frame 3 for Hive: ' + uhiveid;
-							vminst.graphlabel4 = 'Weight of Frame 4 for Hive: ' + uhiveid;
-							vminst.graphlabel5 = 'Weight of Frame 5 for Hive: ' + uhiveid;
-							vminst.graphlabel6 = 'Weight of Frame 6 for Hive: ' + uhiveid;
-							vminst.graphlabel7 = 'Weight of Frame 7 for Hive: ' + uhiveid;
-							vminst.graphlabel8 = 'Weight of Frame 8 for Hive: ' + uhiveid;
+							vminst.graphlabel1 = 'Frame 1 for Super: ' + uhiveid;
+							vminst.graphlabel2 = 'Frame 2 for Super: ' + uhiveid;
+							vminst.graphlabel3 = 'Frame 3 for Super: ' + uhiveid;
+							vminst.graphlabel4 = 'Frame 4 for Super: ' + uhiveid;
+							vminst.graphlabel5 = 'Frame 5 for Super: ' + uhiveid;
+							vminst.graphlabel6 = 'Frame 6 for Super: ' + uhiveid;
+							vminst.graphlabel7 = 'Frame 7 for Super: ' + uhiveid;
+							vminst.graphlabel8 = 'Frame 8 for Super: ' + uhiveid;
 						
 							//$log.debug('hiv',hiveid);
 							//sort the data for the hives
@@ -1805,7 +1805,7 @@
 						for (var uniq=0,ulen=uniqhives.length; uniq<ulen; uniq++) {
 							var uhiveid = uniqhives[uniq].hiveID;
 							var freqarray = [];
-							vminst.graphlabel = 'Frequency Spectrum for hive:' + uhiveid;
+							vminst.graphlabel = 'Frequency Spectrum for Super:' + uhiveid;
 						
 						
 							for (var i=0, len=vminst.frequencyrange.length; i<len; i++) {
