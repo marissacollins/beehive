@@ -722,10 +722,12 @@
 				columnDefs: [
 					{
 						field: 'hiveid',
+						name: 'Super id',
 						enableCellEdit: false,
 						enableFiltering: true
 					}, {
 						field: 'datetime',
+						name: 'Date & Time',
 						enableCellEdit: false,
 						enableFiltering: true,
 						type: 'date',
@@ -743,6 +745,7 @@
 							  ]
 					}, {
 						field: 'temp',
+						name: 'Temperature',
 						enableCellEdit: false,
 						enableFiltering: true,
 						filters:  [
@@ -796,10 +799,12 @@
 				columnDefs: [
 					{
 						field: 'hiveid',
+						name: 'Hive id',
 						enableCellEdit: false,
 						enableFiltering: true
 					}, {
 						field: 'datetime',
+						name: 'Date & Time',
 						enableCellEdit: false,
 						enableFiltering: true,
 						type: 'date',
@@ -857,10 +862,12 @@
 				columnDefs: [
 					{
 						field: 'hiveid',
+						name: 'Hive id',
 						enableCellEdit: false,
 						enableFiltering: true
 					}, {
 						field: 'datetime',
+						name: 'Date & Time',
 						enableCellEdit: false,
 						enableFiltering: true,
 						type: 'date',
@@ -892,6 +899,7 @@
 							  ]
 					}, {
 						field: 'picurl', 
+						name: 'Picture',
 						cellTemplate:"<img  ng-src=\"/beehive/uploads/{{grid.getCellValue(row, col)}}\" lazy-src>",
 						enableCellEdit: false,
 						enableFiltering: true
@@ -924,6 +932,7 @@
 				columnDefs: [
 					{
 						field: 'datetime',
+						name: 'Date & Time',
 						enableCellEdit: false,
 						enableFiltering: true,
 						type: 'date',
@@ -941,6 +950,7 @@
 							  ]
 					}, {
 						field: 'temp',
+						name: 'Temperature',
 						enableCellEdit: false,
 						enableFiltering: true,
 						filters:  [
@@ -994,10 +1004,12 @@
 				columnDefs: [
 					{
 						field: 'hiveID',
+						name: 'Hive id',
 						enableCellEdit: false,
 						enableFiltering: true
 					}, {
 						field: 'datetime',
+						name: 'Date & Time',
 						enableCellEdit: false,
 						enableFiltering: true,
 						type: 'date',
@@ -1072,6 +1084,7 @@
             columnDefs: [
                 {
                     field: 'hiveid',
+					name: 'Super id',
                     enableCellEdit: false,
                     enableFiltering: true
                 }, {

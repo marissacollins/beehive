@@ -59,6 +59,49 @@ li {/*Navigation bar position*/
 	font-family:Tahoma;
 	font-size:16px;
 }
+#notesButton {/*save and load buttons*/
+	color:white;
+	background-color: #428BCA;
+	border:1px solid #36658C;
+	border-radius:8%;
+	margin-left:5px;
+}
+#notesButton:hover {
+	color:black;
+	background-color:#f2f2f2;	
+}
+#notesButton:active {
+	position:relative;
+	top:1px;
+}
+.inputfile { /*Choose a file button*/
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+	font-family:Tahoma;
+	font-weight:normal;
+    color:white;
+	background-color: #428BCA;
+	border:1px solid #36658C;
+	border-radius:8%;
+    display: inline-block;
+	cursor: pointer;
+	padding:3px;
+	padding-left:5px; 
+	padding-right:5px;
+	margin-top:2px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color:black;
+	background-color:#f2f2f2;
+}
 
 /*---Your Hive Page---*/
 #yourHiveTable{/*table style and position*/
@@ -130,10 +173,17 @@ a:hover{/*sets hover color of links to navy*/
 }
 
 /*---Data Listing Page---*/
-.panel-heading{/*Heading style for each table*/
+.panel-heading{/*Title style for each table*/
 	font-size:28px;
 	color: #36658C;
 	font-weight:700;
+}
+.ui-grid-top-panel {/*Heading style for each table*/
+    color: black;
+	background: #74a9d8 !important;
+}
+.ui-grid-cell-contents {/*Cell style for each table*/
+	font-size: medium;
 }
 
 /*---About Page---*/
@@ -196,53 +246,8 @@ a:hover{/*sets hover color of links to navy*/
 	padding-left:5%;
 }
 
-/*---Notes buttons---*/
-#notesButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-	box-shadow:inset 0px 1px 0px 0px #54a3f7;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
-	background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-	background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-	background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-	background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
-	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
-	background-color:#007dc1;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	border:1px solid #124d77;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #154682;
-}
-#notesButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
-	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
-	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
-	background-color:#0061a7;
-}
-#notesButton:active {
-	position:relative;
-	top:1px;
-}
-.ui-grid-top-panel {
-    color: blue;
-	background: green !important;
-}
-.ui-grid-cell-contents {
-	font-size: large;
-}
+
+
 .modal-lg {
     width: 1600px;
 }
