@@ -59,6 +59,9 @@ li {/*Navigation bar position*/
 	font-family:Tahoma;
 	font-size:16px;
 }
+#notes tr td{
+	width:33%;
+}
 #notesButton {/*save and load buttons*/
 	color:white;
 	background-color: #428BCA;
