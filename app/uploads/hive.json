@@ -1,208 +1,208 @@
 {
   "hive": [
 	{
-		"hiveID": "1",
-		"datetime": "2015-07-06 10:12:53",
-		"temp": "95.8",
-		"humidity": "57.54"
+		"hiveID": "2",
+		"datetime": "2015-07-06 11:21:33",
+		"temp": "95.5",
+		"humidity": "53.54"
 	},
 	{
-		"hiveID": "1",
-		"datetime": "2015-07-17 13:32:54",
-		"temp": "95.9",
-		"humidity": "54.14"
+		"hiveID": "2",
+		"datetime": "2015-07-17 10:43:52",
+		"temp": "96.9",
+		"humidity": "52.54"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-07-21 09:13:23",
-		"temp": "97.4",
-		"humidity": "58.14"
+		"hiveID": "2",
+		"datetime": "2015-07-21 10:10:08",
+		"temp": "94.6",
+		"humidity": "57.34"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-07-24 18:14:32",
-		"temp": "98.7",
-		"humidity": "51.65"
+		"hiveID": "2",
+		"datetime": "2015-07-24 17:21:43",
+		"temp": "96.4",
+		"humidity": "53.45"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-07-31 10:54:17",
-		"temp": "96.2",
-		"humidity": "58.32"
+		"hiveID": "2",
+		"datetime": "2015-07-31 12:34:54",
+		"temp": "94.5",
+		"humidity": "53.54"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-03 06:16:32",
-		"temp": "96.3",
-		"humidity": "57.43"
+		"hiveID": "2",
+		"datetime": "2015-08-03 08:21:43",
+		"temp": "98.4",
+		"humidity": "56.23"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-21 09:12:32",
-		"temp": "98.2",
-		"humidity": "59.7"
+		"hiveID": "2",
+		"datetime": "2015-08-21 11:43:54",
+		"temp": "97.5",
+		"humidity": "52.6"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-11 18:34:54",
-		"temp": "96.5",
-		"humidity": "51.43"
+		"hiveID": "2",
+		"datetime": "2015-08-11 17:45:57",
+		"temp": "91.5",
+		"humidity": "54.76"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-17 16:43:56",
-		"temp": "94.7",
-		"humidity": "58.18"
+		"hiveID": "2",
+		"datetime": "2015-08-17 09:54:26",
+		"temp": "95.8",
+		"humidity": "52.54"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-23 05:15:43",
-		"temp": "93.6",
+		"hiveID": "2",
+		"datetime": "2015-08-23 07:14:56",
+		"temp": "95.8",
+		"humidity": "56.76"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-08-31 18:32:54",
+		"temp": "95.2",
+		"humidity": "55.17"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-03 19:14:43",
+		"temp": "95.2",
+		"humidity": "53.76"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-10 01:12:54",
+		"temp": "97.7",
+		"humidity": "53.54"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-17 10:43:56",
+		"temp": "91.5",
+		"humidity": "52.15"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-20 18:19:45",
+		"temp": "95.8",
+		"humidity": "56.56"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-24 10:32:54",
+		"temp": "97.8",
+		"humidity": "54.27"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-09-30 07:23:54",
+		"temp": "95.7",
 		"humidity": "55.65"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-08-31 14:32:45",
-		"temp": "93.6",
-		"humidity": "56.18"
+		"hiveID": "2",
+		"datetime": "2015-10-04 08:34:54",
+		"temp": "95.7",
+		"humidity": "58.54"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-09-03 08:12:32",
+		"hiveID": "2",
+		"datetime": "2015-10-10 11:13:48",
+		"temp": "96.7",
+		"humidity": "53.19"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-10-18 13:34:56",
+		"temp": "96.9",
+		"humidity": "56.17"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-10-23 11:34:57",
 		"temp": "93.4",
-		"humidity": "56.65"
+		"humidity": "51.98"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-09-10 11:43:23",
-		"temp": "96.3",
-		"humidity": "57.43"
+		"hiveID": "2",
+		"datetime": "2015-10-31 18:16:24",
+		"temp": "95.3",
+		"humidity": "57.87"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-09-17 19:23:43",
-		"temp": "94.7",
-		"humidity": "58.19"
+		"hiveID": "2",
+		"datetime": "2015-11-03 06:23:57",
+		"temp": "92.5",
+		"humidity": "51.43"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-09-20 17:34:54",
-		"temp": "96.6",
-		"humidity": "52.17"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-09-24 17:32:43",
-		"temp": "96.4",
-		"humidity": "52.65"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-09-30 06:16:57",
-		"temp": "94.2",
-		"humidity": "57.19"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-10-04 04:17:43",
-		"temp": "96.8",
-		"humidity": "59.54"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-10-10 08:12:32",
-		"temp": "97.5",
-		"humidity": "58.18"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-10-18 05:12:43",
+		"hiveID": "2",
+		"datetime": "2015-11-07 18:22:53",
 		"temp": "96.7",
-		"humidity": "58.17"
+		"humidity": "53.44"
 	},
 		{
-		"hiveID": "1",
-		"datetime": "2015-10-23 10:32:56",
+		"hiveID": "2",
+		"datetime": "2015-11-13 02:13:55",
+		"temp": "95.7",
+		"humidity": "52.54"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-11-20 13:43:54",
+		"temp": "96.8",
+		"humidity": "53.54"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-11-26 13:54:24",
+		"temp": "95.5",
+		"humidity": "55.34"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-11-30 14:23:12",
+		"temp": "95.6",
+		"humidity": "54.12"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-08 04:23:43",
+		"temp": "92.1",
+		"humidity": "55.95"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-13 23:22:12",
+		"temp": "98.3",
+		"humidity": "55.10"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-16 11:01:23",
+		"temp": "98.3",
+		"humidity": "55.43"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-23 10:12:32",
+		"temp": "95.5",
+		"humidity": "53.54"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-28 11:32:43",
+		"temp": "95.7",
+		"humidity": "58.23"
+	},
+		{
+		"hiveID": "2",
+		"datetime": "2015-12-31 10:32:43",
 		"temp": "97.3",
-		"humidity": "52.64"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-10-31 17:32:54",
-		"temp": "96.4",
-		"humidity": "52.75"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-03 09:15:43",
-		"temp": "93.6",
-		"humidity": "58.32"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-07 10:32:43",
-		"temp": "94.6",
-		"humidity": "58.24"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-13 08:43:57",
-		"temp": "96.4",
-		"humidity": "56.87"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-20 07:13:43",
-		"temp": "91.5",
-		"humidity": "58.43"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-26 17:32:54",
-		"temp": "96.8",
-		"humidity": "51.54"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-11-30 08:43:15",
-		"temp": "98.4",
-		"humidity": "52.17"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-08 07:23:43",
-		"temp": "96.7",
-		"humidity": "58.93"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-13 20:24:56",
-		"temp": "96.7",
-		"humidity": "53.10"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-16 17:23:43",
-		"temp": "98.7",
-		"humidity": "59.23"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-23 17:23:43",
-		"temp": "97.2",
-		"humidity": "50.76"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-28 10:07:18",
-		"temp": "96.4",
-		"humidity": "52.19"
-	},
-		{
-		"hiveID": "1",
-		"datetime": "2015-12-31 15:23:32",
-		"temp": "96.3",
-		"humidity": "52.43"
+		"humidity": "55.32"
 	}
 	
 	
