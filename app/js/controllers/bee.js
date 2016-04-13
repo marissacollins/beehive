@@ -1952,8 +1952,6 @@
 				};
 					
 				}
-				var graphnum = (graphid == ("OutsideTempSpline" || "OutsideHumSpline" || "HiveTempSpline" || "HumiditySpline" 
-					|| "LightSpline" || "AudioSpline" || "PopulationSpline") ? 3 : (graphid == "WeightSplineFrame1" ? 2 : 1));
 				var plot = $.plot('#' + graphid, data, options);
 				console.log("plot", plot, data, options);
 				
@@ -1964,11 +1962,11 @@
 								var x = item.datapoint[0].toFixed(2),
 									y = item.datapoint[1].toFixed(2);
 
-								$("#tooltip" + graphnum).html(item.series.label + " = " + y)
+								$("#tooltip").html(item.series.label + " = " + y)
 									.css({top: item.pageY+5, left: item.pageX+5})
 									.fadeIn(200);
 							} else {
-								$("#tooltip" + graphnum).hide();
+								$("#tooltip").hide();
 							}
 					});				
 					
