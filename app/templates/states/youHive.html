@@ -109,19 +109,38 @@
 					</div>
 				</div>
 				<div class="row">					
+				
 				<div ng-class="(vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All') ? ['col-md-6', 'modal-footer'] : ['modalnone']">					
 				  <div id="tooltip" style=" 
 							border: 1px solid rgb(255, 221, 221); 
 							padding: 2px; opacity: 0.8; 							 
 							display: block; background-color: rgb(255, 238, 238);"></div>
-				   <button class="btn btn-warning" type="button" ng-click="vminst.close()">Close</button>
+				   
 				  </div>
-				<div ng-class="(vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All') ? ['col-md-6', 'modal-footer'] : ['col-md-12', 'modal-footer']">					
+				<div ng-class="(vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId != 'All') ? ['col-md-6', 'modal-footer'] : ['col-md-12', 'modalnone']">					
 					  <div id="tooltip1" style=" 
 								border: 1px solid rgb(255, 221, 221); 
 								padding: 2px; opacity: 0.8; 							 
 								display: block; background-color: rgb(255, 238, 238);"></div>
-				  </div>		
+								<button class="btn btn-warning" type="button" ng-click="vminst.close()">Close</button>
+				  </div>
+				  
+				  <div ng-class="(vminst.graphid1 == 'weightSplineFrame1' && vminst.selectedHiveId == 'All') ? ['col-md-12', 'modal-footer'] : ['col-md-12', 'modalnone']">					
+					  <div id="tooltip2" style=" 
+								border: 1px solid rgb(255, 221, 221); 
+								padding: 2px; opacity: 0.8; 							 
+								display: block; background-color: rgb(255, 238, 238);"></div>
+								<button class="btn btn-warning" type="button" ng-click="vminst.close()">Close</button>
+				  </div>
+				  
+				  <div ng-class="(vminst.graphid1 != 'weightSplineFrame1') ? ['col-md-12', 'modal-footer'] : ['col-md-12', 'modalnone']">					
+					  <div id="tooltip3" style=" 
+								border: 1px solid rgb(255, 221, 221); 
+								padding: 2px; opacity: 0.8; 							 
+								display: block; background-color: rgb(255, 238, 238);"></div>
+								<button class="btn btn-warning" type="button" ng-click="vminst.close()">Close</button>
+				  </div>
+				  
 				</div>
 			</script>
 
