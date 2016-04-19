@@ -2,7 +2,7 @@
   "frameweight": [
 	
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-01-03 15:54:43",
       "frameweight1": "68.86",
       "frameweight2": "69.10",
@@ -14,7 +14,7 @@
       "frameweight8": "68.54"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-01-09 10:24:54",
       "frameweight1": "64.75",
       "frameweight2": "63.54",
@@ -26,7 +26,7 @@
       "frameweight8": "61.03"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-01-16 07:24:21",
       "frameweight1": "59.23",
       "frameweight2": "57.65",
@@ -38,7 +38,7 @@
       "frameweight8": "58.13"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-01-23 09:25:54",
       "frameweight1": "56.13",
       "frameweight2": "51.32",
@@ -52,7 +52,7 @@
 	   
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-01-28 18:09:24",
       "frameweight1": "50.43",
       "frameweight2": "48.54",
@@ -64,7 +64,7 @@
       "frameweight8": "49.65"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-04 12:16:43",
       "frameweight1": "47.54",
       "frameweight2": "43.43",
@@ -76,7 +76,7 @@
       "frameweight8": "42.76"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-07 12:16:43",
       "frameweight1": "41.43",
       "frameweight2": "37.54",
@@ -88,7 +88,7 @@
       "frameweight8": "36.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-10 22:11:32",
       "frameweight1": "36.32",
       "frameweight2": "31.03",
@@ -100,7 +100,7 @@
       "frameweight8": "31.54"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-14 08:09:43",
       "frameweight1": "32.65",
       "frameweight2": "29.54",
@@ -112,7 +112,7 @@
       "frameweight8": "27.54"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-19 13:10:54",
       "frameweight1": "28.31",
       "frameweight2": "26.32",
@@ -124,7 +124,7 @@
       "frameweight8": "23.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-24 08:14:54",
       "frameweight1": "21.54",
       "frameweight2": "20.43",
@@ -136,7 +136,7 @@
       "frameweight8": "19.54"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-02-28 08:54:23",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -148,7 +148,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-04 22:43:56",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -160,7 +160,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-08 09:23:57",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -172,7 +172,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-13 07:23:54",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -184,7 +184,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-20 19:43:52",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -196,7 +196,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-24 08:14:52",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -208,7 +208,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-03-29 15:23:57",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -220,7 +220,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-04-04 06:23:54",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -232,7 +232,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-04-09 10:23:54",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
@@ -244,7 +244,7 @@
       "frameweight8": "13.43"
 	},
 	{
-	  "hiveID": "1",
+	  "hiveID": "2",
       "datetime": "2015-04-12 14:56:32",
       "frameweight1": "18.24",
       "frameweight2": "17.09",
