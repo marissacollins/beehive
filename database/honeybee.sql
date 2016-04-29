@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2016 at 04:18 AM
+-- Generation Time: Apr 29, 2016 at 06:12 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `honeybee`
 --
-CREATE DATABASE IF NOT EXISTS `honeybee` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `honeybee`;
 
 -- --------------------------------------------------------
 
@@ -28,6 +26,7 @@ USE `honeybee`;
 -- Table structure for table `alertconfig`
 --
 
+DROP TABLE IF EXISTS `alertconfig`;
 CREATE TABLE `alertconfig` (
   `id` int(20) NOT NULL,
   `hiveid` varchar(20) NOT NULL,
@@ -55,6 +54,7 @@ INSERT INTO `alertconfig` (`id`, `hiveid`, `configkey`, `configvalue`) VALUES
 -- Table structure for table `audio`
 --
 
+DROP TABLE IF EXISTS `audio`;
 CREATE TABLE `audio` (
   `id` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -127,6 +127,7 @@ INSERT INTO `audio` (`id`, `datetime`, `hiveID`, `frequency`, `amplitude`) VALUE
 -- Table structure for table `frameweight`
 --
 
+DROP TABLE IF EXISTS `frameweight`;
 CREATE TABLE `frameweight` (
   `id` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -320,6 +321,7 @@ INSERT INTO `frameweight` (`id`, `datetime`, `hiveID`, `frameweight1`, `framewei
 -- Table structure for table `hive`
 --
 
+DROP TABLE IF EXISTS `hive`;
 CREATE TABLE `hive` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
@@ -526,6 +528,7 @@ INSERT INTO `hive` (`id`, `hiveID`, `name`, `datetime`, `temp`, `weight`, `humid
 -- Table structure for table `lighthistory`
 --
 
+DROP TABLE IF EXISTS `lighthistory`;
 CREATE TABLE `lighthistory` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
@@ -692,6 +695,7 @@ INSERT INTO `lighthistory` (`id`, `hiveID`, `datetime`, `lumen`) VALUES
 -- Table structure for table `outsidetemp`
 --
 
+DROP TABLE IF EXISTS `outsidetemp`;
 CREATE TABLE `outsidetemp` (
   `id` int(11) NOT NULL,
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -829,6 +833,7 @@ INSERT INTO `outsidetemp` (`id`, `datetime`, `temp`, `humidity`) VALUES
 -- Table structure for table `population`
 --
 
+DROP TABLE IF EXISTS `population`;
 CREATE TABLE `population` (
   `id` int(11) NOT NULL,
   `hiveID` int(11) NOT NULL,
@@ -842,48 +847,48 @@ CREATE TABLE `population` (
 --
 
 INSERT INTO `population` (`id`, `hiveID`, `datetime`, `count`, `picurl`) VALUES
-(1, 1, '2016-03-04 22:32:28', 22, 'population_2016040335757000000_test.jpg'),
-(2, 2, '2016-03-04 22:34:23', 12, 'population_2016040335757000000_test.jpg'),
-(3, 1, '2016-03-01 00:00:00', 22, 'population_2016040335757000000_test.jpg'),
-(4, 2, '2016-03-02 00:00:00', 18, 'population_2016040335757000000_test.jpg'),
-(5, 1, '2016-04-29 23:32:28', 33, 'population_2016040335757000000_test.jpg'),
-(6, 1, '2016-03-22 22:34:23', 21, 'population_2016040335757000000_test.jpg'),
-(7, 1, '2016-03-09 22:32:28', 33, 'population_2016040335757000000_test.jpg'),
-(8, 1, '2016-03-24 22:34:23', 21, 'population_2016040335757000000_test.jpg'),
-(9, 1, '2016-02-04 22:40:47', 24, 'population_2016040335757000000_test.jpg'),
-(10, 1, '2016-03-04 22:40:47', 23, 'population_2016040335757000000_test.jpg'),
-(11, 1, '2016-03-04 22:43:47', 19, 'population_2016040335757000000_test.jpg'),
-(12, 1, '2016-03-04 22:43:57', 17, 'population_2016040335757000000_test.jpg'),
-(13, 1, '2016-04-04 22:43:57', 35, 'population_2016040335749000000_test.jpg'),
-(14, 1, '2016-04-05 22:43:57', 15, 'population_2016040335757000000_test.jpg'),
-(15, 2, '2016-04-29 12:09:43', 35, 'population_2016040335757000000_test.jpg'),
-(16, 2, '2016-04-12 08:34:23', 27, 'population_2016040335757000000_test.jpg'),
-(17, 2, '2016-04-20 10:23:23', 34, 'population_2016040335757000000_test.jpg'),
-(18, 2, '2016-01-08 17:24:23', 14, 'population_2016040335757000000_test.jpg'),
-(19, 2, '2016-02-13 17:23:03', 20, 'population_2016040335757000000_test.jpg'),
-(20, 2, '2016-02-12 10:19:23', 23, 'population_2016040335757000000_test.jpg'),
-(21, 2, '2016-03-17 19:32:43', 26, 'population_2016040335757000000_test.jpg'),
-(22, 2, '2016-04-22 19:03:23', 34, 'population_2016040335757000000_test.jpg'),
-(23, 2, '2016-02-18 07:23:45', 12, 'population_2016040335757000000_test.jpg'),
-(24, 2, '2016-03-15 10:23:53', 18, 'population_2016040335757000000_test.jpg'),
-(25, 2, '2016-03-02 10:34:43', 30, 'population_2016040335757000000_test.jpg'),
-(26, 2, '2016-01-23 18:23:32', 37, 'population_2016040335757000000_test.jpg'),
-(27, 2, '2015-04-29 10:09:43', 37, 'population_2016040335757000000_test.jpg'),
-(28, 2, '2016-04-17 10:34:23', 29, 'population_2016040335757000000_test.jpg'),
-(30, 2, '2016-01-21 18:04:23', 23, 'population_2016040335757000000_test.jpg'),
-(31, 2, '2016-02-28 09:23:03', 20, 'population_2016040335757000000_test.jpg'),
-(32, 2, '2016-03-17 12:09:13', 25, 'population_2016040335757000000_test.jpg'),
-(33, 2, '2015-04-23 18:32:43', 18, 'population_2016040335757000000_test.jpg'),
-(34, 1, '2015-08-17 10:32:43', 30, 'population_2016040335757000000_test.jpg'),
-(35, 1, '2015-07-13 11:34:43', 30, 'population_2016040335757000000_test.jpg'),
-(37, 1, '2015-05-12 12:43:54', 38, 'population_2016040335757000000_test.jpg'),
-(38, 1, '2015-06-23 10:56:03', 17, 'population_2016040335757000000_test.jpg'),
-(39, 1, '2015-08-25 09:14:28', 36, 'population_2016040335757000000_test.jpg'),
-(40, 1, '2015-03-24 18:09:23', 32, 'population_2016040335757000000_test.jpg'),
-(41, 1, '2015-04-29 09:22:43', 40, 'population_2016040335757000000_test.jpg'),
-(42, 1, '2015-09-10 13:02:13', 31, 'population_2016040335757000000_test.jpg'),
-(43, 2, '2015-06-14 10:09:43', 37, 'population_2016040335757000000_test.jpg'),
-(44, 1, '2015-07-09 10:34:23', 29, 'population_2016040335757000000_test.jpg');
+(1, 1, '2016-03-04 22:32:28', 9, '2015.11.12.19.18.jpeg'),
+(2, 2, '2016-03-04 22:34:23', 12, '2015.11.12.19.19.jpeg'),
+(3, 1, '2016-03-01 00:00:00', 13, '2015.11.12.19.23.jpeg'),
+(4, 2, '2016-03-02 00:00:00', 18, '2015.11.12.19.21.jpeg'),
+(5, 1, '2016-04-29 23:32:28', 8, '2015.11.12.19.22.jpeg'),
+(6, 1, '2016-03-22 22:34:23', 21, '2015.11.12.19.23.jpeg'),
+(7, 1, '2016-03-09 22:32:28', 10, '2015.11.12.19.24.jpeg'),
+(8, 1, '2016-03-24 22:34:23', 21, '2015.11.12.19.25.jpeg'),
+(9, 1, '2016-02-04 22:40:47', 24, '2015.11.12.19.26.jpeg'),
+(10, 1, '2016-03-04 22:40:47', 23, '2015.11.12.19.27.jpeg'),
+(11, 1, '2016-03-04 22:43:47', 19, '2015.11.12.19.28.jpeg'),
+(12, 1, '2016-03-04 22:43:57', 17, '2015.11.12.19.29.jpeg'),
+(13, 1, '2016-04-04 22:43:57', 15, '2015.11.12.19.18.jpeg'),
+(14, 1, '2016-04-05 22:43:57', 15, '2015.11.12.19.19.jpeg'),
+(15, 2, '2016-04-29 12:09:43', 8, '2015.11.12.19.18.jpeg'),
+(16, 2, '2016-04-12 08:34:23', 10, '2015.11.12.19.21.jpeg'),
+(17, 2, '2016-04-20 10:23:23', 11, '2015.11.12.19.22.jpeg'),
+(18, 2, '2016-01-08 17:24:23', 14, '2015.11.12.19.23.jpeg'),
+(19, 2, '2016-02-13 17:23:03', 11, '2015.11.12.19.24.jpeg'),
+(20, 2, '2016-02-12 10:19:23', 12, '2015.11.12.19.25.jpeg'),
+(21, 2, '2016-03-17 19:32:43', 15, '2015.11.12.19.26.jpeg'),
+(22, 2, '2016-04-22 19:03:23', 10, '2015.11.12.19.27.jpeg'),
+(23, 2, '2016-02-18 07:23:45', 12, '2015.11.12.19.28.jpeg'),
+(24, 2, '2016-03-15 10:23:53', 18, '2015.11.12.19.29.jpeg'),
+(25, 2, '2016-03-02 10:34:43', 8, '2015.11.12.19.18.jpeg'),
+(26, 2, '2016-01-23 18:23:32', 6, '2015.11.12.19.18.jpeg'),
+(27, 2, '2015-04-29 10:09:43', 10, '2015.11.12.19.19.jpeg'),
+(28, 2, '2016-04-17 10:34:23', 8, '2015.11.12.19.23.jpeg'),
+(30, 2, '2016-01-21 18:04:23', 9, '2015.11.12.19.21.jpeg'),
+(31, 2, '2016-02-28 09:23:03', 20, '2015.11.12.19.22.jpeg'),
+(32, 2, '2016-03-17 12:09:13', 13, '2015.11.12.19.24.jpeg'),
+(33, 2, '2015-04-23 18:32:43', 18, '2015.11.12.19.25.jpeg'),
+(34, 1, '2015-08-17 10:32:43', 13, '2015.11.12.19.26.jpeg'),
+(35, 1, '2015-07-13 11:34:43', 8, '2015.11.12.19.27.jpeg'),
+(37, 1, '2015-05-12 12:43:54', 11, '2015.11.12.19.28.jpeg'),
+(38, 1, '2015-06-23 10:56:03', 17, '2015.11.12.19.29.jpeg'),
+(39, 1, '2015-08-25 09:14:28', 12, '2015.11.12.19.18.jpeg'),
+(40, 1, '2015-03-24 18:09:23', 10, '2015.11.12.19.19.jpeg'),
+(41, 1, '2015-04-29 09:22:43', 12, '2015.11.12.19.21.jpeg'),
+(42, 1, '2015-09-10 13:02:13', 10, '2015.11.12.19.22.jpeg'),
+(43, 2, '2015-06-14 10:09:43', 6, '2015.11.12.19.23.jpeg'),
+(44, 1, '2015-07-09 10:34:23', 9, '2015.11.12.19.24.jpeg');
 
 --
 -- Indexes for dumped tables
